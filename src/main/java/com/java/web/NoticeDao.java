@@ -15,12 +15,23 @@ public class NoticeDao {
 	SqlSession s;
 
 	
-	  public List<Login> loginselect(Login login) { List<Login> list=new
-	  ArrayList<Login>(); Map<String,Login> map=new HashMap<String, Login>();
-	  	return s.selectList("test.login", map); 
-	  }
+	public List<Login> loginselect(Login login) {
+		List<Login> list=new ArrayList<Login>(); 
+		Map<String,Login> map=new HashMap<String, Login>();
+	  	return s.selectList("test.login", login); 
+	}
 	 
 	public List<Bean> contentselect() {
 		return s.selectList("test.content");
+	}
+	
+	public void insertContent(String val ) {
+		s.insert("test.insert",val);
+	}
+	public void updateContent(Bean bean ) {
+		s.update("test.update",bean);
+	}
+	public void deleteContent(Bean bean ) {
+		s.update("test.delete",bean);
 	}
 }

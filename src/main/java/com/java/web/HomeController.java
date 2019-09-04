@@ -91,7 +91,40 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/create")
+	public String create(HttpServletRequest request, HttpServletResponse response) {
+		String no=request.getParameter("no");
+		String val=request.getParameter("val");
+		System.out.println(no+","+val);
+		ns.createContent(val);
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/update")
+	public String update(HttpServletRequest request, HttpServletResponse response) {
+		int no=Integer.parseInt(request.getParameter("no"));
+		String val=request.getParameter("val");
+		Bean bean=new Bean(no, val);
+		System.out.println(no+","+val);
+		ns.updateContent(bean);
+		return "redirect:/";
+	}
+	@RequestMapping("/delete")
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
+		int no=Integer.parseInt(request.getParameter("no"));
+		String val=request.getParameter("val");
+		Bean bean=new Bean(no, val);
+		System.out.println(no+","+val);
+		ns.deleteContent(bean);
+		return "redirect:/";
+	}
+	
+	
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.

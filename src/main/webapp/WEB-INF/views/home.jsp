@@ -14,19 +14,18 @@
 <style>
 
 </style>
-<script type="text/javascript">
+<script>
 /* document.getElementById("content").onclick=function (){
 	alert("로그인필요");
 } */
 var login=false;
-function login() {
+/* function login() {
 	alert("로그인필요");
-	document.getElementsByName("login")
-}
-function logout(){
 	
-	alert("1");
-}
+} */
+/* function logout(){
+	alert("로그인 실패");
+} */
 
 <%
 if(session==null) {
@@ -58,10 +57,40 @@ function check(index){
 	}
 
 }
+
+function logout(){
+if(<%=session.getAttribute("login")%>!=null) {
+	//ajax
+/* 	$.ajax("url":"/login", "type":"GET", "data":{id: $("#usrname").val(), pw:$("#psw").val()}, (data) => {
+			data = JSON.parse(data);
+			if(data.state){
+				login = true;
+				nickname = data.nickname;
+				alert("로그인 완료");
+				//$("#myModal").modal("hide");
+				//
+				
+			}else {
+				alert("로그인 실패");
+			}
+			//console.log(data);
+			//console.log(nickname);
+
+		}); */
+	alert("로그인 성공");
+}else{
+	alert("로그인 실패");
+	}
+}
+function loginCheck() {
+	alert("로그인필요");
+	
+}
+
 </script>
 </head>
 
-<body>
+<body onload="">
 <%
 	int a;
 	if(list==null) {
@@ -70,15 +99,19 @@ function check(index){
 		a=list.size();
 	}
 %>
+	<script>
+
+	</script>
 	<form id="content">
-		<input type="text" name="no">
+		<input type="text" name="no" >
 		<input type="text" name="val">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}%> method="GET">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET">
-		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="login()"><%
-		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout">logout</button><% }%>
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()"  <% }%>>
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET" onclick="loginCheck()">
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET" onclick="loginCheck()">
+		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="logout()"><%
+		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout"">logout</button><% }%>
 	</form>
+
 	<% 
 		for(int i=0;i<a;i++) {
 		

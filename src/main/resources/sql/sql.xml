@@ -8,6 +8,17 @@
   </select>
   
    <select id="content" resultType="com.java.web.Bean">
-   select no,val from content
+   select no,val from content where delYn='N'
   </select>
+  
+  <insert id="insert" parameterType="String">
+  	insert into content (val) values (#{val})
+  </insert>
+  <update id="update" parameterType="com.java.web.Bean">
+  	update content set val=#{val} where no=#{no}
+  </update>
+  
+  <update id="delete" parameterType="com.java.web.Bean">
+  	update content set delYn='Y' where no=#{no}
+  </update>
 </mapper>
