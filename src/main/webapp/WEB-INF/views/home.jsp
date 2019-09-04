@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!--<link rel="stylesheet" type="text/css" href="css/servletNotice.css">-->
-<link rel="stylesheet" type="text/css" href="/servletNotice/css/servletNotice.css">
+<link rel="stylesheet" type="text/css" href="../../resources/css/springNotice.css">
 
 <style>
 
@@ -73,11 +73,11 @@ function check(index){
 	<form id="content">
 		<input type="text" name="no">
 		<input type="text" name="val">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/servletNotice/create" value="추가"<%}%> method="GET">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/servletNotice/update" value="업데이트"<%}%>method="GET">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/servletNotice/delete" value="삭제"<%}%>method="GET">
-		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/servletNotice/login" value="login"  onclick="login()"><%
-		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/servletNotice/login" id="logout" value="logout">logout</button><% }%>
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}%> method="GET">
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET">
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET">
+		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="login()"><%
+		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout">logout</button><% }%>
 	</form>
 	<% 
 		for(int i=0;i<a;i++) {

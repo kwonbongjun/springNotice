@@ -7,12 +7,15 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-
+	@Autowired
+	NoticeService ns;
 //	@RequestMapping("/create")
 //	public String create(HttpServletRequest request, HttpServletResponse response) {
 //		String no=request.getParameter("no");
@@ -58,43 +62,35 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String read(HttpServletRequest request, HttpServletResponse response) {
-		try {
-//			String driver="org.mariadb.jdbc.Driver";
-//			String url="jdbc:mariadb://192.168.3.31:3306/DBTEST";
-			//String url="jdbc:mariadb://172.30.1.11:3306/DBTEST";
-//			String userName="root";
-//			String password="1234";
-			Connection con=DriverManager.getConnection(url,userName,password);
-			Statement st = con.createStatement();
 
-			
-			
-			String sql="select no,val from content";
-			
-			//List<Bean> list=(List<Bean>) st.executeQuery(sql);
-			ResultSet rs=st.executeQuery(sql);
-			List<Bean> list=new ArrayList<Bean>();
-			while(rs.next()) {
-				list.add(new Bean(rs.getInt("no"),rs.getString("val")));
-			}
-			
-			//System.out.println(st.executeQuery(sql).getObject(1));
+		try {
+			List<Bean> list=ns.contentRead();
 			request.setAttribute("list", list);
-			con.close();
-			st.close();
-			
-			//response.sendRedirect("/servletNotice/test.jsp");
-			
-			RequestDispatcher rd=request.getRequestDispatcher("/test.jsp");
-			rd.forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();
 			
 		}
+		
 		return "home";
 	}
-
-	
+	@RequestMapping("/login")
+	public String Login(HttpServletRequest request, HttpServletResponse response) {
+		String id=request.getParameter("no");
+		String pw=request.getParameter("val");
+		Login login=new Login(id, pw);
+		System.out.println(login.getId()+login.getPw());
+		
+		List<Login> loginList = ns.loginRead(login);
+		HttpSession s=request.getSession();
+//		s.setAttribute("login", false);
+		System.out.println(loginList.size());
+		if(loginList.size()>0) {
+			s.setAttribute("login", true);
+		}else {
+			s.invalidate();
+		}
+		return "redirect:/";
+	}
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
