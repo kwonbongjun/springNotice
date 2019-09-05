@@ -1,3 +1,4 @@
+<%@page import="com.java.web.Login"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%-- <%@ page session="false" %> --%>
 <%@page import="com.java.web.Bean"%>
@@ -105,6 +106,7 @@ function viewchange(){
 	}else {
 		a=list.size();
 	}
+	Login user=(Login)request.getAttribute("user");
 %>
 <div id="list">
 	<script>
@@ -113,7 +115,7 @@ function viewchange(){
 	<form id="content">
 		<input type="text" name="no" >
 		<input type="text" name="val">
-		<input type="hidden" name="writer" value=<%=request.getAttribute("user")%>>
+		<%if(session.getAttribute("login")!=null){%><input type="hidden" name="writer" value=<%=user.getId()%>><%} %>
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>>
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET" onclick="loginCheck()" value="업데이트">
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET" onclick="loginCheck()" value="삭제">

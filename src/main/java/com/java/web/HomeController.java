@@ -88,7 +88,7 @@ public class HomeController {
 		System.out.println(loginList.size());
 		if(loginList.size()>0) {
 			s.setAttribute("login", true);
-			s.setAttribute("user", login);
+			request.setAttribute("user", login);
 		}else {
 			s.invalidate();
 		}
