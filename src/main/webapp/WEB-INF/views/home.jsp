@@ -87,6 +87,13 @@ function loginCheck() {
 	
 }
 
+function viewchange(){
+	document.getElementById("list").style.display='none';
+	document.getElementById("write").style.display='block'
+
+}
+
+
 </script>
 </head>
 
@@ -99,17 +106,19 @@ function loginCheck() {
 		a=list.size();
 	}
 %>
+<div id="list">
 	<script>
 
 	</script>
 	<form id="content">
 		<input type="text" name="no" >
 		<input type="text" name="val">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()"  <% }%>>
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET" onclick="loginCheck()">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET" onclick="loginCheck()">
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>>
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET" onclick="loginCheck()" value="업데이트">
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET" onclick="loginCheck()" value="삭제">
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="logout()"><%
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout"">logout</button><% }%>
+		<button type="button" onclick="viewchange()">입력</button>
 	</form>
 
 	<% 
@@ -118,9 +127,12 @@ function loginCheck() {
 		%><ul>
 		<input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)">	
 		<li class="content"><%=list.get(i).getNo()%></li>
-		<li class="content"><%=list.get(i).getVal() %></li>
+		<li class="content"><a href="/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getVal() %></a></li>
 		</ul>
 		<%}
 	%>
+	</div>
+
+	
 </body>
 </html>

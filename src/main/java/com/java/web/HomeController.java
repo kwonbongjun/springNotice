@@ -62,7 +62,9 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String read(HttpServletRequest request, HttpServletResponse response) {
-
+		if(request.getParameter("boardNum")!=null) {
+			return "detail";
+		}
 		try {
 			List<Bean> list=ns.contentRead();
 			request.setAttribute("list", list);
