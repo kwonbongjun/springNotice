@@ -15,7 +15,8 @@ function load() {
 <body>
 	<div id="write">
 		<form>
-			<input class="text" type="text" name="text">
+			<input type="text" name="title">
+			<input class="text" type="text" name="val">
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>>
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET" onclick="loginCheck()" value="업데이트">
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET" onclick="loginCheck()" value="삭제">

@@ -88,6 +88,7 @@ public class HomeController {
 		System.out.println(loginList.size());
 		if(loginList.size()>0) {
 			s.setAttribute("login", true);
+			s.setAttribute("user", login);
 		}else {
 			s.invalidate();
 		}
@@ -96,9 +97,12 @@ public class HomeController {
 	
 	@RequestMapping("/create")
 	public String create(HttpServletRequest request, HttpServletResponse response) {
-		String no=request.getParameter("no");
+		int no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
-		System.out.println(no+","+val);
+		String writer=request.getParameter("writer");
+		
+		System.out.println(no+","+val+","+writer);
+		Bean bean=new Bean(no, "title",val,writer);
 		ns.createContent(val);
 		return "redirect:/";
 	}
@@ -107,7 +111,7 @@ public class HomeController {
 	public String update(HttpServletRequest request, HttpServletResponse response) {
 		int no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
-		Bean bean=new Bean(no, val);
+		Bean bean=new Bean(no, "title",val,"writer");
 		System.out.println(no+","+val);
 		ns.updateContent(bean);
 		return "redirect:/";
@@ -116,7 +120,7 @@ public class HomeController {
 	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		int no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
-		Bean bean=new Bean(no, val);
+		Bean bean=new Bean(no, "title",val,"writer");
 		System.out.println(no+","+val);
 		ns.deleteContent(bean);
 		return "redirect:/";

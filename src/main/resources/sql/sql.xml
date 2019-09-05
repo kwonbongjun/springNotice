@@ -8,7 +8,7 @@
   </select>
   
    <select id="content" resultType="com.java.web.Bean">
-   select no,val from content where delYn='N'
+   select no,title,val,writer from content where delYn='N'
   </select>
   
   <insert id="insert" parameterType="String">
