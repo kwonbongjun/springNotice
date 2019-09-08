@@ -1,5 +1,13 @@
 package com.java.web;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,6 +32,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.sf.json.JSONObject;
 
 /**
  * Handles requests for the application home page.
@@ -85,7 +95,7 @@ public class HomeController {
 		List<Login> loginList = ns.loginRead(login);
 		HttpSession s=request.getSession();
 //		s.setAttribute("login", false);
-		System.out.println(loginList.size());
+		//System.out.println(loginList.size());
 		if(loginList.size()>0) {
 			s.setAttribute("login", true);
 			request.setAttribute("user", login);
@@ -126,8 +136,87 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/kakao")
+	public void kakao(HttpServletRequest request, HttpServletResponse response) {
+				try {
+					//http://gdj16.gudi.kr:20003/KakaoBack 
+					String url="https://kauth.kakao.com/oauth/authorize?client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87"
+							+ "&redirect_uri="+URLEncoder.encode("http://localhost:8080/KakaoBack","UTF-8")
+							+ "&response_type=code";
+					System.out.println(request.getParameter("code"));
+					response.sendRedirect(url);
+//					String url = "https://kauth.kakao.com/oauth/authorize";
+//					url +="?client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87&redirect_uri="; //rest api
+//					url +=URLEncoder.encode("http://gdj16.gudi.kr:20003/KakaoBack","UTF-8"); //uri
+//					url +="&response_type=code"; //token 
+//					System.out.println(url);
+//					res.sendRedirect(url);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	}
+	@RequestMapping("/KakaoBack")
+	public String kakaoback(HttpServletRequest request, HttpServletResponse response){
+	//http://gdj16.gudi.kr:20003/KakaoBack
+		try {
+			String url="https://kauth.kakao.com/oauth/token"
+					 +"?grant_type=authorization_code"
+					 +"&client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87"
+					 +"&redirect_uri="+URLEncoder.encode("http://localhost:8080/KakaoBack","UTF-8")
+					 +"&code="+request.getParameter("code");
+			URL uri = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
+			conn.setRequestMethod("POST");
+			
+			InputStream input = conn.getInputStream();
+			InputStreamReader inputReader = new InputStreamReader(input);
+			BufferedReader br = new BufferedReader(inputReader);
+			
+			String line="";
+			String result="";
+			while((line=br.readLine())!=null) {
+				result+=line;
+			}
+			
+			JSONObject jtoken = JSONObject.fromObject(result);
+			String accesstoken=(String) jtoken.get("access_token");
+			System.out.println(result);
+			
+			url="https://kapi.kakao.com/v2/user/me" +  
+					"?access_token=" + accesstoken;
+//					"?Content-type= application/x-www-form-urlencoded;charset=utf-8";
+			uri = new URL(url);
+			conn = (HttpURLConnection) uri.openConnection();
+			conn.setRequestMethod("POST");
+			
+			input = conn.getInputStream();
+			inputReader = new InputStreamReader(input);
+			br = new BufferedReader(inputReader);
+			
+			line="";
+			result="";
+			while((line=br.readLine())!=null) {
+				result+=line;
+			}
+			
+			jtoken = JSONObject.fromObject(result);
+			System.out.println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		HttpSession session=request.getSession();
+		session.setAttribute("login", true);
+		return "redirect:/";
+	}
 	
-	
+	@RequestMapping("/kakaologout")
+	public void kakaoLogout(HttpServletRequest request, HttpServletResponse response){
+		
+	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
