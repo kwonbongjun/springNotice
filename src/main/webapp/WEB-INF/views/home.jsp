@@ -43,7 +43,8 @@ List<Bean> list=(List<Bean>) request.getAttribute("list");
 var checkIndex=-1;
 function check(index){
 
-	var check = document.getElementsByName("check");		
+	var check = document.getElementsByName("check");	
+	if(list!=null) {
 	for(var i=0;i<<%=list.size()%>;i++){
 		if(i!=index)
 		document.getElementsByName("check")[i].checked=false;
@@ -56,7 +57,7 @@ function check(index){
 		document.getElementById("content").no.value="";
 		document.getElementById("content").val.value="";
 	}
-
+	}
 }
 
 function logout(){
@@ -117,16 +118,16 @@ function viewchange(){
 		<input type="text" name="val">
 <%-- 		<%if(session.getAttribute("login")!=null){%><input type="hidden" name="writer" value=<%=user.getId()%>><%} %> --%>
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>>
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}%>method="GET" onclick="loginCheck()" value="업데이트">
-		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}%>method="GET" onclick="loginCheck()" value="삭제">
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}else{%>method="GET" onclick="loginCheck()" value="업데이트"<%} %>>
+		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}else{%>method="GET" onclick="loginCheck()" value="삭제"<%} %>>
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="logout()"><%
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout"">logout</button><% }%>
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/kakao" value="카카오""><%
-		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" value="카카오로그아웃"">logout</button><% }%>
+		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">logout</button><% }%>
 		
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
-	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%=list.get(list.size()-1).getNo()+1%>">입력</a></button><%}; %>
+	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=list.get(list.size()-1).getNo()+1%><%}else{%><%=1 %><%}%>">입력</a></button><%}; %>
 	<% 
 		for(int i=0;i<a;i++) {
 		

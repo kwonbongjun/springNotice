@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Connection;
@@ -42,6 +44,8 @@ import net.sf.json.JSONObject;
 public class HomeController {
 	@Autowired
 	NoticeService ns;
+	
+	private static String at="";
 //	@RequestMapping("/create")
 //	public String create(HttpServletRequest request, HttpServletResponse response) {
 //		String no=request.getParameter("no");
@@ -77,6 +81,7 @@ public class HomeController {
 		}
 		try {
 			List<Bean> list=ns.contentRead();
+			System.out.println("list"+list);
 			request.setAttribute("list", list);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -181,6 +186,7 @@ public class HomeController {
 			
 			JSONObject jtoken = JSONObject.fromObject(result);
 			String accesstoken=(String) jtoken.get("access_token");
+			at=accesstoken;
 			System.out.println(result);
 			
 			url="https://kapi.kakao.com/v2/user/me" +  
@@ -214,8 +220,41 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/kakaologout")
-	public void kakaoLogout(HttpServletRequest request, HttpServletResponse response){
-		
+	public String kakaoLogout(HttpServletRequest request, HttpServletResponse response){
+		if(!"".equals(at)) {
+			String url="https://kapi.kakao.com/v1/user/logout" +  
+					"?access_token=" + at;
+			URL uri;
+			try {
+				uri = new URL(url);
+				HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
+				conn.setRequestMethod("POST");
+				
+				InputStream input = conn.getInputStream();
+				InputStreamReader inputReader = new InputStreamReader(input);
+				BufferedReader br = new BufferedReader(inputReader);
+				
+				String line="";
+				String result="";
+				while((line=br.readLine())!=null) {
+					result+=line;
+				}
+				
+				JSONObject jtoken = JSONObject.fromObject(result);
+				String id=(String) jtoken.get("id");
+				System.out.println(id);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return "redirect:/login";
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
