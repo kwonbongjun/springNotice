@@ -18,14 +18,25 @@ public class NoticeService {
  	public List<Bean> contentRead(){
  		return nd.contentselect();
  	}
- 	
- 	public void createContent(String val) {
- 		nd.insertContent(val);
+ 	public void createContent(Bean bean) {
+ 		nd.insertContent(bean);
  	}
+
 	public void updateContent(Bean bean) {
  		nd.updateContent(bean);
  	}
 	public void deleteContent(Bean bean) {
  		nd.deleteContent(bean);
  	}
+	
+	public Bean detailRead(int no){
+		return nd.detailselect(no);
+	}
+	
+	public void updateDetail(Bean bean){
+		nd.updateDetail(bean);
+	}
+// 	public void createContent(String val) {
+// 		nd.insertContent(val);
+// 	}
 }

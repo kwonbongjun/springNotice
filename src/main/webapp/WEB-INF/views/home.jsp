@@ -38,14 +38,23 @@ if(session==null) {
 }
 System.out.println("session"+session.getAttribute("login"));
 List<Bean> list=(List<Bean>) request.getAttribute("list");
+System.out.println("list"+list);
 %>
-
+<%
+int a;
+if(list==null) {
+	a=0;
+}else {
+	a=list.size();
+}
+Login user=(Login)request.getAttribute("user");
+%>
 var checkIndex=-1;
 function check(index){
 
 	var check = document.getElementsByName("check");	
 	if(list!=null) {
-	for(var i=0;i<<%=list.size()%>;i++){
+	for(var i=0;i<<%=a%>;i++){
 		if(i!=index)
 		document.getElementsByName("check")[i].checked=false;
 	}
@@ -100,15 +109,7 @@ function viewchange(){
 </head>
 
 <body onload="">
-<%
-	int a;
-	if(list==null) {
-		a=0;
-	}else {
-		a=list.size();
-	}
-	Login user=(Login)request.getAttribute("user");
-%>
+
 <div id="list">
 	<script>
 
@@ -123,7 +124,7 @@ function viewchange(){
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="logout()"><%
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout"">logout</button><% }%>
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/kakao" value="카카오""><%
-		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">logout</button><% }%>
+		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">카카오로그아웃</button><% }%>
 		
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
@@ -134,7 +135,9 @@ function viewchange(){
 		%><ul>
 		<input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)">	
 		<li class="content"><%=list.get(i).getNo()%></li>
-		<li class="content"><a href="/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getVal() %></a></li>
+		<%if(session.getAttribute("login")!=null){%><li class="content"><a href="/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></li><%}else{ %>
+		<li class="content"><%=list.get(i).getTitle() %></li><%} %>
+		<li class="content"><%=list.get(i).getWriter()%></li>
 		<%-- <li class="content"><%=request.getAttribute("user")%></li> --%>
 		</ul>
 		<%}

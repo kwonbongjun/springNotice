@@ -5,11 +5,23 @@ public class Bean {
 	private String title;
 	private String val;
 	private String writer;
-	public Bean(int no,String val,String title, String writer) {
-		this.no=no;
+
+	public void update(String no,String title, String val) {
+		this.no=Integer.parseInt(no);
+		this.val=val;
+		this.title=title;
+	}
+	public Bean(String title, String val, String writer) {
 		this.val=val;
 		this.title=title;
 		this.writer=writer;
+	}
+
+	public Bean() {
+		// TODO Auto-generated constructor stub
+	}
+	public void setNo(int no) {
+		this.no=no;
 	}
 	public String getTitle() {
 		return title;

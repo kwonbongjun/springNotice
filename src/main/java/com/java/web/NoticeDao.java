@@ -20,21 +20,33 @@ public class NoticeDao {
 		Map<String,Login> map=new HashMap<String, Login>();
 		System.out.println("1");
 //		System.out.println(s.selectList("test.login").get(0));
+
 	  	return s.selectList("test.login", login); 
 	}
 	 
 	public List<Bean> contentselect() {
-
 		return s.selectList("test.content");
 	}
-	
-	public void insertContent(String val ) {
-		s.insert("test.insert",val);
+	public void insertContent(Bean bean ) {
+		s.insert("test.insert",bean);
 	}
+
 	public void updateContent(Bean bean ) {
 		s.update("test.update",bean);
 	}
 	public void deleteContent(Bean bean ) {
 		s.update("test.delete",bean);
 	}
+	
+	public Bean detailselect(int no){
+		return s.selectOne("test.detail",no);
+	}
+	public void updateDetail(Bean bean) {
+		s.update("test.updateDetail",bean);	
+	}
+//	public void insertContent(String val ) {
+//		s.insert("test.insert",val);
+//	}
+
+
 }

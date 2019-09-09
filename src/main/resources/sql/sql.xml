@@ -12,13 +12,21 @@
   </select>
   
   <insert id="insert" parameterType="String">
-  	insert into content (no,val) values (tmp_seq.NEXTVAL,#{val})
+  	insert into content (no,title,val,writer) values (tmp_seq.NEXTVAL,#{title},#{val,jdbcType=VARCHAR},#{writer})
   </insert>
   <update id="update" parameterType="com.java.web.Bean">
-  	update content set val=#{val} where no=#{no}
+  	update content set val=#{val,jdbcType=VARCHAR} where no=#{no,jdbcType=VARCHAR}
   </update>
   
   <update id="delete" parameterType="com.java.web.Bean">
-  	update content set delYn='Y' where no=#{no}
+  	update content set delYn='Y' where no=#{no,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="detail" parameterType="int" resultType="com.java.web.Bean">
+ 	 select no,title,val,writer from content where no=#{no} and delYn='N'
+  </select>
+  
+  <update id="updateDetail" parameterType="com.java.web.Bean" >
+  	update content set title=#{title}, val=#{val} where no=#{no} and delYn='N'
   </update>
 </mapper>

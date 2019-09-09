@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,6 +47,7 @@ public class HomeController {
 	NoticeService ns;
 	
 	private static String at="";
+	private static String nm="";
 //	@RequestMapping("/create")
 //	public String create(HttpServletRequest request, HttpServletResponse response) {
 //		String no=request.getParameter("no");
@@ -76,12 +78,17 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String read(HttpServletRequest request, HttpServletResponse response) {
+		int no;
 		if(request.getParameter("boardNum")!=null) {
+			no=Integer.parseInt(request.getParameter("boardNum"));
+			Bean detail=ns.detailRead(no);
+			if(detail!=null)
+			request.setAttribute("detail", detail);
 			return "detail";
 		}
 		try {
 			List<Bean> list=ns.contentRead();
-			System.out.println("list"+list);
+			if(list.size()>0)
 			request.setAttribute("list", list);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -109,33 +116,44 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
-	
 	@RequestMapping("/create")
 	public String create(HttpServletRequest request, HttpServletResponse response) {
-		int no=Integer.parseInt(request.getParameter("no"));
+		String title=request.getParameter("title");
 		String val=request.getParameter("val");
-		String writer=request.getParameter("writer");
+		String writer=nm;
 		
-		System.out.println(no+","+val+","+writer);
-		Bean bean=new Bean(no, "title",val,writer);
-		ns.createContent(val);
+		System.out.println(title+","+val+","+writer);
+		Bean bean=new Bean(title,val,writer);
+		ns.createContent(bean);
 		return "redirect:/";
 	}
-	
-	@RequestMapping("/update")
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(HttpServletRequest request, HttpServletResponse response) {
-		int no=Integer.parseInt(request.getParameter("no"));
+		String no="";
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		System.out.println(request.getParameter("no"));
+		if(request.getParameter("no")!=null) {
+		no=(request.getParameter("no"));
 		String val=request.getParameter("val");
-		Bean bean=new Bean(no, "title",val,"writer");
+		String title=request.getParameter("title");
+
+		Bean bean=new Bean();
+		bean.update(no, title, val);
 		System.out.println(no+","+val);
-		ns.updateContent(bean);
-		return "redirect:/";
+		ns.updateDetail(bean);
+		}
+		return "redirect:/?boardNum="+no;
 	}
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		int no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
-		Bean bean=new Bean(no, "title",val,"writer");
+		Bean bean=new Bean("title",val,"writer");
 		System.out.println(no+","+val);
 		ns.deleteContent(bean);
 		return "redirect:/";
@@ -187,6 +205,7 @@ public class HomeController {
 			JSONObject jtoken = JSONObject.fromObject(result);
 			String accesstoken=(String) jtoken.get("access_token");
 			at=accesstoken;
+
 			System.out.println(result);
 			
 			url="https://kapi.kakao.com/v2/user/me" +  
@@ -208,6 +227,12 @@ public class HomeController {
 			
 			jtoken = JSONObject.fromObject(result);
 			System.out.println(result);
+//			String temp=(String) jtoken.get("properties");
+
+			JSONObject tmp=JSONObject.fromObject(jtoken.get("properties"));
+
+			nm=(String) tmp.get("nickname");
+			System.out.println(nm);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -221,6 +246,7 @@ public class HomeController {
 	
 	@RequestMapping("/kakaologout")
 	public String kakaoLogout(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("at"+at);
 		if(!"".equals(at)) {
 			String url="https://kapi.kakao.com/v1/user/logout" +  
 					"?access_token=" + at;
@@ -241,8 +267,14 @@ public class HomeController {
 				}
 				
 				JSONObject jtoken = JSONObject.fromObject(result);
-				String id=(String) jtoken.get("id");
-				System.out.println(id);
+//				String id=(String) jtoken.get("id");
+				System.out.println(result);
+//				System.out.println(id);
+				
+				HttpSession session=request.getSession();
+				session.invalidate();
+//				RequestDispatcher rd=request.getRequestDispatcher("https://developers.kakao.com/logout");
+//				rd.forward(request, response);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -252,9 +284,8 @@ public class HomeController {
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		return "redirect:/login";
+		return "redirect:https://developers.kakao.com/logout";
 	}
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -276,4 +307,28 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	@RequestMapping("/create2")
+	public String create2(HttpServletRequest request, HttpServletResponse response) {
+		int no=Integer.parseInt(request.getParameter("no"));
+		String val=request.getParameter("val");
+		String writer=request.getParameter("writer");
+		
+		System.out.println(no+","+val+","+writer);
+//		Bean bean=new Bean(no, "title",val,writer);
+//		ns.createContent(val);
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/update2")
+	public String update2(HttpServletRequest request, HttpServletResponse response) {
+		int no=Integer.parseInt(request.getParameter("no"));
+		String val=request.getParameter("val");
+		Bean bean=new Bean("title",val,"writer");
+		System.out.println(no+","+val);
+		ns.updateContent(bean);
+		return "redirect:/";
+	}
+	
+	
 }
