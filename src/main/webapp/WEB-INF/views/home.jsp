@@ -128,10 +128,9 @@ function viewchange(){
 		
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
-	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=list.get(list.size()-1).getNo()+1%><%}else{%><%=1 %><%}%>">입력</a></button><%}; %>
+	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=list.get(list.size()-1).getNo()+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
 	<% 
 		for(int i=0;i<a;i++) {
-		
 		%><ul>
 		<input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)">	
 		<li class="content"><%=list.get(i).getNo()%></li>

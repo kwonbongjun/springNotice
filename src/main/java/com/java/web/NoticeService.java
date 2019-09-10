@@ -36,6 +36,9 @@ public class NoticeService {
 	public void updateDetail(Bean bean){
 		nd.updateDetail(bean);
 	}
+	public void deleteDetail(int no){
+		nd.deleteDetail(no);
+	}
 // 	public void createContent(String val) {
 // 		nd.insertContent(val);
 // 	}

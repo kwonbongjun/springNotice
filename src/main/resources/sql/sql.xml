@@ -29,4 +29,9 @@
   <update id="updateDetail" parameterType="com.java.web.Bean" >
   	update content set title=#{title}, val=#{val} where no=#{no} and delYn='N'
   </update>
+  
+  <update id="deleteDetail" parameterType="com.java.web.Bean" >
+	update content set delYn='Y' where no=#{no}
+  </update>
+  
 </mapper>

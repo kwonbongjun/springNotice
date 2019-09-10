@@ -80,7 +80,9 @@ public class HomeController {
 	public String read(HttpServletRequest request, HttpServletResponse response) {
 		int no;
 		if(request.getParameter("boardNum")!=null) {
+			System.out.println(request.getParameter("boardNum"));
 			no=Integer.parseInt(request.getParameter("boardNum"));
+
 			Bean detail=ns.detailRead(no);
 			if(detail!=null)
 			request.setAttribute("detail", detail);
@@ -88,8 +90,10 @@ public class HomeController {
 		}
 		try {
 			List<Bean> list=ns.contentRead();
-			if(list.size()>0)
+			if(list.size()>0) {
 			request.setAttribute("list", list);
+
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			
@@ -151,11 +155,22 @@ public class HomeController {
 	}
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, HttpServletResponse response) {
-		int no=Integer.parseInt(request.getParameter("no"));
-		String val=request.getParameter("val");
-		Bean bean=new Bean("title",val,"writer");
-		System.out.println(no+","+val);
-		ns.deleteContent(bean);
+		//String no="";
+		int no;
+//		if(request.getParameter("boardNum")!=null) {
+//			no=Integer.parseInt(request.getParameter("boardNum"));
+//			Bean detail=ns.detailRead(no);
+//			if(detail!=null)
+//			request.setAttribute("detail", detail);
+//			return "detail";
+//		}
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		no=Integer.parseInt(request.getParameter("no"));
+		ns.deleteDetail(no);
 		return "redirect:/";
 	}
 	
@@ -327,6 +342,15 @@ public class HomeController {
 		Bean bean=new Bean("title",val,"writer");
 		System.out.println(no+","+val);
 		ns.updateContent(bean);
+		return "redirect:/";
+	}
+	@RequestMapping("/delete2")
+	public String delete2(HttpServletRequest request, HttpServletResponse response) {
+		int no=Integer.parseInt(request.getParameter("no"));
+		String val=request.getParameter("val");
+		Bean bean=new Bean("title",val,"writer");
+		System.out.println(no+","+val);
+		ns.deleteContent(bean);
 		return "redirect:/";
 	}
 	

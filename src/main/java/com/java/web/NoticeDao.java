@@ -44,6 +44,9 @@ public class NoticeDao {
 	public void updateDetail(Bean bean) {
 		s.update("test.updateDetail",bean);	
 	}
+	public void deleteDetail(int no) {
+		s.update("test.deleteDetail",no);
+	}
 //	public void insertContent(String val ) {
 //		s.insert("test.insert",val);
 //	}
