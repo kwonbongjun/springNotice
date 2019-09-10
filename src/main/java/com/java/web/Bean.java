@@ -5,7 +5,27 @@ public class Bean {
 	private String title;
 	private String val;
 	private String writer;
-
+	private String fileName;
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getFileurl() {
+		return fileurl;
+	}
+	public void setFileurl(String fileurl) {
+		this.fileurl = fileurl;
+	}
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+	private String fileurl;
+	private String ext;
 	public void update(String no,String title, String val) {
 		this.no=Integer.parseInt(no);
 		this.val=val;
@@ -15,6 +35,15 @@ public class Bean {
 		this.val=val;
 		this.title=title;
 		this.writer=writer;
+	}
+	public Bean(String title, String val,String writer, 
+			String fileName, String originalFileName, String ext) {
+		this.val=val;
+		this.title=title;
+		this.writer=writer;
+		this.fileName=fileName;
+		this.fileurl=originalFileName;
+		this.ext=ext;
 	}
 
 	public Bean() {

@@ -28,7 +28,9 @@ public class NoticeDao {
 		return s.selectList("test.content");
 	}
 	public void insertContent(Bean bean ) {
+		System.out.println("2");
 		s.insert("test.insert",bean);
+		System.out.println("2");
 	}
 
 	public void updateContent(Bean bean ) {
