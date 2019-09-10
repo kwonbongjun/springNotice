@@ -57,7 +57,7 @@ function file_Event(obj){
 			<input type="hidden" name="no" value="<%=no%>">
 			<input id="title" type="text" name="title">
 			<input id="val" class="text" type="text" name="val">
-			<% if(detail!=null){%><a href="/download?boardnum=<%=no%>"><%=detail.getFileName() %></a><%} %>
+			<% if(detail!=null){%><a href="/download?boardnum=<%=no%>"><%=detail.getFileName()%></a><%} %>
 			<input id="file" type="file" name="file" multiple="multiple"  onchange="file_Event(this)">
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가" method="POST"<%}%>>
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트" method="POST"<%}%>method="GET" onclick="loginCheck()" value="업데이트">

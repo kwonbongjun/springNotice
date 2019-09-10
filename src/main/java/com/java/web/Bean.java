@@ -49,6 +49,14 @@ public class Bean {
 	public Bean() {
 		// TODO Auto-generated constructor stub
 	}
+	public Bean(int no, String title, String val, String originalFileName, String fileName, String ext) {
+		this.no=no;
+		this.val=val;
+		this.title=title;
+		this.fileurl=fileName;
+		this.fileName=originalFileName;
+		this.ext=ext;
+	}
 	public void setNo(int no) {
 		this.no=no;
 	}

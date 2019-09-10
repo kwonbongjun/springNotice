@@ -30,7 +30,6 @@ var login=false;
 
 <%
 if(session==null) {
-	
 }else{
 	%>login=<%session.getAttribute("login");%>
 	console.log(login);
@@ -42,12 +41,21 @@ System.out.println("list"+list);
 %>
 <%
 int a;
+int contentperpage=3;
+int totalpage=(Integer)(request.getAttribute("total"));
+int pagenum=0;
 if(list==null) {
 	a=0;
 }else {
 	a=list.size();
+	pagenum=totalpage/contentperpage;
+	if(a%contentperpage>0){
+		pagenum++;
+	}
+	System.out.println(""+a+pagenum);
 }
 Login user=(Login)request.getAttribute("user");
+
 %>
 var checkIndex=-1;
 function check(index){
@@ -142,6 +150,14 @@ function viewchange(){
 		</ul>
 		<%}
 	%>
+	<ul>
+	<li><a href="/?pageNum=<%=%>"> < </a></li>
+	<%if(list!=null){
+	for(int i=1;i<=pagenum;i++){%>
+		<li><a href="/?pageNum=<%=i%>">[<%=i%>]</a></li>
+	<%}} %>
+	</ul>
+	<li><a href="/?pageNum=<%=%>">></a></li>
 	</div>
 
 	

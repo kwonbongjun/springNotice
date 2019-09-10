@@ -14,9 +14,11 @@ public class NoticeService {
 		return nd.loginselect(login); 
 	}
 	 
- 	
- 	public List<Bean> contentRead(){
- 		return nd.contentselect();
+ 	public int contentReadAll(){
+ 		return nd.contentselectAll();
+ 	}
+ 	public List<Bean> contentRead(int pageNum){
+ 		return nd.contentselect(pageNum);
  	}
  	public void createContent(Bean bean) {
  		nd.insertContent(bean);

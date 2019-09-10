@@ -23,9 +23,11 @@ public class NoticeDao {
 
 	  	return s.selectList("test.login", login); 
 	}
-	 
-	public List<Bean> contentselect() {
-		return s.selectList("test.content");
+	public int contentselectAll() {
+		return s.selectOne("test.contentall");
+	}
+	public List<Bean> contentselect(int pageNum) {
+		return s.selectList("test.content",pageNum);
 	}
 	public void insertContent(Bean bean ) {
 		System.out.println("2");

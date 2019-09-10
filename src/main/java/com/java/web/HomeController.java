@@ -98,10 +98,18 @@ public class HomeController {
 			return "detail";
 		}
 		try {
-			List<Bean> list=ns.contentRead();
+			int pageNum=1;
+			if(request.getParameter("pageNum")!=null){
+				pageNum=Integer.parseInt(request.getParameter("pageNum"));
+			}
+			int total=ns.contentReadAll();
+			request.setAttribute("total", total);
+			System.out.println(total);
+			List<Bean> list=ns.contentRead(pageNum);
+			int page=0;
 			if(list.size()>0) {
 			request.setAttribute("list", list);
-
+				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -146,7 +154,7 @@ public class HomeController {
 			fileName=UUID.randomUUID().toString();
 			try {
 				byte[] data=file.getBytes();
-				String path="D:\\workspace\\resources\\";
+				String path="C:\\Resources\\";//D:\\workspace\\resources\\";
 				File f = new File(path);
 				if(!f.isDirectory()) {
 					f.mkdirs();
@@ -168,7 +176,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@RequestParam("file") MultipartFile[] files,HttpServletRequest request, HttpServletResponse response) {
-		String no="";
+		int no=0;
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -176,7 +184,7 @@ public class HomeController {
 		}
 		System.out.println(request.getParameter("no"));
 		if(request.getParameter("no")!=null) {
-		no=(request.getParameter("no"));
+		no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
 		String title=request.getParameter("title");
 
@@ -191,11 +199,12 @@ public class HomeController {
 		for(int i=0;i<files.length;i++) {
 			MultipartFile file = files[i];
 			originalFileName=file.getOriginalFilename();
+			System.out.println(originalFileName);
 			ext=originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
 			fileName=UUID.randomUUID().toString();
 			try {
 				byte[] data=file.getBytes();
-				String path="D:\\workspace\\resources\\";
+				String path="C:\\Resources\\";//"D:\\workspace\\resources\\";
 				File f = new File(path);
 				if(!f.isDirectory()) {
 					f.mkdirs();
@@ -367,15 +376,16 @@ public class HomeController {
 	public void download(HttpServletRequest request, HttpServletResponse response){	
 		 	int no=Integer.parseInt(request.getParameter("boardnum"));
 			Bean detail=ns.detailRead(no);
-			String path="D:\\workspace\\resources\\"; 
+			String path="C:\\Resources\\";//"D:\\workspace\\resources\\"; 
 			String originalFilename=detail.getFileName();
+			System.out.println(originalFilename);
 			String fileName=detail.getFileurl();
 			String ext=detail.getExt();
 			try {
 				InputStream input = new FileInputStream(path+fileName+ext);
 				OutputStream output = response.getOutputStream();
 				IOUtils.copy(input, output);
-				response.setHeader("content-Disposition", "attachment;filename=\""+(originalFilename+ext)+"\"");
+				response.setHeader("content-Disposition", "attachment;filename=\""+(originalFilename)+"\"");
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}catch (IOException e) {
