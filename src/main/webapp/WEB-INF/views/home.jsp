@@ -20,6 +20,20 @@
 	alert("로그인필요");
 } */
 var login=false;
+var a;
+var contentperpage=3;
+var pagepernotice=3;
+var totalpage;
+var pagenum=0;
+var hash=location.search.split("=");
+var curpage=hash[1];
+var pageIndex=curpage;
+if(pageIndex%pagepernotice!=1){
+	
+}
+if(pageIndex==undefined) {
+	pageIndex=1;
+}
 /* function login() {
 	alert("로그인필요");
 	
@@ -42,14 +56,17 @@ System.out.println("list"+list);
 <%
 int a;
 int contentperpage=3;
+int pagepernotice=3;
 int totalpage=(Integer)(request.getAttribute("total"));
 int pagenum=0;
+int pageIndex=1;
+
 if(list==null) {
 	a=0;
 }else {
 	a=list.size();
 	pagenum=totalpage/contentperpage;
-	if(a%contentperpage>0){
+	if(totalpage%contentperpage>0){
 		pagenum++;
 	}
 	System.out.println(""+a+pagenum);
@@ -57,6 +74,8 @@ if(list==null) {
 Login user=(Login)request.getAttribute("user");
 
 %>
+totalpage=<%=totalpage%>
+pagenum=totalpage/parseInt(contentperpage);
 var checkIndex=-1;
 function check(index){
 
@@ -111,12 +130,87 @@ function viewchange(){
 	document.getElementById("write").style.display='block'
 
 }
+function pageclick(a) {
+var temp=document.getElementsByTagName("ul")[3].getElementsByTagName("li")[a].innerText;
+var page=temp.substring(1,2);
+
+}
+function leftpageclick(a) {
+while(curpage>pageIndex){
+	curpage--;	
+}
+if(curpage>1) {
+curpage-=pagepernotice;
+pageIndex-=pagepernotice;
+}
+alert(curpage);
+}
+function rightpageclick(a) {
+alert(curpage);
+while(curpage>pageIndex){
+	curpage--;	
+}
+if(curpage<pagenum) {
+	console.log(curpage);
+	if(pagenum-curpage<3) {
+		curpage+=pagenum-curpage;
+		pageIndex+=pagenum-curpage;
+		return;
+	}
+	curpage+=pagepernotice;
+	pageIndex+=pagepernotice;
+}
+alert(curpage);
+}
 
 
+function onload(){
+
+var pageli=document.createElement('li');
+var pagetext=document.createTextNode("<");
+var lia=document.createElement('a');
+
+
+pageli.appendChild(pagetext);
+lia.appendChild(pagetext);
+document.getElementById("page").appendChild(pageli);
+document.getElementById("page").getElementsByTagName("li")[0].classList.add("content");
+document.getElementById("page").getElementsByTagName("li")[0].appendChild(lia);
+document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+curpage );
+document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('onclick', "leftpageclick()" );
+console.log("page"+pageIndex);
+for(var i=pageIndex;i<=pageIndex+pagepernotice;i++) {
+pageli=document.createElement('li');
+lia=document.createElement('a');
+pagetext=document.createTextNode("["+i+"]");
+lia.appendChild(pagetext);
+document.getElementById("page").appendChild(pageli);
+document.getElementById("page").getElementsByTagName("li")[i].classList.add("content");
+document.getElementById("page").getElementsByTagName("li")[i].appendChild(lia);
+document.getElementById("page").getElementsByTagName("li")[i].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i );
+document.getElementById("page").getElementsByTagName("li")[i].getElementsByTagName("a")[0].setAttribute('onclick', "pageclick("+i+")" );
+}
+pageli=document.createElement('li');
+pagetext=document.createTextNode(">");
+lia=document.createElement('a');
+pageli.appendChild(pagetext);
+lia.appendChild(pagetext);
+document.getElementById("page").appendChild(pageli);
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].classList.add("content");
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].appendChild(lia);
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+curpage );
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].getElementsByTagName("a")[0].setAttribute('onclick', "rightpageclick()" );
+}
+<%-- <li class="content"><a href="/?pageNum=<%=1%>" onclick="return leftpageclick();"> < </a></li>
+<%if(list!=null){
+for(int i=1;i<=pagenum;i++){%>
+	<li class="content"><a href="/?pageNum=<%=i%>" onclick="return pageclick(<%=i%>);">[<%=i%>]</a></li>
+<%}} %>
+<li class="content"><a href="/?pageNum=<%=1%>">></a></li> --%>
 </script>
 </head>
 
-<body onload="">
+<body onload="onload()">
 
 <div id="list">
 	<script>
@@ -150,14 +244,15 @@ function viewchange(){
 		</ul>
 		<%}
 	%>
-	<ul>
-	<li><a href="/?pageNum=<%=%>"> < </a></li>
+<%-- 	<ul>
+	<li class="content"><a href="/?pageNum=<%=1%>" onclick="return leftpageclick();"> < </a></li>
 	<%if(list!=null){
 	for(int i=1;i<=pagenum;i++){%>
-		<li><a href="/?pageNum=<%=i%>">[<%=i%>]</a></li>
+		<li class="content"><a href="/?pageNum=<%=i%>" onclick="return pageclick(<%=i%>);">[<%=i%>]</a></li>
 	<%}} %>
-	</ul>
-	<li><a href="/?pageNum=<%=%>">></a></li>
+	<li class="content"><a href="/?pageNum=<%=1%>">></a></li>
+	</ul> --%>
+	<ul id="page"></ul>
 	</div>
 
 	
