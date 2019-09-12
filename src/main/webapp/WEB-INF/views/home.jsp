@@ -151,13 +151,13 @@ function viewchange(){
 		<%}
 	%>
 	<ul>
-	<li><a href="/?pageNum=<%=%>"> < </a></li>
+	<li><a href="/?pageNum=<%=1%>"> < </a></li>
 	<%if(list!=null){
 	for(int i=1;i<=pagenum;i++){%>
 		<li><a href="/?pageNum=<%=i%>">[<%=i%>]</a></li>
 	<%}} %>
 	</ul>
-	<li><a href="/?pageNum=<%=%>">></a></li>
+	<li><a href="/?pageNum=<%=1%>">></a></li>
 	</div>
 
 	
