@@ -101,23 +101,44 @@ public class HomeController {
 			return "detail";
 		}
 		try {
+
 			int pageNum=1;
 			if(request.getParameter("pageNum")!=null){
 				pageNum=Integer.parseInt(request.getParameter("pageNum"));
 			}
+			List<Bean> list=null;
+			
+			if(request.getParameter("search")!=null) {
+				String title=request.getParameter("search");
+				int total=ns.contentReadSearchAll(title);
+				request.setAttribute("total", total);
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("pageNum", pageNum);
+				map.put("title", title);
+				list=ns.contentReadSearch(map);
+//				finalno = ns.readSearchFinalNo(title);
+//				if(finalno==0) {
+//					finalno=1;
+//				}
+//				System.out.println("finalno"+finalno);
+			}else {
 			int total=ns.contentReadAll();
+			
 			request.setAttribute("total", total);
 			System.out.println(total);
-			List<Bean> list=ns.contentRead(pageNum);
+			list=ns.contentRead(pageNum);
+			}
+			int page=0;
 			int finalno = ns.readfinalno();
 			if(finalno==0) {
 				finalno=1;
 			}
-			int page=0;
+			System.out.println("listsize"+list.size());
 			if(list.size()>0) {
 			request.setAttribute("list", list);
 			request.setAttribute("finalno", finalno);	
 			}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			

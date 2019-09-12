@@ -143,7 +143,12 @@ curpage-=pagepernotice;
 pageIndex-=pagepernotice;
 }
 alert(curpage);
-location.search="?pageNum="+curpage
+
+<%if(request.getParameter("search")==null){%>
+location.search="?pageNum="+curpage;
+<%}else{%>
+location.search="?pageNum="+curpage+"&search="+search;
+<%}%>
 }
 function rightpageclick(a) {
 if(isNaN(curpage)) curpage=1;
@@ -157,18 +162,29 @@ if(curpage<pagenum) {
 	if(pagenum-curpage<3) {
 		curpage+=pagenum-curpage;
 		pageIndex+=pagenum-curpage;
+		<%if(request.getParameter("search")==null){%>
+		location.search="?pageNum="+curpage;
+		<%}else{%>
+		location.search="?pageNum="+curpage+"&search="+search;
+		<%}%>
 		return;
 	}
 	curpage+=pagepernotice;
 	pageIndex+=pagepernotice;
 }
 alert(curpage);
-location.search="?pageNum="+curpage
-
+<%if(request.getParameter("search")==null){%>
+location.search="?pageNum="+curpage;
+<%}else{%>
+location.search="?pageNum="+curpage+"&search="+search;
+<%}%>
 }
 
+var search; 
 function onload(){
-	if(pagenum-pageIndex<3) {
+search="<%=request.getParameter("search")%>";
+
+if(pagenum-pageIndex<3) {
 		pagepernotice=pagenum-pageIndex+1;
 	}
 	
@@ -196,7 +212,11 @@ lia.appendChild(pagetext);
 document.getElementById("page").appendChild(pageli);
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].classList.add("content");
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].appendChild(lia);
-document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i );
+<%if(request.getParameter("search")==null){%>
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i);
+<%}else{%>
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i+"&search="+search);
+<%}%>
 t=i+1-pageIndex;
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('onclick', "pageclick("+t+")" );
 }
@@ -239,6 +259,10 @@ for(int i=1;i<=pagenum;i++){%>
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
 	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
+	<form>
+	<input type="text" name="search">
+	<a href="/"><button type="submit">search</button></a>
+	</form>
 	<% 
 		for(int i=0;i<a;i++) {
 		

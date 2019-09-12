@@ -70,6 +70,15 @@ public class NoticeDao {
 	public void deleteFile(int no) {
 		s.delete("test.deleteFile",no);
 	}
+	public int selectSearchAll(String title) {
+		return s.selectOne("test.searchContentAll",title);
+	}
+	public List<Bean> selectContentSearch(Map<String, Object> map ){
+		return s.selectList("test.selectContentSearch", map);
+	}
+	public int selectSearchFinalNo(String title) {
+		return s.selectOne("test.searchFinalNo",title);
+	}
 //	public void insertContent(String val ) {
 //		s.insert("test.insert",val);
 //	}

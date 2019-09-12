@@ -1,6 +1,7 @@
 package com.java.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,15 @@ public class NoticeService {
 		nd.deleteFile(no);	
 	}
 
+	public int contentReadSearchAll(String title) {
+		return nd.selectSearchAll(title);
+	}
+	public List<Bean> contentReadSearch(Map<String, Object> map){
+		return nd.selectContentSearch(map);
+	}
+	public int readSearchFinalNo(String title) {
+		return nd.selectSearchFinalNo(title);
+	}
 // 	public void createContent(String val) {
 // 		nd.insertContent(val);
 // 	}
