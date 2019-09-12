@@ -13,13 +13,27 @@
 <link rel="stylesheet" type="text/css" href="../../resources/css/springNotice.css">
 
 <style>
-
 </style>
 <script>
 /* document.getElementById("content").onclick=function (){
 	alert("로그인필요");
 } */
 var login=false;
+var a;
+var contentperpage=3;
+var pagepernotice=3;
+var totalpage;
+var pagenum=0;
+var hash=location.search.split("=");
+var curpage=parseInt(hash[1]);
+var pageIndex=curpage;
+if(pageIndex==undefined || isNaN(pageIndex)) {
+	pageIndex=1;
+}
+ while(pageIndex%pagepernotice!=1){
+	pageIndex--;
+} 
+
 /* function login() {
 	alert("로그인필요");
 	
@@ -27,7 +41,6 @@ var login=false;
 /* function logout(){
 	alert("로그인 실패");
 } */
-
 <%
 if(session==null) {
 }else{
@@ -42,24 +55,30 @@ System.out.println("list"+list);
 <%
 int a;
 int contentperpage=3;
+int pagepernotice=3;
 int totalpage=(Integer)(request.getAttribute("total"));
 int pagenum=0;
+int pageIndex=1;
 if(list==null) {
 	a=0;
 }else {
 	a=list.size();
 	pagenum=totalpage/contentperpage;
-	if(a%contentperpage>0){
+	if(totalpage%contentperpage>0){
 		pagenum++;
 	}
 	System.out.println(""+a+pagenum);
 }
 Login user=(Login)request.getAttribute("user");
-
 %>
+totalpage=<%=totalpage%>
+pagenum=parseInt(totalpage/contentperpage);
+if(totalpage%contentperpage>0){
+	pagenum++;
+}
+
 var checkIndex=-1;
 function check(index){
-
 	var check = document.getElementsByName("check");	
 	if(list!=null) {
 	for(var i=0;i<<%=a%>;i++){
@@ -76,7 +95,6 @@ function check(index){
 	}
 	}
 }
-
 function logout(){
 if(<%=session.getAttribute("login")%>!=null) {
 	//ajax
@@ -94,7 +112,6 @@ if(<%=session.getAttribute("login")%>!=null) {
 			}
 			//console.log(data);
 			//console.log(nickname);
-
 		}); */
 	alert("로그인 성공");
 }else{
@@ -105,22 +122,105 @@ function loginCheck() {
 	alert("로그인필요");
 	
 }
-
 function viewchange(){
 	document.getElementById("list").style.display='none';
 	document.getElementById("write").style.display='block'
+}
+function pageclick(a) {
+/* temp=document.getElementsByTagName("ul")[3].getElementsByTagName("li")[a].innerText;
+page=parseInt(temp.substring(1,2)); */
+}
+function leftpageclick(a) {
+	console.log(pagenum);
+while(curpage>pageIndex){
+	curpage--;	
+}
+if(curpage>1) {
+curpage-=pagepernotice;
+pageIndex-=pagepernotice;
+}
+alert(curpage);
+if(isNaN(curpage)) curpage=1;
+location.search="?pageNum="+curpage
+}
+function rightpageclick(a) {
+	
+console.log(pagenum);
+while(curpage>pageIndex){
+	curpage--;	
+}
+if(curpage<pagenum) {
+	console.log(curpage);
+	if(pagenum-curpage<3) {
+		curpage+=pagenum-curpage;
+		pageIndex+=pagenum-curpage;
+		return;
+	}
+	curpage+=pagepernotice;
+	pageIndex+=pagepernotice;
+}
+alert(curpage);
+if(isNaN(curpage)) curpage=1;
+location.search="?pageNum="+curpage
 
 }
 
+function onload(){
+	if(pagenum-pageIndex<3) {
+		pagepernotice=pagenum-pageIndex+1;
+	}
+	
+while(document.getElementById("page").hasChildNodes()) {
+	document.getElementById("page").removeChild(document.getElementById("page").childNodes[0])
+}
+	
+var pageli=document.createElement('li');
+var pagetext=document.createTextNode("<");
+var lia=document.createElement('a');
+pageli.appendChild(pagetext);
+lia.appendChild(pagetext);
+document.getElementById("page").appendChild(pageli);
+document.getElementById("page").getElementsByTagName("li")[0].classList.add("content");
+document.getElementById("page").getElementsByTagName("li")[0].appendChild(lia);
+//document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+curpage );
+document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('onclick', "leftpageclick()" );
+console.log("pageIndex"+pageIndex+"pagepernotice"+pagepernotice);
+for(var i=pageIndex;i<pageIndex+pagepernotice;i++) {
 
+pageli=document.createElement('li');
+lia=document.createElement('a');
+pagetext=document.createTextNode("["+i+"]");
+lia.appendChild(pagetext);
+document.getElementById("page").appendChild(pageli);
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].classList.add("content");
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].appendChild(lia);
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i );
+t=i+1-pageIndex;
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('onclick', "pageclick("+t+")" );
+}
+pageli=document.createElement('li');
+pagetext=document.createTextNode(">");
+lia=document.createElement('a');
+lia.appendChild(pagetext);
+document.getElementById("page").appendChild(pageli);
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].classList.add("content");
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].appendChild(lia);
+//document.getElementById("page").getElementsByTagName("li")[pageIndex+pagepernotice].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+curpage );
+document.getElementById("page").getElementsByTagName("li")[pagepernotice+1].getElementsByTagName("a")[0].setAttribute('onclick', "rightpageclick()" );
+}
+<%-- <li class="content"><a href="/?pageNum=<%=1%>" onclick="return leftpageclick();"> < </a></li>
+<%if(list!=null){
+for(int i=1;i<=pagenum;i++){%>
+	<li class="content"><a href="/?pageNum=<%=i%>" onclick="return pageclick(<%=i%>);">[<%=i%>]</a></li>
+<%}} %>
+<li class="content"><a href="/?pageNum=<%=1%>">></a></li> --%>
 </script>
 </head>
 
-<body onload="">
+<body onload="onload()">
 
 <div id="list">
 	<script>
-
 	</script>
 	<form id="content">
 		<input type="text" name="no" >
@@ -150,14 +250,15 @@ function viewchange(){
 		</ul>
 		<%}
 	%>
-	<ul>
-	<li><a href="/?pageNum=<%=1%>"> < </a></li>
+<%-- 	<ul>
+	<li class="content"><a href="/?pageNum=<%=1%>" onclick="return leftpageclick();"> < </a></li>
 	<%if(list!=null){
 	for(int i=1;i<=pagenum;i++){%>
-		<li><a href="/?pageNum=<%=i%>">[<%=i%>]</a></li>
+		<li class="content"><a href="/?pageNum=<%=i%>" onclick="return pageclick(<%=i%>);">[<%=i%>]</a></li>
 	<%}} %>
-	</ul>
-	<li><a href="/?pageNum=<%=1%>">></a></li>
+	<li class="content"><a href="/?pageNum=<%=1%>">></a></li>
+	</ul> --%>
+	<ul id="page"></ul>
 	</div>
 
 	
