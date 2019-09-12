@@ -41,7 +41,39 @@ public class NoticeService {
 	public void deleteDetail(int no){
 		nd.deleteDetail(no);
 	}
+
+	public void createFile(FileBean fb) {
+		nd.insertFile(fb);
+	}
+
+	public List<FileBean> readFile(int no) {
+		return nd.selectFile(no);
+	}
+	public FileBean readFile(FileBean fb) {
+		return nd.selectFile(fb);
+	}
+	
+	public int readfinalno() {
+		return nd.selectfinalno();
+	}
+	public void updateFile(FileBean fb) {
+		nd.updateFile(fb);
+	}
+
+	public void deleteFile(int no) {
+		nd.deleteFile(no);	
+	}
+
 // 	public void createContent(String val) {
 // 		nd.insertContent(val);
 // 	}
+
+
+
+
+
+
+
+
+
 }

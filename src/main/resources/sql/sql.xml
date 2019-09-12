@@ -13,9 +13,11 @@
    <select id="content" resultType="com.java.web.Bean">
    select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N') where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*3+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*3
   </select>
-  
+   <select id="finalno" resultType="int">
+   	select MAX(no) from content
+  </select>
   <insert id="insert" parameterType="String">
-  	insert into content (no,title,val,writer,filename,fileURL,ext) values (tmp_seq.NEXTVAL,#{title},#{val,jdbcType=VARCHAR},#{writer},#{fileName},#{fileurl},#{ext})
+  	insert into content (no,title,val,writer) values (tmp_seq.NEXTVAL,#{title},#{val,jdbcType=VARCHAR},#{writer})
   </insert>
   <update id="update" parameterType="com.java.web.Bean">
   	update content set val=#{val,jdbcType=VARCHAR} where no=#{no,jdbcType=VARCHAR}
@@ -24,13 +26,26 @@
   <update id="delete" parameterType="com.java.web.Bean">
   	update content set delYn='Y' where no=#{no,jdbcType=VARCHAR}
   </update>
+  <insert id="insertFile" parameterType="com.java.web.FileBean">
+  	insert into fileinfo (no,filename,fileurl,ext) values (#{no},#{filename},#{fileurl,jdbcType=VARCHAR},#{ext,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectFile" parameterType="int" resultType="com.java.web.FileBean">
+  	select no,filename,fileURL,ext from fileinfo where no = #{no}
+  </select>
+    <select id="selectFileOne" parameterType="com.java.web.FileBean" resultType="com.java.web.FileBean">
+  	select no,filename,fileURL,ext from fileinfo where no = #{no} and filename=#{filename}
+  </select>
+  
+   <select id="deleteFile" parameterType="int">
+  	delete from fileinfo where no = #{no}
+  </select>
   
   <select id="detail" parameterType="int" resultType="com.java.web.Bean">
- 	 select no,title,val,writer,fileName,fileurl,ext from content where no=#{no} and delYn='N'
+ 	 select no,title,val,writer from content where no=#{no} and delYn='N'
   </select>
   
   <update id="updateDetail" parameterType="com.java.web.Bean" >
-  	update content set title=#{title}, val=#{val}, filename=#{fileName},fileURL=#{fileurl},ext=#{ext}  where no=#{no} and delYn='N'
+  	update content set title=#{title}, val=#{val}  where no=#{no} and delYn='N'
   </update>
   
   <update id="deleteDetail" parameterType="com.java.web.Bean" >

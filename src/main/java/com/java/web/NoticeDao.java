@@ -51,9 +51,34 @@ public class NoticeDao {
 	public void deleteDetail(int no) {
 		s.update("test.deleteDetail",no);
 	}
+	public void insertFile(FileBean fb) {
+		s.insert("test.insertFile", fb);
+	}
+	public List<FileBean> selectFile(int no) {
+		return s.selectList("test.selectFile",no);
+	}
+	public FileBean selectFile(FileBean fb) {
+		return s.selectOne("test.selectFileOne",fb);
+	}
+	
+	public int  selectfinalno() {
+		return s.selectOne("test.finalno");
+	}
+	public void updateFile(FileBean fb) {
+		s.insert("test.insertFile",fb);
+	}
+	public void deleteFile(int no) {
+		s.delete("test.deleteFile",no);
+	}
 //	public void insertContent(String val ) {
 //		s.insert("test.insert",val);
 //	}
+
+
+
+
+
+
 
 
 }

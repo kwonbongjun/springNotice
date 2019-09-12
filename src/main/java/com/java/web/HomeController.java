@@ -93,8 +93,11 @@ public class HomeController {
 			no=Integer.parseInt(request.getParameter("boardNum"));
 
 			Bean detail=ns.detailRead(no);
+			List<FileBean> fb=ns.readFile(no);
+			System.out.println("no:"+no);
 			if(detail!=null)
 			request.setAttribute("detail", detail);
+			request.setAttribute("file", fb);
 			return "detail";
 		}
 		try {
@@ -106,10 +109,14 @@ public class HomeController {
 			request.setAttribute("total", total);
 			System.out.println(total);
 			List<Bean> list=ns.contentRead(pageNum);
+			int finalno = ns.readfinalno();
+			if(finalno==0) {
+				finalno=1;
+			}
 			int page=0;
 			if(list.size()>0) {
 			request.setAttribute("list", list);
-				
+			request.setAttribute("finalno", finalno);	
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -140,6 +147,8 @@ public class HomeController {
 	}
 	@RequestMapping(value="/create", method = RequestMethod.POST)
 	public String create(@RequestParam("file") MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
+		int no=Integer.parseInt(request.getParameter("no"));
+		System.out.println("no:"+no);
 		String title=request.getParameter("title");
 		String val=request.getParameter("val");
 		String writer=nm;
@@ -166,10 +175,12 @@ public class HomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			FileBean fb=new FileBean(no,originalFileName,fileName,ext);
+			ns.createFile(fb);
 		}
 		}
 		System.out.println(title+","+val+","+writer);
-		Bean bean=new Bean(title,val,writer,originalFileName,fileName,ext);
+		Bean bean=new Bean(title,val,writer);
 		ns.createContent(bean);
 		return "redirect:/";
 	}
@@ -195,6 +206,7 @@ public class HomeController {
 		String originalFileName="";
 		String fileName="";
 		String ext="";
+		ns.deleteFile(no);
 		if(!"".equals(files[0].getOriginalFilename())) {
 		for(int i=0;i<files.length;i++) {
 			MultipartFile file = files[i];
@@ -216,9 +228,12 @@ public class HomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			FileBean fb=new FileBean(no,originalFileName,fileName,ext);
+			ns.createFile(fb);;
 		}
+		
 		}
-		Bean bean=new Bean(no,title,val,originalFileName,fileName,ext);
+		Bean bean=new Bean(no,title,val);
 		ns.updateDetail(bean);
 		}
 		return "redirect:/?boardNum="+no;
@@ -375,12 +390,15 @@ public class HomeController {
 	@RequestMapping("/download")
 	public void download(HttpServletRequest request, HttpServletResponse response){	
 		 	int no=Integer.parseInt(request.getParameter("boardnum"));
+		 	String filename=request.getParameter("filename");
 			Bean detail=ns.detailRead(no);
+			FileBean fb=new FileBean(no, filename, "", "");
+			FileBean file=ns.readFile(fb);
 			String path="C:\\Resources\\";//"D:\\workspace\\resources\\"; 
-			String originalFilename=detail.getFileName();
+			String originalFilename=file.getFilename();
 			System.out.println(originalFilename);
-			String fileName=detail.getFileurl();
-			String ext=detail.getExt();
+			String fileName=file.getFileurl();
+			String ext=file.getExt();
 			try {
 				InputStream input = new FileInputStream(path+fileName+ext);
 				OutputStream output = response.getOutputStream();

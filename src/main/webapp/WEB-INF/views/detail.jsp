@@ -1,3 +1,4 @@
+<%@page import="com.java.web.FileBean"%>
 <%@page import="com.java.web.Bean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,6 +13,7 @@
 
 <%
 	Bean detail=(Bean) request.getAttribute("detail");	
+	List<FileBean> fb= (List<FileBean>) request.getAttribute("file");
 	String title;
 	String val;
 	int no;
@@ -19,7 +21,7 @@
 	if(detail==null){
 		title="";
 		val="";
-		no=0;
+		no=Integer.parseInt(request.getParameter("boardNum"));
 		filename="";
 	}else{
 		no=detail.getNo();
@@ -27,6 +29,7 @@
 		val=detail.getVal();
 		filename=detail.getFileName();
 	}
+	
 %>
 var dt = new DataTransfer();
 function load() {
@@ -57,9 +60,11 @@ function file_Event(obj){
 			<input type="hidden" name="no" value="<%=no%>">
 			<input id="title" type="text" name="title">
 			<input id="val" class="text" type="text" name="val">
-			<% if(detail!=null){%><a href="/download?boardnum=<%=no%>"><%=detail.getFileName()%></a><%} %>
+			<%if(fb!=null) {for (int i=0;i<fb.size();i++) {%>
+			<% if(detail!=null){%><a href="/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>"><%=fb.get(i).getFilename()%></a><%} %>
+			<%}} %>
 			<input id="file" type="file" name="file" multiple="multiple"  onchange="file_Event(this)">
-			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가" method="POST"<%}%>>
+			<%if(session.getAttribute("login")!=null && detail==null){%><input type="submit"  formaction="/create" value="추가" method="POST"><%}%>
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트" method="POST"<%}%>method="GET" onclick="loginCheck()" value="업데이트">
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제" method="POST"<%}%>method="GET" onclick="loginCheck()" value="삭제">
 			<button type="button" formaction="/" onclick="load()">뒤로가기</button>

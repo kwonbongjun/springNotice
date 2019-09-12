@@ -50,6 +50,7 @@ if(session==null) {
 }
 System.out.println("session"+session.getAttribute("login"));
 List<Bean> list=(List<Bean>) request.getAttribute("list");
+int finalno = (int) request.getAttribute("finalno");
 System.out.println("list"+list);
 %>
 <%
@@ -131,7 +132,9 @@ function pageclick(a) {
 page=parseInt(temp.substring(1,2)); */
 }
 function leftpageclick(a) {
-	console.log(pagenum);
+if(isNaN(curpage)) curpage=1;
+
+console.log(pagenum);
 while(curpage>pageIndex){
 	curpage--;	
 }
@@ -140,11 +143,11 @@ curpage-=pagepernotice;
 pageIndex-=pagepernotice;
 }
 alert(curpage);
-if(isNaN(curpage)) curpage=1;
 location.search="?pageNum="+curpage
 }
 function rightpageclick(a) {
-	
+if(isNaN(curpage)) curpage=1;
+
 console.log(pagenum);
 while(curpage>pageIndex){
 	curpage--;	
@@ -160,7 +163,6 @@ if(curpage<pagenum) {
 	pageIndex+=pagepernotice;
 }
 alert(curpage);
-if(isNaN(curpage)) curpage=1;
 location.search="?pageNum="+curpage
 
 }
@@ -236,7 +238,7 @@ for(int i=1;i<=pagenum;i++){%>
 		
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
-	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=list.get(list.size()-1).getNo()+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
+	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
 	<% 
 		for(int i=0;i<a;i++) {
 		
