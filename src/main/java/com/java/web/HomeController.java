@@ -15,12 +15,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +24,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,9 +41,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import net.sf.json.JSONObject;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
 	@Autowired
@@ -57,108 +48,67 @@ public class HomeController {
 	
 	private static String at="";
 	private static String nm="";
-//	@RequestMapping("/create")
-//	public String create(HttpServletRequest request, HttpServletResponse response) {
-//		String no=request.getParameter("no");
-//		String val=request.getParameter("val");
-//		System.out.println(no+","+val);
-//		try {
-//			String driver="org.mariadb.jdbc.Driver";
-//			Class.forName(driver);
-//			String url="jdbc:mariadb://192.168.3.31:3306/DBTEST";
-//			//String url="jdbc:mariadb://172.30.1.11:3306/DBTEST";
-//			String userName="root";
-//			String password="1234";
-//			Connection con=DriverManager.getConnection(url,userName,password);
-//			Statement st = con.createStatement();
-//			String sql="insert into content(val) values(\""+val+"\")";
-//			st.execute(sql);
-//			con.close();
-//			st.close();
-////			RequestDispatcher rd=request.getRequestDispatcher("/test.jsp");
-////			rd.forward(request, response);
-//			response.sendRedirect("/servletNotice/test");
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			
-//		}
-//			return "home";
-//	}
-	
+
+	//루트주소 진입
 	@RequestMapping("/")
 	public String read(HttpServletRequest request, HttpServletResponse response) {
 		int no;
+		//게시글 입력 or 게시판글클릭
 		if(request.getParameter("boardNum")!=null) {
-			System.out.println(request.getParameter("boardNum"));
 			no=Integer.parseInt(request.getParameter("boardNum"));
-
 			Bean detail=ns.detailRead(no);
 			List<FileBean> fb=ns.readFile(no);
 			System.out.println("no:"+no);
-			if(detail!=null)
+			//if(detail!=null)
 			request.setAttribute("detail", detail);
 			request.setAttribute("file", fb);
 			return "detail";
 		}
 		try {
-
 			int pageNum=1;
+			//페이지 받아오기
 			if(request.getParameter("pageNum")!=null){
 				pageNum=Integer.parseInt(request.getParameter("pageNum"));
 			}
 			List<Bean> list=null;
-			
+			int total;
+			//검색여부 확인
 			if(request.getParameter("search")!=null) {
 				String title=request.getParameter("search");
-				int total=ns.contentReadSearchAll(title);
-				request.setAttribute("total", total);
-				Map<String, Object> map=new HashMap<String, Object>();
-				map.put("pageNum", pageNum);
-				map.put("title", title);
-				list=ns.contentReadSearch(map);
-//				finalno = ns.readSearchFinalNo(title);
-//				if(finalno==0) {
-//					finalno=1;
-//				}
-//				System.out.println("finalno"+finalno);
+				total=ns.contentReadSearchAll(title);
+				list=ns.contentReadSearch(pageNum, title);
 			}else {
-			int total=ns.contentReadAll();
-			
-			request.setAttribute("total", total);
-			System.out.println(total);
-			list=ns.contentRead(pageNum);
+				total=ns.contentReadAll();
+				list=ns.contentRead(pageNum);
 			}
-			int page=0;
+			
+			//게시글 마지막 no 확인
 			int finalno = ns.readfinalno();
 			if(finalno==0) {
 				finalno=1;
 			}
+			
 			System.out.println("listsize"+list.size());
 			if(list.size()>0) {
 			request.setAttribute("list", list);
-			request.setAttribute("finalno", finalno);	
 			}
-			
+			request.setAttribute("total", total);
+			request.setAttribute("finalno", finalno);	
 		}catch(Exception e) {
 			e.printStackTrace();
-			
 		}
-		
-		
 		return "home";
 	}
+	
 	@RequestMapping("/login")
 	public String Login(HttpServletRequest request, HttpServletResponse response) {
 		String id=request.getParameter("no");
 		String pw=request.getParameter("val");
-		Login login=new Login(id, pw);
-		System.out.println(login.getId()+login.getPw());
+		Login login = ns.loginRead(id,pw);
 		
-		List<Login> loginList = ns.loginRead(login);
 		HttpSession s=request.getSession();
 //		s.setAttribute("login", false);
-		//System.out.println(loginList.size());
-		if(loginList.size()>0) {
+		if(login!=null) {
 			s.setAttribute("login", true);
 			request.setAttribute("user", login);
 		}else {
@@ -166,6 +116,7 @@ public class HomeController {
 		}
 		return "redirect:/";
 	}
+	
 	@RequestMapping(value="/create", method = RequestMethod.POST)
 	public String create(@RequestParam("file") MultipartFile[] files, HttpServletRequest request, HttpServletResponse response) {
 		int no=Integer.parseInt(request.getParameter("no"));
@@ -173,35 +124,9 @@ public class HomeController {
 		String title=request.getParameter("title");
 		String val=request.getParameter("val");
 		String writer=nm;
-		String originalFileName="";
-		String fileName="";
-		String ext="";
-		if(!"".equals(files[0].getOriginalFilename())) {
-		for(int i=0;i<files.length;i++) {
-			MultipartFile file = files[i];
-			originalFileName=file.getOriginalFilename();
-			ext=originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
-			fileName=UUID.randomUUID().toString();
-			try {
-				byte[] data=file.getBytes();
-				String path="C:\\Resources\\";//D:\\workspace\\resources\\";
-				File f = new File(path);
-				if(!f.isDirectory()) {
-					f.mkdirs();
-				}
-				OutputStream os = new FileOutputStream(new File(path+fileName+ext));
-				os.write(data);
-				os.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			FileBean fb=new FileBean(no,originalFileName,fileName,ext);
-			ns.createFile(fb);
-		}
-		}
-		System.out.println(title+","+val+","+writer);
-		Bean bean=new Bean(title,val,writer);
+		
+		ns.uploadFile(files, no);
+		Bean bean=new Bean(no,title,val,writer);
 		ns.createContent(bean);
 		return "redirect:/";
 	}
@@ -219,7 +144,7 @@ public class HomeController {
 		no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
 		String title=request.getParameter("title");
-
+		String writer=request.getParameter("writer");
 
 //		bean.update(no, title, val);
 		System.out.println(no+","+val);
@@ -254,7 +179,7 @@ public class HomeController {
 		}
 		
 		}
-		Bean bean=new Bean(no,title,val);
+		Bean bean=new Bean(no,title,val,writer);
 		ns.updateDetail(bean);
 		}
 		return "redirect:/?boardNum="+no;
@@ -466,25 +391,5 @@ public class HomeController {
 //		ns.createContent(val);
 		return "redirect:/";
 	}
-	
-	@RequestMapping("/update2")
-	public String update2(HttpServletRequest request, HttpServletResponse response) {
-		int no=Integer.parseInt(request.getParameter("no"));
-		String val=request.getParameter("val");
-		Bean bean=new Bean("title",val,"writer");
-		System.out.println(no+","+val);
-		ns.updateContent(bean);
-		return "redirect:/";
-	}
-	@RequestMapping("/delete2")
-	public String delete2(HttpServletRequest request, HttpServletResponse response) {
-		int no=Integer.parseInt(request.getParameter("no"));
-		String val=request.getParameter("val");
-		Bean bean=new Bean("title",val,"writer");
-		System.out.println(no+","+val);
-		ns.deleteContent(bean);
-		return "redirect:/";
-	}
-	
 	
 }

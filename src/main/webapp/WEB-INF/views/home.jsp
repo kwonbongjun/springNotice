@@ -1,17 +1,15 @@
 <%@page import="com.java.web.Login"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%-- <%@ page session="false" %> --%>
 <%@page import="com.java.web.Bean"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%> <!--pageEncoding="UTF-8"-->
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!--<link rel="stylesheet" type="text/css" href="css/servletNotice.css">-->
-<link rel="stylesheet" type="text/css" href="../../resources/css/springNotice.css">
-
+<!-- <meta charset="UTF-8"> -->
+<title>봉준의 게시판</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
+<!--  -->
 <style>
 </style>
 <script>

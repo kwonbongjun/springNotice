@@ -15,13 +15,13 @@ public class NoticeDao {
 	SqlSession s;
 
 	
-	public List<Login> loginselect(Login login) {
+	public Login loginselect(Login login) {
 		List<Login> list=new ArrayList<Login>(); 
 		Map<String,Login> map=new HashMap<String, Login>();
 		System.out.println("1");
 //		System.out.println(s.selectList("test.login").get(0));
 
-	  	return s.selectList("test.login", login); 
+	  	return s.selectOne("test.login", login); 
 	}
 	public int contentselectAll() {
 		return s.selectOne("test.contentall");

@@ -1,17 +1,25 @@
 package com.java.web;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class NoticeService {
  @Autowired
  NoticeDao nd;
 	
-	public List<Login> loginRead(Login login){
+	public Login loginRead(String id, String pw){
+		Login login=new Login(id, pw);
 		return nd.loginselect(login); 
 	}
 	 
@@ -68,11 +76,40 @@ public class NoticeService {
 	public int contentReadSearchAll(String title) {
 		return nd.selectSearchAll(title);
 	}
-	public List<Bean> contentReadSearch(Map<String, Object> map){
+	public List<Bean> contentReadSearch(int pageNum, String title){
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("pageNum", pageNum);
+		map.put("title", title);
 		return nd.selectContentSearch(map);
 	}
 	public int readSearchFinalNo(String title) {
 		return nd.selectSearchFinalNo(title);
+	}
+	
+	public void uploadFile(MultipartFile[] files, int no) {
+		if(!"".equals(files[0].getOriginalFilename())) {
+			for(int i=0;i<files.length;i++) {
+				MultipartFile file = files[i];
+				String originalFileName=file.getOriginalFilename();
+				String ext=originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
+				String fileName=UUID.randomUUID().toString();
+				try {
+					byte[] data=file.getBytes();
+					String path="C:\\Resources\\";//D:\\workspace\\resources\\";
+					File f = new File(path);
+					if(!f.isDirectory()) {
+						f.mkdirs();
+					}
+					OutputStream os = new FileOutputStream(new File(path+fileName+ext));
+					os.write(data);
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				FileBean fb=new FileBean(no,originalFileName,fileName,ext);
+				createFile(fb);
+			}
+		}
 	}
 // 	public void createContent(String val) {
 // 		nd.insertContent(val);

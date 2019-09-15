@@ -27,7 +27,6 @@
 		no=detail.getNo();
 		title=detail.getTitle();
 		val=detail.getVal();
-		filename=detail.getFileName();
 	}
 	
 %>
@@ -67,7 +66,7 @@ function file_Event(obj){
 			<%if(session.getAttribute("login")!=null && detail==null){%><input type="submit"  formaction="/create" value="추가" method="POST"><%}%>
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트" method="POST"<%}%>method="GET" onclick="loginCheck()" value="업데이트">
 			<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제" method="POST"<%}%>method="GET" onclick="loginCheck()" value="삭제">
-			<button type="button" formaction="/" onclick="load()">뒤로가기</button>
+			<button type="submit" formaction="/" onclick="load()">뒤로가기</button>
 		</form>
 	</div>
 </body>
