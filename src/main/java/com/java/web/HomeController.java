@@ -134,11 +134,11 @@ public class HomeController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@RequestParam("file") MultipartFile[] files,HttpServletRequest request, HttpServletResponse response) {
 		int no=0;
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			request.setCharacterEncoding("utf-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
 		System.out.println(request.getParameter("no"));
 		if(request.getParameter("no")!=null) {
 		no=Integer.parseInt(request.getParameter("no"));
@@ -162,7 +162,7 @@ public class HomeController {
 			fileName=UUID.randomUUID().toString();
 			try {
 				byte[] data=file.getBytes();
-				String path="C:\\Resources\\";//"D:\\workspace\\resources\\";
+				String path="D:\\workspace\\resources\\";//"D:\\workspace\\resources\\";"C:\\Resources\\";
 				File f = new File(path);
 				if(!f.isDirectory()) {
 					f.mkdirs();
@@ -214,6 +214,11 @@ public class HomeController {
 							+ "&response_type=code";
 					System.out.println(request.getParameter("code"));
 					response.sendRedirect(url);
+					
+//					String url2 = "https://accounts.kakao.com/login?continue=";
+//					url2+=URLEncoder.encode(url, "UTF-8");
+//					response.sendRedirect(url2);
+//					
 //					String url = "https://kauth.kakao.com/oauth/authorize";
 //					url +="?client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87&redirect_uri="; //rest api
 //					url +=URLEncoder.encode("http://gdj16.gudi.kr:20003/KakaoBack","UTF-8"); //uri
@@ -292,6 +297,7 @@ public class HomeController {
 	
 	@RequestMapping("/kakaologout")
 	public String kakaoLogout(HttpServletRequest request, HttpServletResponse response){
+		//HttpSession hs
 		System.out.println("at"+at);
 		if(!"".equals(at)) {
 			String url="https://kapi.kakao.com/v1/user/logout" +  
@@ -301,6 +307,7 @@ public class HomeController {
 				uri = new URL(url);
 				HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
 				conn.setRequestMethod("POST");
+//				conn.setRequestProperty("Authorization", "Bearer " + hs.getAttribute("access_token"));
 				
 				InputStream input = conn.getInputStream();
 				InputStreamReader inputReader = new InputStreamReader(input);
@@ -340,7 +347,7 @@ public class HomeController {
 			Bean detail=ns.detailRead(no);
 			FileBean fb=new FileBean(no, filename, "", "");
 			FileBean file=ns.readFile(fb);
-			String path="C:\\Resources\\";//"D:\\workspace\\resources\\"; 
+			String path="D:\\workspace\\resources\\";//"D:\\workspace\\resources\\"; "C:\\Resources\\"
 			String originalFilename=file.getFilename();
 			System.out.println(originalFilename);
 			String fileName=file.getFileurl();

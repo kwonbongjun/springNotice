@@ -48,7 +48,8 @@ if(session==null) {
 }
 System.out.println("session"+session.getAttribute("login"));
 List<Bean> list=(List<Bean>) request.getAttribute("list");
-int finalno = (int) request.getAttribute("finalno");
+String tmp = (String) request.getAttribute("finalno");
+int finalno= Integer.parseInt(tmp);
 System.out.println("list"+list);
 %>
 <%
