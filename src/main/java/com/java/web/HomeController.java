@@ -62,6 +62,7 @@ public class HomeController {
 			//if(detail!=null)
 			request.setAttribute("detail", detail);
 			request.setAttribute("file", fb);
+			request.setAttribute("writer", nm);
 			return "detail";
 		}
 		try {
@@ -83,17 +84,19 @@ public class HomeController {
 			}
 			
 			//게시글 마지막 no 확인
-			int finalno = ns.readfinalno();
+			int finalno = 0;
 			if(finalno==0) {
 				finalno=1;
 			}
-			
 			System.out.println("listsize"+list.size());
+			
 			if(list.size()>0) {
 			request.setAttribute("list", list);
+			finalno = ns.readfinalno();
 			}
 			request.setAttribute("total", total);
 			request.setAttribute("finalno", finalno);	
+			request.setAttribute("user", nm);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -105,15 +108,16 @@ public class HomeController {
 		String id=request.getParameter("no");
 		String pw=request.getParameter("val");
 		Login login = ns.loginRead(id,pw);
-		
 		HttpSession s=request.getSession();
 //		s.setAttribute("login", false);
 		if(login!=null) {
 			s.setAttribute("login", true);
 			request.setAttribute("user", login);
+			nm=id;
 		}else {
 			s.invalidate();
 		}
+
 		return "redirect:/";
 	}
 	
@@ -283,6 +287,7 @@ public class HomeController {
 			JSONObject tmp=JSONObject.fromObject(jtoken.get("properties"));
 
 			nm=(String) tmp.get("nickname");
+
 			System.out.println(nm);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

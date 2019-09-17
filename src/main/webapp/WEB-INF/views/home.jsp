@@ -1,3 +1,4 @@
+<%@page import="net.sf.json.JSONObject"%>
 <%@page import="com.java.web.Login"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="com.java.web.Bean"%>
@@ -48,8 +49,8 @@ if(session==null) {
 }
 System.out.println("session"+session.getAttribute("login"));
 List<Bean> list=(List<Bean>) request.getAttribute("list");
-String tmp = (String) request.getAttribute("finalno");
-int finalno= Integer.parseInt(tmp);
+int finalno= (Integer) request.getAttribute("finalno");
+
 System.out.println("list"+list);
 %>
 <%
@@ -69,7 +70,11 @@ if(list==null) {
 	}
 	System.out.println(""+a+pagenum);
 }
-Login user=(Login)request.getAttribute("user");
+String user= (String) request.getAttribute("user");
+System.out.println("user"+user);
+if(user==null) {
+//Login user=(Login)request.getAttribute("user");}
+}
 %>
 totalpage=<%=totalpage%>
 pagenum=parseInt(totalpage/contentperpage);
@@ -254,7 +259,7 @@ for(int i=1;i<=pagenum;i++){%>
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout"">logout</button><% }%>
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/kakao" value="카카오""><%
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">카카오로그아웃</button><% }%>
-		
+		<%if(session.getAttribute("login")!=null){%><p><%=user%></p><%} %>
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
 	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
@@ -262,19 +267,23 @@ for(int i=1;i<=pagenum;i++){%>
 	<input type="text" name="search">
 	<a href="/"><button type="submit">search</button></a>
 	</form>
+	<table>
+	<tbody>
 	<% 
 		for(int i=0;i<a;i++) {
 		
-		%><ul>
-		<input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)">	
-		<li class="content"><%=list.get(i).getNo()%></li>
-		<%if(session.getAttribute("login")!=null){%><li class="content"><a href="/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></li><%}else{ %>
-		<li class="content"><%=list.get(i).getTitle() %></li><%} %>
-		<li class="content"><%=list.get(i).getWriter()%></li>
+		%><tr>
+		<%-- <input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)"> --%>	
+		<td><%=list.get(i).getNo()%></td>
+		<%if(session.getAttribute("login")!=null){%><td><a href="/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></td><%}else{ %>
+		<td><%=list.get(i).getTitle() %></td><%} %>
+		<td><%=list.get(i).getWriter()%></td>
 		<%-- <li class="content"><%=request.getAttribute("user")%></li> --%>
-		</ul>
+		</tr>
 		<%}
 	%>
+	</tbody>
+	</table>
 <%-- 	<ul>
 	<li class="content"><a href="/?pageNum=<%=1%>" onclick="return leftpageclick();"> < </a></li>
 	<%if(list!=null){

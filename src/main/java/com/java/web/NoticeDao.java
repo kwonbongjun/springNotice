@@ -19,7 +19,6 @@ public class NoticeDao {
 		List<Login> list=new ArrayList<Login>(); 
 		Map<String,Login> map=new HashMap<String, Login>();
 		System.out.println("1");
-//		System.out.println(s.selectList("test.login").get(0));
 
 	  	return s.selectOne("test.login", login); 
 	}

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test">
   <select id="login" parameterType="com.java.web.Login" resultType="com.java.web.Login">
-    select id,pw from login where id=#{id} and pw=#{pw,jdbcType=VARCHAR}
+    select id,pw from login where id=#{id} and pw=#{pw}
   </select>
    <select id="contentall" resultType="int">
    select count(*) from content where delYn='N'
