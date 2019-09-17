@@ -127,7 +127,7 @@ public class HomeController {
 		System.out.println("no:"+no);
 		String title=request.getParameter("title");
 		String val=request.getParameter("val");
-		String writer=nm;
+		String writer=request.getParameter("writer");
 		
 		ns.uploadFile(files, no);
 		Bean bean=new Bean(no,title,val,writer);
@@ -137,57 +137,22 @@ public class HomeController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@RequestParam("file") MultipartFile[] files,HttpServletRequest request, HttpServletResponse response) {
-		int no=0;
-//		try {
-//			request.setCharacterEncoding("utf-8");
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
+		int no;//=0;
 		System.out.println(request.getParameter("no"));
-		if(request.getParameter("no")!=null) {
+//		if(request.getParameter("no")!=null) {
 		no=Integer.parseInt(request.getParameter("no"));
 		String val=request.getParameter("val");
 		String title=request.getParameter("title");
 		String writer=request.getParameter("writer");
 
-//		bean.update(no, title, val);
-		System.out.println(no+","+val);
-		
-		String originalFileName="";
-		String fileName="";
-		String ext="";
 		ns.deleteFile(no);
-		if(!"".equals(files[0].getOriginalFilename())) {
-		for(int i=0;i<files.length;i++) {
-			MultipartFile file = files[i];
-			originalFileName=file.getOriginalFilename();
-			System.out.println(originalFileName);
-			ext=originalFileName.substring(originalFileName.lastIndexOf("."), originalFileName.length());
-			fileName=UUID.randomUUID().toString();
-			try {
-				byte[] data=file.getBytes();
-				String path="D:\\workspace\\resources\\";//"D:\\workspace\\resources\\";"C:\\Resources\\";
-				File f = new File(path);
-				if(!f.isDirectory()) {
-					f.mkdirs();
-				}
-				OutputStream os = new FileOutputStream(new File(path+fileName+ext));
-				os.write(data);
-				os.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			FileBean fb=new FileBean(no,originalFileName,fileName,ext);
-			ns.createFile(fb);;
-		}
-		
-		}
+		ns.uploadFile(files, no);
 		Bean bean=new Bean(no,title,val,writer);
 		ns.updateDetail(bean);
-		}
+//		}
 		return "redirect:/?boardNum="+no;
 	}
+	
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, HttpServletResponse response) {
 		//String no="";
@@ -217,11 +182,11 @@ public class HomeController {
 							+ "&redirect_uri="+URLEncoder.encode("http://localhost:8080/KakaoBack","UTF-8")
 							+ "&response_type=code";
 					System.out.println(request.getParameter("code"));
-					response.sendRedirect(url);
+//					response.sendRedirect(url);
 					
-//					String url2 = "https://accounts.kakao.com/login?continue=";
-//					url2+=URLEncoder.encode(url, "UTF-8");
-//					response.sendRedirect(url2);
+					String url2 = "https://accounts.kakao.com/login?continue=";
+					url2+=URLEncoder.encode(url, "UTF-8");
+					response.sendRedirect(url2);
 //					
 //					String url = "https://kauth.kakao.com/oauth/authorize";
 //					url +="?client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87&redirect_uri="; //rest api
@@ -343,7 +308,7 @@ public class HomeController {
 				e.printStackTrace();
 			}
 		}
-		return "redirect:https://developers.kakao.com/logout";
+		return "redirect:/kakao";
 	}
 	@RequestMapping("/download")
 	public void download(HttpServletRequest request, HttpServletResponse response){	

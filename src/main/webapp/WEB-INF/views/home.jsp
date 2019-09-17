@@ -260,6 +260,7 @@ for(int i=1;i<=pagenum;i++){%>
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/kakao" value="카카오""><%
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">카카오로그아웃</button><% }%>
 		<%if(session.getAttribute("login")!=null){%><p><%=user%></p><%} %>
+		<input type="submit" formaction="/join" value="회원가입">
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
 	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>

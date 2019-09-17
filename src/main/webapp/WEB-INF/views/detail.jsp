@@ -63,6 +63,7 @@ function file_Event(obj){
 			<input type="hidden" name="no" value="<%=no%>">
 			<input id="title" type="text" name="title"  required>
 			<input id="val" class="text" type="text" name="val"  required>
+			<input type="hidden" name="writer" value="<%=nmwriter%>">
 			<%if(fb!=null) {for (int i=0;i<fb.size();i++) {%>
 			<% if(detail!=null){%><a href="/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>"><%=fb.get(i).getFilename()%></a><%} %>
 			<%}} %>
