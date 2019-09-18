@@ -31,7 +31,7 @@ public class DataController {
 			
 			URL url = new URL(urlAddress);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			
+			 
 			conn.setRequestMethod("GET");
 			//conn.setRequestProperty("query", URLEncoder.encode(search,"UTF-8"));
 			//System.out.println("at"+at);
