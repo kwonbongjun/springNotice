@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class NoticeService {
+public class NoticeService implements NoticeServiceInterface {
  @Autowired
  NoticeDao nd;
 	

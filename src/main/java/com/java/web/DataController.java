@@ -1,9 +1,12 @@
 package com.java.web;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -53,11 +56,31 @@ public class DataController {
 			JSONObject accesstoken=JSONObject.fromObject(jtoken.get("meta"));
 			System.out.println(accesstoken);
 			JSONArray documents=JSONArray.fromObject(jtoken.get("documents"));
-			for(int i=0;i<documents.size();i++) {
-				System.out.println(documents.get(i));
+			
+			String path="C:\\Resources\\";//D:\\workspace\\resources\\";
+			File f = new File(path);
+			OutputStream os = new FileOutputStream(new File(path+search+".txt"));
+			if(!f.isDirectory()) {
+				f.mkdirs();
 			}
-			
-			
+			for(int i=0;i<documents.size();i++) {
+				//System.out.println(documents.get(i));
+				JSONObject jo=JSONObject.fromObject(documents.get(i));
+				System.out.println(jo.get("title"));
+				System.out.println(jo.get("contents"));
+				os.write(jo.get("title").toString().getBytes());
+				os.write(jo.get("contents").toString().getBytes());
+			}
+			os.close();
+//			byte[] data=file.getBytes();
+//			String path="C:\\Resources\\";//D:\\workspace\\resources\\";
+//			File f = new File(path);
+//			if(!f.isDirectory()) {
+//				f.mkdirs();
+//			}
+//			OutputStream os = new FileOutputStream(new File(path+fileName+ext));
+//			os.write(data);
+//			os.close();
 		}catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

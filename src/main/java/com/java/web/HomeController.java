@@ -42,7 +42,7 @@ import org.springframework.web.multipart.MultipartFile;
 import net.sf.json.JSONObject;
 
 @Controller
-public class HomeController {
+public class HomeController { //인터페이스
 	@Autowired
 	NoticeService ns;
 	
@@ -155,20 +155,12 @@ public class HomeController {
 	
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest request, HttpServletResponse response) {
-		//String no="";
 		int no;
-//		if(request.getParameter("boardNum")!=null) {
-//			no=Integer.parseInt(request.getParameter("boardNum"));
-//			Bean detail=ns.detailRead(no);
-//			if(detail!=null)
-//			request.setAttribute("detail", detail);
-//			return "detail";
+//		try {
+//			request.setCharacterEncoding("utf-8");
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
 //		}
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		no=Integer.parseInt(request.getParameter("no"));
 		ns.deleteDetail(no);
 		return "redirect:/";
