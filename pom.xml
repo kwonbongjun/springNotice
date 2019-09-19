@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<version>1</version>
 	<properties>
-		<java-version>1.8</java-version>
+		<java-version>1.6</java-version>
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
@@ -112,8 +112,8 @@
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -193,7 +193,13 @@
 	    <artifactId>hadoop-client</artifactId>
 	    <version>2.9.0</version>
 	</dependency>
-
+	<!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common -->
+	<dependency>
+	    <groupId>org.apache.hadoop</groupId>
+	    <artifactId>hadoop-common</artifactId>
+	    <version>3.2.0</version>
+	</dependency>
+	
 		
 	</dependencies>
     <build>

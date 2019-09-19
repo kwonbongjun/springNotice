@@ -71,7 +71,7 @@ public class DataController {
 			System.out.println(accesstoken);
 			JSONArray documents=JSONArray.fromObject(jtoken.get("documents"));
 			
-			String path="D:\\workspace\\data"; //C:\\Resources\\";
+			String path="C:\\Resources\\"; //C:\\Resources\\"; D:\\workspace\\data"
 			File f = new File(path);
 			OutputStream os = new FileOutputStream(new File(path+search+".txt"));
 			if(!f.isDirectory()) {
@@ -97,18 +97,19 @@ public class DataController {
 //			os.close();
 			Configuration conf = new Configuration();
 			Configuration hadoopConf = new Configuration();
-			hadoopConf.set("fs.defaultFS", "hdfs://192.168.3.34:9000");
-			String localStr="D:\\workspace\\data";
-			String hadoopStr="/input/data";
+			hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
+			String localStr= "C:\\Resources\\"; // "D:\\workspace\\data"
+			String hadoopStr="/input/data/";
 			Path localPath = new Path(localStr);
 			Path hadoopPath = new Path(hadoopStr);
 			FileSystem localSystem=FileSystem.getLocal(conf);
 			FileSystem hadoopSystem=FileSystem.get(hadoopConf);
-			if(hadoopSystem.exists(new Path("/output/data"))) {
-				hadoopSystem.delete(new Path("/output/data"),true);
-			}
-			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\나쁜녀석들.txt"));
-			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/나쁜녀석들.txt"));
+
+//			if(hadoopSystem.exists(new Path("/output/data"))) {
+//				hadoopSystem.delete(new Path("/output/data"),true);
+//			}
+			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\나쁜 녀석들.txt"));
+			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/a.txt"));
 			int byteRead=0;
 			while((byteRead=fsis.read())>0) {
 				fsos.write(byteRead);
@@ -119,13 +120,16 @@ public class DataController {
 			job.setMapperClass(JobMap.class);
 			job.setCombinerClass(JobReducer.class);
 			job.setReducerClass(JobReducer.class);
+			job.setMapOutputKeyClass(Text.class);
+			job.setMapOutputValueClass(IntWritable.class);
 			job.setOutputKeyClass(Text.class);
-			job.setOutputKeyClass(IntWritable.class);
-			FileInputFormat.addInputPath(job, new Path(hadoopPath+"/나쁜녀석들.txt"));
+			job.setOutputValueClass(IntWritable.class);
+//			job.setNumReduceTasks(1);
+			FileInputFormat.addInputPath(job, new Path(hadoopPath+"/a.txt"));
 			FileOutputFormat.setOutputPath(job, new Path("/output/data"));
 			job.waitForCompletion(true);
 
-			
+			System.out.println("1");
 			PrintWriter pw = response.getWriter();
 			String targetPath="/output/data/part-r-00000";
 			if(hadoopSystem.exists(new Path(targetPath))) {
