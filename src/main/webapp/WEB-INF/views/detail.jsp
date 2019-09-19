@@ -1,5 +1,5 @@
-<%@page import="com.java.web.FileBean"%>
-<%@page import="com.java.web.Bean"%>
+<%@page import="com.java.web.bean.FileBean"%>
+<%@page import="com.java.web.bean.Bean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

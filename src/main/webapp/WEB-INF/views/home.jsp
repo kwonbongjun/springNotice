@@ -1,7 +1,7 @@
 <%@page import="net.sf.json.JSONObject"%>
-<%@page import="com.java.web.Login"%>
+<%@page import="com.java.web.bean.Login"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="com.java.web.Bean"%>
+<%@page import="com.java.web.bean.Bean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%> <!--pageEncoding="UTF-8"-->
 <!DOCTYPE html>

@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.bean;
 
 public class Bean {
 	private int no;

@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,6 +38,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.java.web.bean.Bean;
+import com.java.web.bean.FileBean;
+import com.java.web.bean.Login;
+import com.java.web.service.NoticeService;
+import com.java.web.service.NoticeServiceInterface;
 
 import net.sf.json.JSONObject;
 
@@ -174,23 +180,15 @@ public class HomeController { //인터페이스
 							+ "&redirect_uri="+URLEncoder.encode("http://localhost:8080/KakaoBack","UTF-8")
 							+ "&response_type=code";
 					System.out.println(request.getParameter("code"));
-//					response.sendRedirect(url);
 					
 					String url2 = "https://accounts.kakao.com/login?continue=";
 					url2+=URLEncoder.encode(url, "UTF-8");
 					response.sendRedirect(url2);
-//					
-//					String url = "https://kauth.kakao.com/oauth/authorize";
-//					url +="?client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87&redirect_uri="; //rest api
-//					url +=URLEncoder.encode("http://gdj16.gudi.kr:20003/KakaoBack","UTF-8"); //uri
-//					url +="&response_type=code"; //token 
-//					System.out.println(url);
-//					res.sendRedirect(url);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	}
+	
 	@RequestMapping("/KakaoBack")
 	public String kakaoback(HttpServletRequest request, HttpServletResponse response){
 	//http://gdj16.gudi.kr:20003/KakaoBack

@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +12,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.java.web.bean.Bean;
+import com.java.web.bean.FileBean;
+import com.java.web.bean.Login;
+import com.java.web.dao.NoticeDao;
 
 @Service
 public class NoticeService implements NoticeServiceInterface {

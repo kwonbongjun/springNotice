@@ -1,4 +1,4 @@
-package com.java.web;
+package com.java.web.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,8 +9,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.java.web.bean.Bean;
+import com.java.web.bean.FileBean;
+import com.java.web.bean.Login;
+
 @Repository
-public class NoticeDao {
+public class NoticeDao implements NoticeDaoInterface{
 	@Autowired
 	SqlSession s;
 
