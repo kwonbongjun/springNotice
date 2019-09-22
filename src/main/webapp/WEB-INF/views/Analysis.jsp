@@ -32,8 +32,8 @@ var svg = d3.select("#my_dataviz")
     .attr("height", height)
 
 // Read data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/11_SevCatOneNumNestedOneObsPerGroup.csv", function(data) {
-
+//d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/11_SevCatOneNumNestedOneObsPerGroup.csv", function(data) {
+d3.csv("C:\\Resources\\r.csv",function(data) {
   // Filter a bit the data -> more than 1 million inhabitants
   data = data.filter(function(d){ return d.value>10000000 })
 

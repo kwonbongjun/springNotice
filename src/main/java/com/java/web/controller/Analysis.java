@@ -1,8 +1,11 @@
 package com.java.web.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,11 +84,16 @@ public class Analysis {
 		String strRead="";
 		InputStreamReader isr = new InputStreamReader(fsis);
 		BufferedReader br = new BufferedReader(isr);
+		String path="C:\\Resources\\r.csv";
+		OutputStream os = new FileOutputStream(new File(path));
+		
 		while((strRead = br.readLine())!= null) { 
 			// 정제 결과를 문자열 변수에 담기
 			sb.append(strRead);
+			os.write(strRead.getBytes());
 		}
 		fsis.close();
+		os.close();
 		req.setAttribute("data", sb.toString());
 	}
 	} catch (ClassNotFoundException e) {

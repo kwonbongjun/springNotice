@@ -71,7 +71,7 @@ public class DataController {
 			System.out.println(accesstoken);
 			JSONArray documents=JSONArray.fromObject(jtoken.get("documents"));
 			
-			String path="D:\\workspace\\data\\"; //C:\\Resources\\"; D:\\workspace\\data"
+			String path="C:\\Resources\\"; //C:\\Resources\\"; D:\\workspace\\data"
 			File f = new File(path);
 			OutputStream os = new FileOutputStream(new File(path+search+".txt"));
 			if(!f.isDirectory()) {
@@ -95,7 +95,7 @@ public class DataController {
 //			OutputStream os = new FileOutputStream(new File(path+fileName+ext));
 //			os.write(data);
 //			os.close();
-			String localStr= "D:\\workspace\\data\\"; //"C:\\Resources\\" "D:\\workspace\\data"
+			String localStr= "C:\\Resources\\"; //"C:\\Resources\\" "D:\\workspace\\data"
 			String hadoopStr="/input/data/";
 			Configuration conf = new Configuration();
 			Configuration hadoopConf = new Configuration();
