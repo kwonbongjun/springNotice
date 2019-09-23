@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +19,7 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -23,8 +27,11 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.JsonObject;
 import com.java.web.hadoop.JobMap;
 import com.java.web.hadoop.JobReducer;
+
+import net.sf.json.JSONObject;
 
 
 @Controller
@@ -84,17 +91,28 @@ public class Analysis {
 		String strRead="";
 		InputStreamReader isr = new InputStreamReader(fsis);
 		BufferedReader br = new BufferedReader(isr);
-		String path="C:\\Resources\\r.csv";
-		OutputStream os = new FileOutputStream(new File(path));
+//		String path="D:\\workspace\\data\\";//"C:\\Resources\\r.csv";
+//		OutputStream os = new FileOutputStream(new File(path));
 		
+		List<JSONObject> resultList= new ArrayList<JSONObject>();
+		JSONObject jo = new JSONObject();
+		String [] array;
 		while((strRead = br.readLine())!= null) { 
 			// 정제 결과를 문자열 변수에 담기
 			sb.append(strRead);
-			os.write(strRead.getBytes());
+			array = strRead.split("\t");
+			System.out.println(array[1]);
+//			jo.put(", value)
+//			os.write(strRead.getBytes());
+			jo.put(array[0], array[1]);
+			resultList.add(jo);
 		}
 		fsis.close();
-		os.close();
-		req.setAttribute("data", sb.toString());
+//		os.close();
+
+//		System.out.println(jo.toString());
+		req.setAttribute("data", jo);
+		
 	}
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
