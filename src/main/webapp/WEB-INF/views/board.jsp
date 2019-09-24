@@ -10,6 +10,14 @@
 <!-- <meta charset="UTF-8"> -->
 <title>봉준의 게시판</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <!--  -->
 <style>
 </style>
@@ -263,12 +271,12 @@ for(int i=1;i<=pagenum;i++){%>
 		<input type="submit" formaction="/join" value="회원가입">
 		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
 	</form>
-	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
+	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/board/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
 	<form>
 	<input type="text" name="search">
 	<a href="/"><button type="submit">search</button></a>
 	</form>
-	<table>
+	<table class="table table-striped table-bordered table-hover">
 	<tbody>
 	<% 
 		for(int i=0;i<a;i++) {
@@ -293,7 +301,7 @@ for(int i=1;i<=pagenum;i++){%>
 	<%}} %>
 	<li class="content"><a href="/?pageNum=<%=1%>">></a></li>
 	</ul> --%>
-	<ul id="page"></ul>
+	<ul id="page" class="pagination"></ul>
 	</div>
 
 	

@@ -18,8 +18,8 @@
 				<li>	
 					<form id="content">
 						<%String user= (String) request.getAttribute("user"); %>
-						<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/login" value="login"  onclick="logout()"><%
-						}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/login" id="logout" value="logout"">logout</button><% }%>
+						<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/loginpage" value="login"  onclick="logout()"><%
+						}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/loginpage" id="logout" value="logout"">logout</button><% }%>
 						<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/kakao" value="카카오""><%
 						}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">카카오로그아웃</button><% }%>
 						<%if(session.getAttribute("login")!=null){%><p><%=user%></p><%} %>

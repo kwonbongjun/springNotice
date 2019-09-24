@@ -1,5 +1,5 @@
 <%@page import="java.util.HashMap"%>
-<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>  https://bootsnipp.com/
 <%@page import="net.sf.json.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,15 +13,73 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <!-- Load d3-cloud -->
 <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<!-- Create a div where the graph will take place -->
-<div id="my_dataviz"></div>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!--  -->
+
+<head>
 <style>
 .node:hover{
   stroke-width: 7px !important;
   opacity: 1 !important;
 }
+
+    body,html{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+/*     background: #e74c3c !important; */
+    }
+
+    .searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+    }
+
+    .search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_input{
+    padding: 0 10px;
+    width: 450px;
+    /* caret-color:red; */
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_icon{
+    background: white;
+    color: #e74c3c;
+    }
+
+    .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    }
 </style>
 
 
@@ -76,64 +134,7 @@ simulation
 
 </script> --%>
  <%-- ${data} --%>
- <script>
- <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
- <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
- <% String[] jo = (String[]) request.getAttribute("data");%>
-<%--  var myWord=<%=jo%> --%>
-var myWords = new Array(10);
-<%
- for(int i=0;i<jo.length;i++) {
-	 if(i==0 || i==2 || i==3 || i==8) {%>myWords[<%=i%>]=<%="\"" + "Hello" + "\""%>;<%continue;}
-	 %>myWords[<%=i%>]=<%="\""+jo[i]+"\""%>
-	 <%
- 	}
- %>
- 
- console.log(myWords);
-// List of words
-//var myWords = ["Hello", "Everybody", "How", "Are", "You", "Today", "It", "Is", "A", "Lovely", "Day", "I", "Love", "Coding", "In", "My", "Van", "Mate"]
 
-// set the dimensions and margins of the graph
-var margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 450 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
-
-// append the svg object to the body of the page
-var svg = d3.select("#my_dataviz").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
-
-// Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
-var layout = d3.layout.cloud()
-  .size([width, height])
-  .words(myWords.map(function(d) { return {text: d}; }))
-  .padding(10)
-  .fontSize(60)
-  .on("end", draw);
-layout.start();
-
-// This function takes the output of 'layout' above and draw the words
-// Better not to touch it. To change parameters, play with the 'layout' variable above
-function draw(words) {
-  svg
-    .append("g")
-      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
-      .selectAll("text")
-        .data(words)
-      .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
-        .text(function(d) { return d.text; });
-}
-</script>
- 
  
  <%-- <script>
  <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%>
@@ -247,3 +248,77 @@ var svg = d3.select("#my_dataviz")
 
 //})
 </script> --%>
+</head>
+
+  <body>
+  
+    <div class="container h-100">
+      <div class="d-flex justify-content-center h-100">
+        <div class="searchbar">
+          <input class="search_input" type="text" name="" placeholder="Search...">
+          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        </div>
+      </div>
+    </div>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>	
+ <script>
+ <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
+ <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
+ <% String[] jo = (String[]) request.getAttribute("data");%>
+<%--  var myWord=<%=jo%> --%>
+var myWords = new Array(10);
+<%
+ for(int i=0;i<jo.length;i++) {
+	 if(i==0 || i==2 || i==3 || i==8) {%>myWords[<%=i%>]=<%="\"" + "Hello" + "\""%>;<%continue;}
+	 %>myWords[<%=i%>]=<%="\""+jo[i]+"\""%>
+	 <%
+ 	}
+ %>
+ 
+ console.log(myWords);
+// List of words
+//var myWords = ["Hello", "Everybody", "How", "Are", "You", "Today", "It", "Is", "A", "Lovely", "Day", "I", "Love", "Coding", "In", "My", "Van", "Mate"]
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+var layout = d3.layout.cloud()
+  .size([width, height])
+  .words(myWords.map(function(d) { return {text: d}; }))
+  .padding(10)
+  .fontSize(60)
+  .on("end", draw);
+layout.start();
+
+// This function takes the output of 'layout' above and draw the words
+// Better not to touch it. To change parameters, play with the 'layout' variable above
+function draw(words) {
+  svg
+    .append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+}
+</script>
+ 
+  </body>
+  

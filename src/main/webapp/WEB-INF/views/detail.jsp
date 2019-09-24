@@ -9,6 +9,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="../../resources/css/springNotice.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!--  -->
 <script>
 
 <%
@@ -65,10 +74,10 @@ function formCheck() {
 </head>
 <body onload="load()">
 
-	<div id="write">
+	<div id="write" class="container">
 		<form method="POST" enctype="multipart/form-data">
-			<input type="hidden" name="no" value="<%=no%>">
-			<input id="title" type="text" name="title"  required>
+			<input class="form-control" type="hidden" name="no" value="<%=no%>">
+			<input class="form-control" id="title" type="text" name="title"  required>
 			<input id="val" class="text" type="text" name="val"  required>
 			<input type="hidden" name="writer" value="<%=nmwriter%>">
 			<%if(fb!=null) {for (int i=0;i<fb.size();i++) {%>
