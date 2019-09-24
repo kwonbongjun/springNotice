@@ -72,13 +72,13 @@ function formCheck() {
 			<input id="val" class="text" type="text" name="val"  required>
 			<input type="hidden" name="writer" value="<%=nmwriter%>">
 			<%if(fb!=null) {for (int i=0;i<fb.size();i++) {%>
-			<% if(detail!=null){%><a href="/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>"><%=fb.get(i).getFilename()%></a><%} %>
+			<% if(detail!=null){%><a href="/board/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>"><%=fb.get(i).getFilename()%></a><%} %>
 			<%}} %>
 			<input id="file" type="file" name="file" multiple="multiple"  onchange="file_Event(this)">
-			<%if(session.getAttribute("login")!=null && detail==null){%><input type="submit"  formaction="/create" value="추가" method="POST" onclick="return formCheck()"><%}%>
-			<%if(session.getAttribute("login")!=null && (writer.equals(nmwriter) || nmwriter.equals("admin"))){%><input type="submit" formaction="/update" value="업데이트" method="POST" onclick="return formCheck()"><%}%>
-			<%if(session.getAttribute("login")!=null && (writer.equals(nmwriter) || nmwriter.equals("admin"))){%><input type="submit" formaction="/delete" value="삭제" method="POST"><%}%>
-			<button type="submit" formaction="/" onclick="load()">뒤로가기</button>
+			<%if(session.getAttribute("login")!=null && detail==null){%><input type="submit"  formaction="/board/create" value="추가" method="POST" onclick="return formCheck()"><%}%>
+			<%if(session.getAttribute("login")!=null && (writer.equals(nmwriter) || nmwriter.equals("admin"))){%><input type="submit" formaction="/board/update" value="업데이트" method="POST" onclick="return formCheck()"><%}%>
+			<%if(session.getAttribute("login")!=null && (writer.equals(nmwriter) || nmwriter.equals("admin"))){%><input type="submit" formaction="/board/delete" value="삭제" method="POST"><%}%>
+			<button type="submit" formaction="/board" onclick="load()">뒤로가기</button>
 		</form>
 	</div>
 </body>

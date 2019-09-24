@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +52,7 @@ public class Analysis {
 	Configuration conf = new Configuration();
 	Configuration hadoopConf = new Configuration();
 	hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
-	String localStr= "C:\\Resources\\"; //"C:\\Resources\\" "D:\\workspace\\data"
+	String localStr= "D:\\workspace\\data"; //"C:\\Resources\\" "D:\\workspace\\data"
 	String hadoopStr="/input/data/a.txt";
 	Path localPath = new Path(localStr);
 	Path hadoopPath = new Path(hadoopStr);
@@ -105,7 +107,7 @@ public class Analysis {
 		//List<HashMap<String, Object>> resultList= new ArrayList<HashMap<String,Object>>();
 		List<JSONObject> resultList= new ArrayList<JSONObject>();
 		JSONObject jo = new JSONObject();
-		HashMap<String, Object> map= new HashMap<String, Object>();
+		//HashMap<String, Object> map= new HashMap<String, Object>();
 		String [] array;
 		int max=0;
 		List<HashMap<String, Object>> resultArray= new ArrayList<HashMap<String,Object>>();
@@ -116,6 +118,7 @@ public class Analysis {
 			System.out.println(strRead);
 //			jo.put(", value)
 //			os.write(strRead.getBytes());
+			HashMap<String, Object> map= new HashMap<String, Object>();
 			map.put(array[0], Integer.parseInt(array[1]));
 			jo.put(array[0], array[1]);
 			resultList.add(jo);
@@ -124,8 +127,22 @@ public class Analysis {
 		}
 		Collections.sort(resultArray, new Comparator<HashMap<String,Object>>(){
 			  public int compare(HashMap<String,Object> map1, HashMap<String,Object> map2){
-			    int cnt1 = (int) map1.get("value");
-			    int cnt2 = (int) map2.get("value");
+				Set set = map1.keySet();
+				Iterator iterator = set.iterator();
+				int cnt1 = 0;
+				while(iterator.hasNext()){
+				  String key = (String)iterator.next();
+				  System.out.println("hashMap Key : " + key);
+				  cnt1 = (int) map1.get(key);
+				}
+				set = map2.keySet();
+				iterator = set.iterator();
+				int cnt2 = 0;
+				while(iterator.hasNext()){
+				  String key = (String)iterator.next();
+				  System.out.println("hashMap Key : " + key);
+				  cnt2 = (int) map2.get(key);
+				}		
 
 			    // int 내림차순
 			    return cnt1 > cnt2 ? -1 : cnt1< cnt2 ? 1 : 0;
@@ -133,13 +150,24 @@ public class Analysis {
 			    //return cnt1 < cnt2 ? -1 : cnt1> cnt2 ? 1 : 0;
 			  }
 			});
-		System.out.println(resultArray.get(0));
+		String[] tempArr=new String[10];
+		for(int i=0;i<10;i++) {
+			HashMap<String,Object> map1=resultArray.get(i);
+			Set set = map1.keySet();
+			Iterator iterator = set.iterator();
+			while(iterator.hasNext()){
+				  String key = (String)iterator.next();
+				  System.out.println("hashMap Key : " + key);
+				  tempArr[i]=key;
+				}	
+		}
+		System.out.println("r"+resultArray.get(1));
 		
 		fsis.close();
 //		os.close();
 
 //		System.out.println(jo.toString());
-//		req.setAttribute("data", resultArray);
+		req.setAttribute("data", tempArr);
 		
 	}
 	} catch (ClassNotFoundException e) {

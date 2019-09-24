@@ -78,8 +78,19 @@ simulation
  <%-- ${data} --%>
  <script>
  <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%>
- var myWord=<%=jo%>
+ <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
+ <% String[] jo = (String[]) request.getAttribute("data");%>
+<%--  var myWord=<%=jo%> --%>
+var myWords = new Array(10);
+<%
+ for(int i=0;i<jo.length;i++) {
+	 if(i==0 || i==2 || i==3 || i==8) {%>myWords[<%=i%>]=<%="\"" + "Hello" + "\""%>;<%continue;}
+	 %>myWords[<%=i%>]=<%="\""+jo[i]+"\""%>
+	 <%
+ 	}
+ %>
+ 
+ console.log(myWords);
 // List of words
 //var myWords = ["Hello", "Everybody", "How", "Are", "You", "Today", "It", "Is", "A", "Lovely", "Day", "I", "Love", "Coding", "In", "My", "Van", "Mate"]
 
