@@ -6,7 +6,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <meta charset="utf-8">
-
+<link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -252,15 +252,14 @@ var svg = d3.select("#my_dataviz")
 </head>
 
   <body>
-	<div
-	 class="main_blk">
+	<div class="main_blk">
 		<div>
 			<a href="/">bong's movie</a>
 		</div>
 		<div class="nav">
 			<ul>
 				<li><a href="/board">게시판</a></li>
-				<li><a href="/collect">키워드 분석</a></li>
+				<li><a href="/search">키워드 분석</a></li>
 			</ul>
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>
@@ -271,30 +270,32 @@ var svg = d3.select("#my_dataviz")
 				<button type="submit" formaction="/join" value="회원가입">회원가입</button>
 			</form>
 		</div>
-	 	<p>☆사이트 소개☆<br>
-	 	1.게시판<br>
-	 	2.키워드 분석</p>
 	</div>
   
     <div class="container h-100">
       <div class="d-flex justify-content-center h-100">
-        <div class="searchbar">
-          <input class="search_input" type="text" name="" placeholder="Search...">
-          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        <div >
+        <form class="center">
+          <input class="searchbar" type="text" name="search" placeholder="Search...">
+          <button type="submit" formaction="/collect" value="회원가입">검색</button>
+        </form>
         </div>
       </div>
     </div>
-<!-- Create a div where the graph will take place -->
-<div id="my_dataviz"></div>	
- <script>
- <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
+     <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
  <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
  <% String[] jo = (String[]) request.getAttribute("data");%>
+<!-- Create a div where the graph will take place -->
+<%if(jo!=null) { %>
+<div class="inline" style="height:100px"></div>
+<div id="my_dataviz" class="inline"></div>	
+ <script>
+
 <%--  var myWord=<%=jo%> --%>
 var myWords = new Array(10);
 <%
  for(int i=0;i<jo.length;i++) {
-	 if(i==0 || i==2 || i==3 || i==8) {%>myWords[<%=i%>]=<%="\"" + "Hello" + "\""%>;<%continue;}
+	 
 	 %>myWords[<%=i%>]=<%="\""+jo[i]+"\""%>
 	 <%
  	}
@@ -343,6 +344,6 @@ function draw(words) {
         .text(function(d) { return d.text; });
 }
 </script>
- 
+<%}%>
   </body>
   

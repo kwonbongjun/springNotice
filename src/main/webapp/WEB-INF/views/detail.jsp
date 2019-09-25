@@ -77,9 +77,10 @@ function formCheck() {
 	<div id="write" class="container">
 		<form method="POST" enctype="multipart/form-data">
 			<input class="form-control" type="hidden" name="no" value="<%=no%>">
-			<input class="form-control" id="title" type="text" name="title"  required>
-			<input id="val" class="text" type="text" name="val"  required>
+			<div>제목:<input id="title" class="form-control" type="text" name="title"  required></div>
+			<div>내용:<input id="val" class="text" type="text" name="val"  required></div>
 			<input type="hidden" name="writer" value="<%=nmwriter%>">
+			<div>
 			<%if(fb!=null) {for (int i=0;i<fb.size();i++) {%>
 			<% if(detail!=null){%><a href="/board/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>"><%=fb.get(i).getFilename()%></a><%} %>
 			<%}} %>
@@ -88,6 +89,7 @@ function formCheck() {
 			<%if(session.getAttribute("login")!=null && (writer.equals(nmwriter) || nmwriter.equals("admin"))){%><input type="submit" formaction="/board/update" value="업데이트" method="POST" onclick="return formCheck()"><%}%>
 			<%if(session.getAttribute("login")!=null && (writer.equals(nmwriter) || nmwriter.equals("admin"))){%><input type="submit" formaction="/board/delete" value="삭제" method="POST"><%}%>
 			<button type="submit" formaction="/board" onclick="load()">뒤로가기</button>
+			</div>
 		</form>
 	</div>
 </body>

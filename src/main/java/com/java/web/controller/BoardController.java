@@ -309,7 +309,7 @@ public class BoardController { //인터페이스
 			Bean detail=ns.detailRead(no);
 			FileBean fb=new FileBean(no, filename, "", "");
 			FileBean file=ns.readFile(fb);
-			String path="D:\\workspace\\resources\\";//"D:\\workspace\\resources\\"; "C:\\Resources\\"
+			String path="C:\\Resources\\";//"D:\\workspace\\resources\\"; "C:\\Resources\\"
 			String originalFilename=file.getFilename();
 			System.out.println(originalFilename);
 			String fileName=file.getFileurl();

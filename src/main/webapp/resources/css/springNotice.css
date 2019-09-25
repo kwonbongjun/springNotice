@@ -26,6 +26,13 @@ p{
 		display:block;
 		width: 80%;
 		height: 500px;	
+		padding:6px 12px;
+		font-size:14px;
+		line-height: 1.42857143;
+		color:#555;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius:4px;
 	}
 	
 .main_blk{
@@ -56,4 +63,35 @@ p{
 	background-color: aqua;
 	margin-left:10%;
 	width:80%;
+}
+.form-control{
+ 	width:80% !important;	
+ 	margin: 20px 0;
+}
+#title, #val ,#file{
+	padding-left:5%;
+	display: inline-block;
+}
+#page{
+	margin-left:30%;
+}
+#list{
+	margin-top:30px;
+}
+.ml10{
+	margin-left:5%;
+}
+.title{
+	width:75%;
+}
+.table{
+	width:90% !important;
+}
+.center{
+	margin-top: 30px;
+	text-align: center;
+}
+.inline{
+	display: inline-block;
+	width:45%;
 }

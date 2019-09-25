@@ -37,11 +37,16 @@ import net.sf.json.JSONObject;
 
 @Controller
 public class DataController {
+	@RequestMapping("/search")
+	public String search (HttpServletRequest request, HttpServletResponse response) {
+		return "Analysis";
+	}
 	@RequestMapping("/collect")
 	public String Collect (HttpServletRequest request, HttpServletResponse response) {
 		String urlAddress;
 		try {
-			String search="나쁜 녀석들";
+			String search=request.getParameter("search");
+			System.out.println(search);
 			urlAddress = "https://dapi.kakao.com/v2/search/web"
 					+ "?query="+URLEncoder.encode(search,"UTF-8");
 			//+"\"" +"\""
@@ -105,7 +110,7 @@ public class DataController {
 
 			FileSystem localSystem=FileSystem.getLocal(conf);
 			FileSystem hadoopSystem=FileSystem.get(hadoopConf);
-			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\나쁜 녀석들.txt"));
+			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\"+search+".txt"));
 			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/a.txt"));
 			int byteRead=0;
 			while((byteRead=fsis.read())>0) {

@@ -160,11 +160,14 @@ button:active {
 .dropdown:hover .dropdown-content {display: block;}
 </style>
 
-
-
 </head>
 <body>
-
+<script>
+<%if(request.getAttribute("dup")!=null){ %>
+	alert("id ม฿บน");
+	
+<%} %>
+</script>
 
 <div class="page-container">
             

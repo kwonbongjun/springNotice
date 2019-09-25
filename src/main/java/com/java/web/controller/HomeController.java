@@ -31,13 +31,18 @@ public class HomeController {
 	@Autowired
 	NoticeServiceInterface nsi;
 	@RequestMapping("/submitjoin")
-	public String submitjoin(ServletRequest req, ServletResponse res){
+	public String submitjoin(HttpServletRequest req, HttpServletResponse res){
 		String id=req.getParameter("id");
 		String pw=req.getParameter("pw");
 		String nickname=req.getParameter("nickname");
+		Login checklogin = nsi.checkLogin(id);
+		if(checklogin!=null) {
+			req.setAttribute("dup", true);
+			return "join";
+		}
 		Login login = new Login(id,pw,nickname);
 		nsi.insertLogin(login);
-		return "redirect:/";
+		return "home";
 	}
 	@RequestMapping("/submitlogin")
 	public String submitlogin(HttpServletRequest req, HttpServletResponse res){

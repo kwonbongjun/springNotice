@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
 </head>
 <body>
+
 	<div class="main_blk">
 		<div>
 			<a href="/">bong's movie</a>
@@ -15,7 +16,7 @@
 		<div class="nav">
 			<ul>
 				<li><a href="/board">게시판</a></li>
-				<li><a href="/collect">키워드 분석</a></li>
+				<li><a href="/search">키워드 분석</a></li>
 			</ul>
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>

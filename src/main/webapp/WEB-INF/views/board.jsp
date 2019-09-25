@@ -27,8 +27,8 @@
 } */
 var login=false;
 var a;
-var contentperpage=3;
-var pagepernotice=3;
+var contentperpage=10;
+var pagepernotice=10;
 var totalpage;
 var pagenum=0;
 var hash=location.search.split("=");
@@ -63,8 +63,8 @@ System.out.println("list"+list);
 %>
 <%
 int a;
-int contentperpage=3;
-int pagepernotice=3;
+int contentperpage=10;
+int pagepernotice=10;
 int totalpage=(Integer)(request.getAttribute("total"));
 int pagenum=0;
 int pageIndex=1;
@@ -108,7 +108,7 @@ function check(index){
 	}
 	}
 }
-function logout(){
+<%-- function logout(){
 if(<%=session.getAttribute("login")%>!=null) {
 	//ajax
 /* 	$.ajax("url":"/login", "type":"GET", "data":{id: $("#usrname").val(), pw:$("#psw").val()}, (data) => {
@@ -130,7 +130,7 @@ if(<%=session.getAttribute("login")%>!=null) {
 }else{
 	alert("로그인 실패");
 	}
-}
+} --%>
 function loginCheck() {
 	alert("로그인필요");
 	
@@ -171,7 +171,7 @@ while(curpage>pageIndex){
 }
 if(curpage<pagenum) {
 	console.log(curpage);
-	if(pagenum-curpage<3) {
+	if(pagenum-curpage<10) {
 		curpage+=pagenum-curpage;
 		pageIndex+=pagenum-curpage;
 		<%if(request.getParameter("search")==null){%>
@@ -196,7 +196,7 @@ var search;
 function onload(){
 search="<%=request.getParameter("search")%>";
 
-if(pagenum-pageIndex<3) {
+if(pagenum-pageIndex<10) {
 		pagepernotice=pagenum-pageIndex+1;
 	}
 	
@@ -225,9 +225,9 @@ document.getElementById("page").appendChild(pageli);
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].classList.add("content");
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].appendChild(lia);
 <%if(request.getParameter("search")==null){%>
-document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i);
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/board?pageNum="+i);
 <%}else{%>
-document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+i+"&search="+search);
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/board?pageNum="+i+"&search="+search);
 <%}%>
 t=i+1-pageIndex;
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('onclick', "pageclick("+t+")" );
@@ -252,15 +252,14 @@ for(int i=1;i<=pagenum;i++){%>
 </head>
 
 <body onload="onload()">
-	<div
-	 class="main_blk">
+	<div class="main_blk">
 		<div>
 			<a href="/">bong's movie</a>
 		</div>
 		<div class="nav">
 			<ul>
 				<li><a href="/board">게시판</a></li>
-				<li><a href="/collect">키워드 분석</a></li>
+				<li><a href="/search">키워드 분석</a></li>
 			</ul>
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>
@@ -275,10 +274,10 @@ for(int i=1;i<=pagenum;i++){%>
 <div id="list">
 	<script>
 	</script>
-	<form id="content">
+<%-- 	<form id="content">
 		<input type="text" name="no" >
 		<input type="text" name="val">
-<%-- 		<%if(session.getAttribute("login")!=null){%><input type="hidden" name="writer" value=<%=user.getId()%>><%} %> --%>
+		<%if(session.getAttribute("login")!=null){%><input type="hidden" name="writer" value=<%=user.getId()%>><%} %>
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/create" value="추가"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>>
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/update" value="업데이트"<%}else{%>method="GET" onclick="loginCheck()" value="업데이트"<%} %>>
 		<input type="submit"  <%if(session.getAttribute("login")!=null){%>formaction="/delete" value="삭제"<%}else{%>method="GET" onclick="loginCheck()" value="삭제"<%} %>>
@@ -287,15 +286,23 @@ for(int i=1;i<=pagenum;i++){%>
 		<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/kakao" value="카카오""><%
 		}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">카카오로그아웃</button><% }%>
 		<%if(session.getAttribute("login")!=null){%><p><%=user%></p><%} %>
-		<input type="submit" formaction="/join" value="회원가입">
-		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> --%>
-	</form>
+		<input type="submit" formaction="/join" value="회원가입"> --%>
+		<%-- <input type="submit"  <%if(session.getAttribute("login")==null){%>formaction="/kakao" value="카카오"<%}else{%> method="GET" onclick="loginCheck()" value="추가" <% }%>> 
+	</form>--%>
+	
+	<form class="ml10">
 	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/board/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
-	<form>
 	<input type="text" name="search">
 	<a href="/"><button type="submit">search</button></a>
 	</form>
-	<table class="table table-striped table-bordered table-hover">
+	<table class="table table-striped table-bordered table-hover ml10">
+	<thead>
+		<tr>
+			<td>글 번호</td>
+			<td class="title">제목</td>
+			<td>작성자</td>
+		</tr>
+	</thead>
 	<tbody>
 	<% 
 		for(int i=0;i<a;i++) {
@@ -303,7 +310,7 @@ for(int i=1;i<=pagenum;i++){%>
 		%><tr>
 		<%-- <input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)"> --%>	
 		<td><%=list.get(i).getNo()%></td>
-		<%if(session.getAttribute("login")!=null){%><td><a href="/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></td><%}else{ %>
+		<%if(session.getAttribute("login")!=null){%><td><a href="/board/?boardNum=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></td><%}else{ %>
 		<td><%=list.get(i).getTitle() %></td><%} %>
 		<td><%=list.get(i).getWriter()%></td>
 		<%-- <li class="content"><%=request.getAttribute("user")%></li> --%>
