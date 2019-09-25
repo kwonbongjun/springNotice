@@ -17,17 +17,26 @@ import com.java.web.bean.Bean;
 import com.java.web.bean.FileBean;
 import com.java.web.bean.Login;
 import com.java.web.dao.NoticeDao;
+import com.java.web.dao.NoticeDaoInterface;
 
 @Service
 public class NoticeService implements NoticeServiceInterface {
  @Autowired
  NoticeDao nd;
+ @Autowired
+ NoticeDaoInterface ndi;
 	
 	public Login loginRead(String id, String pw){
 		Login login=new Login(id, pw);
 		return nd.loginselect(login); 
 	}
-	 
+	public void insertLogin(Login login) {
+		ndi.insertLogin(login);
+	}
+	public Login checkLogin(String id) {
+		return ndi.selectLogin(id);
+	}
+	
  	public int contentReadAll(){
  		return nd.contentselectAll();
  	}

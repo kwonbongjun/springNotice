@@ -238,20 +238,22 @@ public class BoardController { //인터페이스
 			jtoken = JSONObject.fromObject(result);
 			System.out.println(result);
 //			String temp=(String) jtoken.get("properties");
-
+			String tmpid =jtoken.get("id").toString();
 			JSONObject tmp=JSONObject.fromObject(jtoken.get("properties"));
-
+			tmp.put("id", tmpid);
 			nm=(String) tmp.get("nickname");
 
 			System.out.println(nm);
+			HttpSession session=request.getSession();
+			Login login=new Login(tmp.get("id").toString(),(String)tmp.get("nickname"));
+			session.setAttribute("login", login);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
-		HttpSession session=request.getSession();
-		session.setAttribute("login", true);
+
 		return "redirect:/";
 	}
 	

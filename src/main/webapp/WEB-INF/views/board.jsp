@@ -78,11 +78,11 @@ if(list==null) {
 	}
 	System.out.println(""+a+pagenum);
 }
-String user= (String) request.getAttribute("user");
-System.out.println("user"+user);
-if(user==null) {
+//String user= (String) request.getAttribute("user");
+//System.out.println("user"+user);
+/* if(user==null) {
 //Login user=(Login)request.getAttribute("user");}
-}
+} */
 %>
 totalpage=<%=totalpage%>
 pagenum=parseInt(totalpage/contentperpage);
@@ -252,7 +252,26 @@ for(int i=1;i<=pagenum;i++){%>
 </head>
 
 <body onload="onload()">
-
+	<div
+	 class="main_blk">
+		<div>
+			<a href="/">bong's movie</a>
+		</div>
+		<div class="nav">
+			<ul>
+				<li><a href="/board">게시판</a></li>
+				<li><a href="/collect">키워드 분석</a></li>
+			</ul>
+			<form id="content" class="textright">
+<%-- 							<%String user= (String) request.getAttribute("user"); %> --%>
+				<%Login user = (Login) session.getAttribute("login"); %>
+				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/loginpage" value="login"  onclick="logout()"><%
+				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout"">logout</button><% }%>
+				<%if(session.getAttribute("login")!=null){%><%=user.getNickname()%><%} %>
+				<button type="submit" formaction="/join" value="회원가입">회원가입</button>
+			</form>
+		</div>
+	</div>
 <div id="list">
 	<script>
 	</script>

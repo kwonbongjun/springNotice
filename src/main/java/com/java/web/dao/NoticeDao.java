@@ -26,6 +26,13 @@ public class NoticeDao implements NoticeDaoInterface{
 
 	  	return s.selectOne("test.login", login); 
 	}
+	public void insertLogin(Login login) {
+		s.insert("test.insertLogin",login);
+	}
+	public Login selectLogin(String id) {
+		return s.selectOne("test.checkLogin",id);
+	}
+	
 	public int contentselectAll() {
 		return s.selectOne("test.contentall");
 	}

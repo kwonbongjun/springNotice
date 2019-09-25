@@ -10,7 +10,6 @@
 <link href="CSS/style.css" rel="stylesheet" type="text/css" />
 <style>
 body {
-background:url(https://preview.ibb.co/g6MVS9/gg.png);
 font-family:'PT Sans',Helvetica, Arial, sans-serif;
 color:#fff;
    background-repeat: no-repeat;
@@ -169,12 +168,11 @@ button:active {
 
 <div class="page-container">
             
-            <form action="#" method="POST">
+            <form action="/submitjoin" method="POST">
 			<h1>Sign Up</h1>
-                <input type="text" name="name" class="Name" placeholder="Name">
-                <input type="text" name="tele" class="Tele" placeholder="Number Phone">
-				<input type="text" name="email" class="Email" placeholder="Email">
-				<input type="password" name="password" class="Address" placeholder="password">
+                <input type="text" name="id" class="Name" placeholder="ID">
+                <input type="password" name="pw" class="Tele" placeholder="Password">
+				<input type="text" name="nickname" class="Address" placeholder="nickname">
                 <button type="submit" value="Add" name="submit">Submit</button>
             </form>
         </div>
