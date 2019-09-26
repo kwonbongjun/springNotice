@@ -253,7 +253,7 @@ var svg = d3.select("#my_dataviz")
 </head>
 
   <body>
-	<div class="main_blk">
+	<div class="main_blk tc">
 		<div>
 			<a href="/">bong's movie</a>
 		</div>
@@ -289,14 +289,16 @@ var svg = d3.select("#my_dataviz")
  	Movie movie=(Movie) request.getAttribute("movie");%>
 <!-- Create a div where the graph will take place -->
 <%if(movie!=null) { System.out.println(movie.getTitle());%>
-<div class="inline">
+<div class="inline w30">
 <img src="<%=movie.getImage()%>" alt="movie" width=110; height=150;>
-<p><%=movie.getTitle()%></p>
+<p>제목:<%=movie.getTitle()%></p>
+<p>감독:<%=movie.getDirector() %>
+<p>배우:<%=movie.getActor() %>
 </div>
 <%} %>
 <%if(jo!=null) { %>
 
-<div id="my_dataviz" class="inline"></div>	
+<div id="visual" class="inline w60"></div>	
  <script>
 
 <%--  var myWord=<%=jo%> --%>
@@ -315,11 +317,11 @@ var myWords = new Array(10);
 
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
-    width = 450 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
+    width = 600 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
-var svg = d3.select("#my_dataviz").append("svg")
+var svg = d3.select("#visual").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

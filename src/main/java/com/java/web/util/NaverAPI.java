@@ -38,7 +38,7 @@ public class NaverAPI {
 		try {
 			System.out.println(search);
 			urlAddress = "https://openapi.naver.com/v1/search/movie.json"
-					+ "?query="+URLEncoder.encode(search,"UTF-8")+"&country=KR&yearfrom=2000&yearto=2019";
+					+ "?query="+URLEncoder.encode(search,"UTF-8")+"&yearfrom=2000&yearto=2019";
 			//+"\"" +"\""
 			
 			URL url = new URL(urlAddress);

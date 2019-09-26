@@ -10,7 +10,7 @@
 <body>
 
 	<div class="main_blk">
-		<div>
+		<div class="logo">
 			<a href="/">bong's movie</a>
 		</div>
 		<div class="nav">
