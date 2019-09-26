@@ -1,3 +1,4 @@
+<%@page import="com.java.web.bean.Movie"%>
 <%@page import="com.java.web.bean.Login"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>  https://bootsnipp.com/
@@ -277,17 +278,24 @@ var svg = d3.select("#my_dataviz")
         <div >
         <form class="center">
           <input class="searchbar" type="text" name="search" placeholder="Search...">
-          <button type="submit" formaction="/collect" value="회원가입">검색</button>
+          <button type="submit" formaction="/collect" value="">검색</button>
         </form>
         </div>
       </div>
     </div>
      <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
  <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
- <% String[] jo = (String[]) request.getAttribute("data");%>
+ <% String[] jo = (String[]) request.getAttribute("data");
+ 	Movie movie=(Movie) request.getAttribute("movie");%>
 <!-- Create a div where the graph will take place -->
+<%if(movie!=null) { System.out.println(movie.getTitle());%>
+<div class="inline">
+<img src="<%=movie.getImage()%>" alt="movie" width=110; height=150;>
+<p><%=movie.getTitle()%></p>
+</div>
+<%} %>
 <%if(jo!=null) { %>
-<div class="inline" style="height:100px"></div>
+
 <div id="my_dataviz" class="inline"></div>	
  <script>
 

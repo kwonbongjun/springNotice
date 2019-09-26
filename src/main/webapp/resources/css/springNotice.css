@@ -45,7 +45,7 @@ p{
 .nav{
 	display:block;
 	width:100%;
-	background-color: blue;
+	background-color: green;
 	text-align: center;
 	font-size: 30px;	
 }
@@ -92,6 +92,7 @@ p{
 	text-align: center;
 }
 .inline{
+	margin-left: 20px;
 	display: inline-block;
 	width:45%;
 }

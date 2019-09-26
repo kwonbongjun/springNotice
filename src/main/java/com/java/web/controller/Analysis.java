@@ -38,6 +38,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.JsonObject;
+import com.java.web.bean.Movie;
 import com.java.web.hadoop.JobMap;
 import com.java.web.hadoop.JobReducer;
 
@@ -46,8 +47,9 @@ import net.sf.json.JSONObject;
 
 @Controller
 public class Analysis {
-	@RequestMapping("/analysis")
-	public String mapReducer(HttpServletRequest req) throws IOException {
+//	@RequestMapping("/analysis")
+	public String[] mapReducer() throws IOException {
+	String[] tempArr = null;
 	try {
 	Configuration conf = new Configuration();
 	Configuration hadoopConf = new Configuration();
@@ -91,6 +93,7 @@ public class Analysis {
 //			pw.write(byteRead);
 //		}
 //	}
+
 	Path targetPath = new Path("/output/data/part-r-00000");
 	// 결과 문자열에 담기 위한 변수
 	StringBuilder sb = new StringBuilder();
@@ -111,6 +114,7 @@ public class Analysis {
 		String [] array;
 		int max=0;
 		List<HashMap<String, Object>> resultArray= new ArrayList<HashMap<String,Object>>();
+
 		while((strRead = br.readLine())!= null) { 
 			// 정제 결과를 문자열 변수에 담기
 			sb.append(strRead);
@@ -132,7 +136,7 @@ public class Analysis {
 				int cnt1 = 0;
 				while(iterator.hasNext()){
 				  String key = (String)iterator.next();
-				  System.out.println("hashMap Key : " + key);
+				  //System.out.println("hashMap Key : " + key);
 				  cnt1 = (int) map1.get(key);
 				}
 				set = map2.keySet();
@@ -140,7 +144,7 @@ public class Analysis {
 				int cnt2 = 0;
 				while(iterator.hasNext()){
 				  String key = (String)iterator.next();
-				  System.out.println("hashMap Key : " + key);
+				  //System.out.println("hashMap Key : " + key);
 				  cnt2 = (int) map2.get(key);
 				}		
 
@@ -150,24 +154,24 @@ public class Analysis {
 			    //return cnt1 < cnt2 ? -1 : cnt1> cnt2 ? 1 : 0;
 			  }
 			});
-		String[] tempArr=new String[10];
+		tempArr=new String[10];
 		for(int i=0;i<10;i++) {
 			HashMap<String,Object> map1=resultArray.get(i);
 			Set set = map1.keySet();
 			Iterator iterator = set.iterator();
 			while(iterator.hasNext()){
 				  String key = (String)iterator.next();
-				  System.out.println("hashMap Key : " + key);
+				  //System.out.println("hashMap Key : " + key);
 				  tempArr[i]=key;
 				}	
 		}
-		System.out.println("r"+resultArray.get(1));
+		//System.out.println("r"+resultArray.get(1));
 		
 		fsis.close();
 //		os.close();
 
 //		System.out.println(jo.toString());
-		req.setAttribute("data", tempArr);
+//		req.setAttribute("data", tempArr);
 		
 	}
 	} catch (ClassNotFoundException e) {
@@ -175,7 +179,8 @@ public class Analysis {
 	} catch (InterruptedException e) {
 		e.printStackTrace();
 	}	
-	return "Analysis";
+	
+	return tempArr;
 	}
 
 //	@Resource(name="sqlSession2")
