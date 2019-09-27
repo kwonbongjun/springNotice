@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -44,7 +45,7 @@
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
-    background-color: #353b48;
+    background-color: white;
     border-radius: 30px;
     padding: 10px;
     }
@@ -278,7 +279,7 @@ var svg = d3.select("#my_dataviz")
         <div >
         <form class="center">
           <input class="searchbar" type="text" name="search" placeholder="Search...">
-          <button type="submit" formaction="/collect" value="">검색</button>
+          <button type="submit" formaction="/collect" value=""><i class="fas fa-search"></i></button>
         </form>
         </div>
       </div>

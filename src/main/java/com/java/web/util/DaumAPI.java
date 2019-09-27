@@ -53,8 +53,8 @@ public class DaumAPI {
 		getsearchAPI2(search,os,"web");
 		getsearchAPI2(search,os,"blog");
 		getsearchAPI2(search,os,"cafe");
-		getsearchAPI3(search,os,"webkr");
-		getsearchAPI3(search,os,"blog");
+//		getsearchAPI3(search,os,"webkr");
+//		getsearchAPI3(search,os,"blog");
 		getsearchAPI3(search,os,"cafearticle");
 		
 		try {
@@ -146,7 +146,7 @@ public class DaumAPI {
 		
 		for(int j=1;j<=5;j++) {
 			try {
-				urlAddress = "https://openapi.naver.com/v1/search/"+p+"json"
+				urlAddress = "https://openapi.naver.com/v1/search/"+p+".json"
 						+ "?query="+URLEncoder.encode(search,"UTF-8")+"&start="+j;
 				//+"\"" +"\""
 				

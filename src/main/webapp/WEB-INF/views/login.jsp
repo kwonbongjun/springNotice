@@ -42,7 +42,8 @@ height: 370px;
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+/* background-color: rgba(0,0,0,0.5) !important; */
+background-color: aliceblue;
 }
 
 .social_icon span{
@@ -68,11 +69,21 @@ top: -45px;
 
 .input-group-prepend span{
 width: 50px;
-background-color: #FFC312;
+background-color: aliceblue;
 color: black;
 border:0 !important;
 }
-
+.input-group-prepend{
+background-color: aliceblue;
+}
+.form-group button{
+	border: none;
+	background-color: aliceblue;
+	
+}
+.login_btn{
+	background-color: aliceblue;/*  #FFC312*/
+}
 input:focus{
 outline: 0 0 0 0  !important;
 box-shadow: 0 0 0 0 !important;

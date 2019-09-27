@@ -23,7 +23,7 @@ public class JobMap extends Mapper<Object, Text, Text, IntWritable> {
  	        		|| temp.contains("무비") || temp.contains("-") || temp.contains("\u003a") || temp.contains("/")
  	        		|| temp.contains("·") || temp.contains("감독") || temp.contains("출연") || temp.contains("줄거리")
  	        		|| temp.contains("개봉") || temp.contains("후기") || temp.contains("주연")){
-                 System.out.println("문자열 있음!");
+//                 System.out.println("문자열 있음!");
                  continue;
  	        }else if(temp.contains("\u200b") || temp.matches(".다$") || temp.matches(".고$") || temp.matches(".는$")
  	        		|| temp.matches(".러$") || temp.matches(".더$") || temp.matches(".") || temp.matches(".이$")
@@ -47,13 +47,13 @@ public class JobMap extends Mapper<Object, Text, Text, IntWritable> {
 	        		|| temp.contains("무비") || temp.contains("-") || temp.contains("\u003a") || temp.contains("/")
 	        		|| temp.contains("·") || temp.contains("감독") || temp.contains("출연") || temp.contains("줄거리")
 	        		|| temp.contains("개봉") || temp.contains("후기") || temp.contains("주연")){
-                System.out.println("문자열 있음!");
+//                System.out.println("문자열 있음!");
                 continue;
 	        }else if(temp.contains("\u200b") || temp.matches(".다$") || temp.matches(".고$") || temp.matches(".는$")
 	        		|| temp.matches(".러$") || temp.matches(".더$") || temp.matches(".") || temp.matches(".이$")
 	        		|| temp.matches(".은$") || temp.matches(".의$") || temp.matches("..이$") || temp.matches("..은$")
 	        		) {
-	        	System.out.println("유니코드있음!");
+//	        	System.out.println("유니코드있음!");
 	        	continue;
 	        }else if(temp.contains("바로") || temp.contains("너무") || temp.contains("다시") || temp.contains("그리고")
 	        	|| temp.contains("기자") || temp.contains("박스오피스")) {

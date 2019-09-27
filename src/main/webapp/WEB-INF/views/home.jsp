@@ -5,7 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>봉준의 게시판</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 <body>
 
@@ -21,21 +24,33 @@
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>
 				<%Login user = (Login) session.getAttribute("login"); %>
-				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/loginpage" value="login"  onclick="logout()"><%
-				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout"">logout</button><% }%>
+				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><button type="submit"  formaction="/loginpage" value="login"  onclick="logout() " class="login"><i class="fas fa-sign-in-alt"></i></button><%
+				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout" class="login"><i class="fas fa-sign-out-alt"></i></button><% }%>
 				<%if(session.getAttribute("login")!=null){%><%=user.getNickname()%><%} %>
-				<button type="submit" formaction="/join" value="회원가입">회원가입</button>
+				<button  type="submit" formaction="/join" class="login"><i class="fas fa-user-plus"></i></button>
+
 			</form>
 		</div>
 		<div class="body">
-	 	<p>☆사이트 소개☆<br>
-	 	1.게시판<br>
-	 	2.키워드 분석</p>
-			<img src="/resources/img/analysis1.jpg" alt="analysis">
-		</div>
+	 	<p>☆사이트 소개☆</p><br>
+	 		<div class="c1">
+	 		<p>1.게시판</p>
+	 		<div><img class="fl" src="/resources/img/board.PNG" alt="board">
+	 		영화에 대해 자유롭게 이야기 나누고 생각을 공유할 수 있는 게시판 기능</div>
+	 		</div>
+	 		<div class="c2">
+			 	<p>2.키워드 분석</p>
+			 	영화를 검색했을 때 웹에서 영화와 관련된 키워드 추출
+			 	<img  class="tr" src="/resources/img/analysis1.jpg" alt="analysis" >
+				
+			</div>
 	</div>
 	<div class="footer">
-		
+		<ul>
+			<li>tel:010-1111-2222</li>
+			<li>address:경기도 군포시</li>
+			<li>Copyright@Bong Corp.All rights reserved.</li>
+		</ul>
 	</div>
 </body>
 </html>
