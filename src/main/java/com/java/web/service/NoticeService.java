@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.java.web.bean.Bean;
 import com.java.web.bean.FileBean;
 import com.java.web.bean.Login;
+import com.java.web.bean.Movie;
+import com.java.web.bean.UserMovie;
 import com.java.web.dao.NoticeDao;
 import com.java.web.dao.NoticeDaoInterface;
 
@@ -130,11 +132,20 @@ public class NoticeService implements NoticeServiceInterface {
 // 	}
 
 
-
-
-
-
-
-
+	public int titleidmapping(String title) {
+		return ndi.titleidmapping(title);
+	}
+	public int isSetScore(UserMovie um ) {
+		return ndi.isSetScore(um);
+	}
+	public void setstar(UserMovie um) {
+		ndi.setstar(um);
+	}
+	public void insertUserMovie(UserMovie um) {
+		ndi.inserUserMovie(um);
+	}
+	public List<String> recommend(String id) {
+		return ndi.recommend(id);
+	}
 
 }

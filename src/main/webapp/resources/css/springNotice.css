@@ -1,6 +1,7 @@
 @charset "EUC-KR";
 body{
 	margin:0;
+
 }
 ul{
 	display:inline-block;
@@ -19,14 +20,16 @@ p{
 }
 a{
 	text-decoration: none;
-	color: black;
+	font-family: serif;
+	color:#337ab7;
 }
 img{
 	display: inline;
-    max-width: 50%;
-    max-height: 50%;
+    max-width: 30%;
+    max-height: 100%;
     margin : 10px 10px;
-    vertical-align:middle
+    vertical-align:middle;
+    border: 1px solid aqua;
 }
 	.content {
 		display:inline-block;
@@ -108,6 +111,7 @@ img{
 	float: left;
 }
 .fr{
+	clear:both;
 	float: right;
 }
 .c2{
@@ -140,6 +144,13 @@ div.body{
 	width:80%;
 	margin-top: 50px;
 	position: relative;
+	font-family: serif;
+	color:maroon;
+	height: auto;
+}
+.body p{
+	width:65%;
+	display: inline-block;
 }
 
 div.body:after {
@@ -157,6 +168,8 @@ div.body:after {
     height: 100%;
     opacity : 0.2;
     z-index: -1;
+    font-family: serif;
+	color:aqua
 }
 .form-control{
  	width:80% !important;	
@@ -206,4 +219,16 @@ div.body:after {
 .container button{
 	border:none;
 	background-color: white;
+
+}
+
+
+.star{
+	cursor: pointer;
+}
+#star div{
+	display: inline-block;
+}
+p.star{
+	white-space: nowrap;
 }

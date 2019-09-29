@@ -4,6 +4,8 @@ public class Login {
 	private String id;
 	private String pw;
 	private String nickname;
+
+	
 	public Login(String id,String nickname) {
 		this.id=id;
 		this.nickname=nickname;

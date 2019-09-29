@@ -19,7 +19,7 @@
    select count(*) from content where delYn='N' and title=#{title}
   </select>
    <select id="content" resultType="com.java.web.bean.Bean">
-   select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' order by no asc) where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10
+   select no,title,val,writer from (select row_number() over(order by no asc) rn,no,title,val,writer from content where delYn='N') where rn <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and rn <![CDATA[ < ]]>= (#{pageNum})*10
   </select>
   <select id="selectContentSearch" parameterType="hashmap" resultType="com.java.web.bean.Bean">
   	select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' and title=#{title}) where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10 
@@ -66,4 +66,37 @@
 	update content set delYn='Y' where no=#{no}
   </update>
   
+  <insert id="crawling" parameterType="com.java.web.util.CrawlingBean">
+  	insert into movie (no,title,genre1,genre2,nation,time,release,director) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
+  </insert>
+  
+  <select id="titleidmapping" parameterType="String" resultType="int">
+    select no from movie where title=#{title}
+  </select>
+  
+   <select id="isSetScore" parameterType="com.java.web.bean.UserMovie" resultType="Integer">
+    select count(*) from UserMovie where user_id=#{user_id} and m_no=#{m_no}
+  </select>
+  
+   <update id="setStar" parameterType="com.java.web.bean.UserMovie" >
+	update UserMovie set m_rate=#{m_rate} where user_id=#{user_id} and m_no=#{m_no}
+  </update>
+  
+   <insert id="insertUM" parameterType="com.java.web.bean.UserMovie">
+  	insert into UserMovie (user_id,m_no,m_rate,searchCnt) values (#{user_id},#{m_no},#{m_rate},#{searchCnt})
+  </insert>
+
+  <select id="recommend" parameterType="String" resultType="String">
+        select title from movie 
+        where genre1 in (select genre1 
+	        from(
+	        select m.genre1 , count(m.genre1) cnt1
+	        from UserMovie um 
+	        join
+	        movie m
+	        on (um.m_no = m.no and um.watchYn='N')
+	        where um.user_id=#{id}
+	        group by m.genre1, m.genre2
+	        order by  cnt1 desc))
+  </select>
 </mapper>

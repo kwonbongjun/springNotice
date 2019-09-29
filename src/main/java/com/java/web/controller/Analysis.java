@@ -155,12 +155,32 @@ public class Analysis {
 			  }
 			});
 		tempArr=new String[10];
+		int a=0;
+		String tempstr="";
+		String m1=null;
+		String m2=null;
 		for(int i=0;i<10;i++) {
-			HashMap<String,Object> map1=resultArray.get(i);
+			HashMap<String,Object> map1=resultArray.get(i+a);
 			Set set = map1.keySet();
 			Iterator iterator = set.iterator();
 			while(iterator.hasNext()){
 				  String key = (String)iterator.next();
+				  if(i==0) {
+						tempArr[i]=key;
+						break;
+					}
+				  	if(key.length()<tempstr.length()) {
+				  		m1=key;m2=tempstr;
+				  	}else {
+				  		m2=key;m1=tempstr;
+				  	}
+				  	if(m2.contains(m1)) {
+				  		System.out.println(i);
+						  tempstr=key;
+						  a++;i--;
+						  break;
+					 }
+				  	tempstr=key;
 				  //System.out.println("hashMap Key : " + key);
 				  tempArr[i]=key;
 				}	

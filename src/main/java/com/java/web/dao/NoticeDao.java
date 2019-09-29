@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.java.web.bean.Bean;
 import com.java.web.bean.FileBean;
 import com.java.web.bean.Login;
+import com.java.web.bean.Movie;
+import com.java.web.bean.UserMovie;
 
 @Repository
 public class NoticeDao implements NoticeDaoInterface{
@@ -94,10 +96,20 @@ public class NoticeDao implements NoticeDaoInterface{
 //	}
 
 
-
-
-
-
-
-
+	public int titleidmapping(String title) {
+		return s.selectOne("test.titleidmapping",title);
+	}
+	public int isSetScore(UserMovie um) {
+		System.out.println(s.selectOne("test.isSetScore",um).toString());
+		return s.selectOne("test.isSetScore",um);
+	}
+	public void setstar(UserMovie um) {
+		s.update("test.setStar", um);
+	}
+	public void inserUserMovie(UserMovie um) {
+		s.insert("test.insertUM", um);
+	}
+	public List<String> recommend(String id) {
+		return s.selectList("test.recommend", id);
+	}
 }

@@ -9,6 +9,8 @@
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
@@ -251,8 +253,10 @@ var svg = d3.select("#my_dataviz")
 
 //})
 </script> --%>
-</head>
 
+</head>
+ 	<%Movie movie=(Movie) request.getAttribute("movie"); %>
+ 	
   <body>
 	<div class="main_blk tc">
 		<div>
@@ -278,6 +282,8 @@ var svg = d3.select("#my_dataviz")
       <div class="d-flex justify-content-center h-100">
         <div >
         <form class="center">
+          <%if(user!=null){ %><input type="hidden" nm="user_id" value="<%=user.getId()%>"><%} %>
+          <%if(movie!=null){ %><input type="hidden" nm="m_no" value="<%=movie.getTitle()%>"><%} %>
           <input class="searchbar" type="text" name="search" placeholder="Search...">
           <button type="submit" formaction="/collect" value=""><i class="fas fa-search"></i></button>
         </form>
@@ -286,8 +292,7 @@ var svg = d3.select("#my_dataviz")
     </div>
      <%-- <%List<HashMap<String,Object>> jo = (List<HashMap<String,Object>>) request.getAttribute("data");%> --%>
  <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
- <% String[] jo = (String[]) request.getAttribute("data");
- 	Movie movie=(Movie) request.getAttribute("movie");%>
+ <% String[] jo = (String[]) request.getAttribute("data");%>
 <!-- Create a div where the graph will take place -->
 <%if(movie!=null) { System.out.println(movie.getTitle());%>
 <div class="inline w30">
@@ -295,6 +300,50 @@ var svg = d3.select("#my_dataviz")
 <p>제목:<%=movie.getTitle()%></p>
 <p>감독:<%=movie.getDirector() %>
 <p>배우:<%=movie.getActor() %>
+<%if(request.getAttribute("isSetScore")==null && (user!=null)) {%>
+<script>
+
+var rstar;
+function star(i) {
+	rstar=i;
+	for(var j=0;j<5;j++) {
+		document.getElementsByClassName("star")[j].style.color="black"
+	}
+	for(var j=0;j<i;j++) {
+		document.getElementsByClassName("star")[j].style.color="yellow"
+	}
+}
+
+
+function setstar(user_id,m_no) {
+	$.ajax({
+		url:"/setstar",
+		dataType:"json",
+		data:{star:rstar,user_id:user_id,m_no:m_no}
+	}).done(function(data){
+		alert("평점을 주었습니다.");
+	});
+	alert("평점을 주었습니다.");
+}
+</script>
+
+<%-- <form id="star">
+	<div onclick="star(1,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)" class="star">☆</div>
+	<div onclick="star(2,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)" class="star">☆</div>
+	<div onclick="star(3,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)" class="star">☆</div>
+	<div onclick="star(4,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)" class="star">☆</div>
+	<div onclick="star(5,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)" class="star">☆</div>
+	<button type="button">등록</button>
+</form> --%>
+<form id="star">
+	<div onclick="star(1)" class="star">☆</div>
+	<div onclick="star(2)" class="star">☆</div>
+	<div onclick="star(3)" class="star">☆</div>
+	<div onclick="star(4)" class="star">☆</div>
+	<div onclick="star(5)" class="star">☆</div>
+	<button type="button" onclick="setstar(<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)">등록</button>
+</form>
+<%} %>
 </div>
 <%} %>
 <%if(jo!=null) { %>

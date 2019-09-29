@@ -72,8 +72,11 @@ public class NaverAPI {
 //			OutputStream output = response.getOutputStream();
 //			IOUtils.copy(input, output);
 //			response.setHeader("content-Disposition", "attachment;filename=\""+(originalFilename)+"\"");
-			
-			movie = new Movie((String) mo.get("image"), (String) mo.get("title"),
+			String title=(String)mo.get("title");
+
+			title=title.replace("<b>", "");
+			title=title.replace("</b>", "");
+			movie = new Movie((String) mo.get("image"), title,
 					(String) mo.get("director"),(String) mo.get("actor"),(String) mo.get("userRating"));
 			
 		}catch (UnsupportedEncodingException e) {
