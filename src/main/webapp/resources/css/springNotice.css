@@ -31,6 +31,15 @@ img{
     vertical-align:middle;
     border: 1px solid aqua;
 }
+.center input, select{
+	border-radius: 30px;
+	width:100px;
+	height:30px;
+}
+.searchbar{
+	width:200px !important;
+	height:60px !important;
+}
 	.content {
 		display:inline-block;
 		height:100px;
@@ -232,3 +241,7 @@ div.body:after {
 p.star{
 	white-space: nowrap;
 }
+.ui-datepicker-calendar {
+    display: none;
+    }​
+​

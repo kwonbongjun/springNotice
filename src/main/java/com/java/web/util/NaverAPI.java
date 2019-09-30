@@ -32,15 +32,25 @@ import net.sf.json.JSONObject;
 
 @Controller
 public class NaverAPI {
-	public Movie naverMovie (String search) {
+	public Movie[] naverMovie (String search,String sdate, String edate, String  nation) {
 		String urlAddress;
-		Movie movie=null;
+		Movie[] movie=null;
 		try {
 			System.out.println(search);
+			if(sdate==null) {
+				sdate="2000";
+			}
+			if(edate==null) {
+				edate="2019";
+			}
+
 			urlAddress = "https://openapi.naver.com/v1/search/movie.json"
-					+ "?query="+URLEncoder.encode(search,"UTF-8")+"&yearfrom=2000&yearto=2019";
+					+ "?query="+URLEncoder.encode(search,"UTF-8")+"&yearfrom="+sdate+"&yearto="+edate;
 			//+"\"" +"\""
-			
+			if(nation!=null) {
+				urlAddress+="&country="+nation;
+			}
+
 			URL url = new URL(urlAddress);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			 
@@ -64,7 +74,10 @@ public class NaverAPI {
 			
 			JSONObject jtoken = JSONObject.fromObject(result);
 			JSONArray ma=JSONArray.fromObject(jtoken.get("items"));
-			JSONObject mo=JSONObject.fromObject(ma.get(0));
+			movie = new Movie[ma.size()];
+			for(int i = 0;i<ma.size();i++) {
+
+			JSONObject mo=JSONObject.fromObject(ma.get(i));
 //			System.out.println(accesstoken);
 //			JSONArray documents=JSONArray.fromObject(jtoken.get("documents"));
 			
@@ -73,12 +86,13 @@ public class NaverAPI {
 //			IOUtils.copy(input, output);
 //			response.setHeader("content-Disposition", "attachment;filename=\""+(originalFilename)+"\"");
 			String title=(String)mo.get("title");
-
+			System.out.println(title);
 			title=title.replace("<b>", "");
 			title=title.replace("</b>", "");
-			movie = new Movie((String) mo.get("image"), title,
+			movie[i] = new Movie((String) mo.get("image"), title,
 					(String) mo.get("director"),(String) mo.get("actor"),(String) mo.get("userRating"));
-			
+
+			}
 		}catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}catch (IOException e) {

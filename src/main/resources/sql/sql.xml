@@ -87,7 +87,7 @@
   </insert>
 
   <select id="recommend" parameterType="String" resultType="String">
-        select title from movie 
+<!--         select title from movie 
         where genre1 in (select genre1 
 	        from(
 	        select m.genre1 , count(m.genre1) cnt1
@@ -98,5 +98,18 @@
 	        where um.user_id=#{id}
 	        group by m.genre1, m.genre2
 	        order by  cnt1 desc))
+	        select title, genre1, genre2, nation, director -->
+		select title from movie 
+        where genre1 in (select m1.genre1
+	        from(
+	        select m.genre1,genre2,nation,director , count(m.genre1) cnt1, count(m.genre2) cnt2, count(m.nation) nt, count(m.director) dr
+	        from UserMovie um 
+	        join
+	        movie m
+	        on (um.m_no = m.no and um.watchYn='N')
+	        where um.user_id=#{id}
+	        group by m.genre1 ,m.genre2, m.nation, m.director
+	        order by  cnt1 desc, cnt2 desc, nt desc, dr desc) m1)
+	        order by genre1 , genre2 , nation , director
   </select>
 </mapper>

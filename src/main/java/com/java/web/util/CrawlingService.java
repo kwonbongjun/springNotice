@@ -27,7 +27,7 @@ public class CrawlingService implements CrawlingServiceInterface {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		Document doc;
 		try {
-			for(int i=161501; i<163001;i++) {
+			for(int i=161501; i<162001;i++) {
 			doc = Jsoup.connect("https://movie.naver.com/movie/bi/mi/basic.nhn?code="+i).get();
 			Elements pages = doc.select(".mv_info .step4 em");
 			String title="";

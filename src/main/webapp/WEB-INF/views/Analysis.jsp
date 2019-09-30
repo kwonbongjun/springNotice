@@ -28,6 +28,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <!--  -->
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <head>
 <style>
 .node:hover{
@@ -254,10 +258,25 @@ var svg = d3.select("#my_dataviz")
 //})
 </script> --%>
 
+<script>
+$(document).ready(function(){$(".datepicker").datepicker({
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'yy',
+        onClose: function(dateText, inst) { 
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, 1));
+        }
+	
+	});
+
+}); 
+</script>
 </head>
- 	<%Movie movie=(Movie) request.getAttribute("movie"); %>
+ 	<%Movie[] movie=(Movie[]) request.getAttribute("movie"); %>
  	
   <body>
+
 	<div class="main_blk tc">
 		<div>
 			<a href="/">bong's movie</a>
@@ -283,7 +302,20 @@ var svg = d3.select("#my_dataviz")
         <div >
         <form class="center">
           <%if(user!=null){ %><input type="hidden" nm="user_id" value="<%=user.getId()%>"><%} %>
-          <%if(movie!=null){ %><input type="hidden" nm="m_no" value="<%=movie.getTitle()%>"><%} %>
+<%--           <%if(movie!=null){ %><input type="hidden" nm="m_no" value="<%=movie.getTitle()%>"><%} %> --%>
+
+  			<input type="text" name="sdate" id="datepicker" class=".ui-datepicker-calendar datepicker" placeholder="시작날짜"/>   
+
+  			<input type="text" name="edate" id="datepicker" class=".ui-datepicker-calendar datepicker" placeholder="끝날짜"/>   
+
+		  <select name = "nation">
+		  	  <option value="">국가</option>
+			  <option value="KR">Korea</option>
+			  <option value="JP">America</option>
+			  <option value="US">Japan</option>
+			  <option value="HK">China</option>
+		  </select>
+		  <input class="searchbar" type="text" name="director" placeholder="director">
           <input class="searchbar" type="text" name="search" placeholder="Search...">
           <button type="submit" formaction="/collect" value=""><i class="fas fa-search"></i></button>
         </form>
@@ -294,12 +326,12 @@ var svg = d3.select("#my_dataviz")
  <%-- <%List<JSONObject> jo = (List<JSONObject>) request.getAttribute("data");%> --%>
  <% String[] jo = (String[]) request.getAttribute("data");%>
 <!-- Create a div where the graph will take place -->
-<%if(movie!=null) { System.out.println(movie.getTitle());%>
-<div class="inline w30">
-<img src="<%=movie.getImage()%>" alt="movie" width=110; height=150;>
-<p>제목:<%=movie.getTitle()%></p>
-<p>감독:<%=movie.getDirector() %>
-<p>배우:<%=movie.getActor() %>
+<%if(movie!=null) { %><div class="inline w30"><% for(int i=0;i<movie.length;i++) {%>
+<div class="">
+<img src="<%=movie[i].getImage()%>" alt="movie" width=110; height=150;>
+<p>제목:<%=movie[i].getTitle()%></p>
+<p>감독:<%=movie[i].getDirector() %>
+<p>배우:<%=movie[i].getActor() %>
 <%if(request.getAttribute("isSetScore")==null && (user!=null)) {%>
 <script>
 
@@ -341,10 +373,12 @@ function setstar(user_id,m_no) {
 	<div onclick="star(3)" class="star">☆</div>
 	<div onclick="star(4)" class="star">☆</div>
 	<div onclick="star(5)" class="star">☆</div>
-	<button type="button" onclick="setstar(<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)">등록</button>
+	<button type="button" onclick="setstar(<%="\'"+user.getId()+"\'"%>,<%="\'"+movie[i].getTitle()+"\'"%>)">등록</button>
 </form>
 <%} %>
 </div>
+	<% }%>
+	</div>
 <%} %>
 <%if(jo!=null) { %>
 

@@ -25,8 +25,8 @@ public class RecommendController {
 		System.out.println(id);
 		List<String> title=nsi.recommend(id);
 		NaverAPI na = new NaverAPI();
-		Movie m = na.naverMovie(title.get(0));
-		req.setAttribute("mlist", m);
+		Movie[] m = na.naverMovie(title.get(0),null,null,null);
+		req.setAttribute("mlist", m[0]);
 		return "recommend";
 	}
 }

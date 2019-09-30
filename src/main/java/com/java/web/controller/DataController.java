@@ -54,46 +54,52 @@ public class DataController {
 	@RequestMapping("/collect")
 	public String Collect (HttpServletRequest request, HttpServletResponse response) {
 		
-//		try {
+		try {
 			String search=request.getParameter("search");
 			System.out.println(search);
-			
+			String sdate = request.getParameter("sdate");
+			String edate = request.getParameter("edate");
+			String nation = request.getParameter("nation");
+			String director = request.getParameter("director");
+			System.out.println(sdate+" "+ edate+" "+ nation+" " + director +"1111");
 			NaverAPI n = new NaverAPI(); 
-			Movie m = n.naverMovie(search);
-			
-
+			Movie[] m = n.naverMovie(search, sdate, edate, nation);
+			if(director!=null) {
+				search=director+" "+search;
+			}
 //			
-//			DaumAPI da = new DaumAPI();
-//			da.getsearchAPI(search);
-//
-//			String localStr= "C:\\Resources\\"; //"C:\\Resources\\" "D:\\workspace\\data"
-//			String hadoopStr="/input/data/";
-//			Configuration conf = new Configuration();
-//			Configuration hadoopConf = new Configuration();
-//			hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
-//			Path localPath = new Path(localStr);
-//			Path hadoopPath = new Path(hadoopStr);
-//
-//			FileSystem localSystem=FileSystem.getLocal(conf);
-//			FileSystem hadoopSystem=FileSystem.get(hadoopConf);
-//			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\"+search+".txt"));
-//			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/a.txt"));
-//			int byteRead=0;
-//			while((byteRead=fsis.read())>0) {
-//				fsos.write(byteRead);
-//			}
-//			fsis.close();
-//			fsos.close();
-			Analysis a = new Analysis();
-			//String[] str = a.mapReducer();
-			request.setAttribute("movie", m);
-			//request.setAttribute("data", str);
+			DaumAPI da = new DaumAPI();
+			da.getsearchAPI(search);
+
+			String localStr= "C:\\Resources\\"; //"C:\\Resources\\" "D:\\workspace\\data"
+			String hadoopStr="/input/data/";
+			Configuration conf = new Configuration();
+			Configuration hadoopConf = new Configuration();
+			hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
+			Path localPath = new Path(localStr);
+			Path hadoopPath = new Path(hadoopStr);
+
+			FileSystem localSystem=FileSystem.getLocal(conf);
+			FileSystem hadoopSystem=FileSystem.get(hadoopConf);
+			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\"+search+".txt"));
+			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/a.txt"));
+			int byteRead=0;
+			while((byteRead=fsis.read())>0) {
+				fsos.write(byteRead);
+			}
+			fsis.close();
+			fsos.close();
 			
-//		}catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}catch (IOException e) {
-//			e.printStackTrace();
-//		}
+			Analysis a = new Analysis();
+			String[] str = a.mapReducer();
+			request.setAttribute("movie", m);
+			request.setAttribute("data", str);
+			
+		}catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 
 		return "Analysis";
