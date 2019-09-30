@@ -99,17 +99,24 @@
 	        group by m.genre1, m.genre2
 	        order by  cnt1 desc))
 	        select title, genre1, genre2, nation, director -->
-		select title from movie 
-        where genre1 in (select m1.genre1
-	        from(
-	        select m.genre1,genre2,nation,director , count(m.genre1) cnt1, count(m.genre2) cnt2, count(m.nation) nt, count(m.director) dr
-	        from UserMovie um 
-	        join
-	        movie m
-	        on (um.m_no = m.no and um.watchYn='N')
-	        where um.user_id=#{id}
-	        group by m.genre1 ,m.genre2, m.nation, m.director
-	        order by  cnt1 desc, cnt2 desc, nt desc, dr desc) m1)
-	        order by genre1 , genre2 , nation , director
+
+select title
+from movie
+where genre1 = (select g1.genre1 from(
+    select genre1, avg(um.m_rate) c1
+    from usermovie um join movie m
+    on(um.m_no=m.no)
+    where um.watchYn='N' and um.m_rate>0 and um.user_id=#{id}
+    group by m.genre1
+    having avg(um.m_rate)=(select max(c1) from(
+        select avg(um.m_rate) c1
+        from usermovie um join movie m
+        on(um.m_no=m.no)
+        where um.watchYn='N' and um.m_rate>0
+        group by m.genre1)
+        )
+    order by c1 desc) g1 )
+order by genre1 , genre2 , nation , director    
+		
   </select>
 </mapper>
