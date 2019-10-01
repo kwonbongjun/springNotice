@@ -293,7 +293,7 @@ for(int i=1;i<=pagenum;i++){%>
 	<% 
 		for(int i=0;i<a;i++) {
 		
-		%><tr>
+		%><tr> 
 		<%-- <input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)"> --%>	
 		<td><%=i%></td>
 		<td><a href="/recommend/?boardNum=<%=list.get(i).getTitle()%>"><%=list.get(i).getTitle() %></a></td>
