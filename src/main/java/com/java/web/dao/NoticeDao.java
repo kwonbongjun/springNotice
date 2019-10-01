@@ -112,4 +112,16 @@ public class NoticeDao implements NoticeDaoInterface{
 	public List<String> recommend(String id) {
 		return s.selectList("test.recommend", id);
 	}
+	public void setWatchMovie(UserMovie um) {
+		s.update("test.setWatchMovie",um);
+	}
+	public void setrate(UserMovie m_no) {
+		s.update("test.setrate", m_no);
+	}
+	public List<Movie> movieRank(int page){
+		return s.selectList("test.movierank",page);
+	}
+	public int movieRankAll() {
+		return s.selectOne("test.movieRankAll");
+	}
 }

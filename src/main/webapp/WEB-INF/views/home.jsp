@@ -34,6 +34,7 @@ function user(id) {
 				<li><a href="/search">키워드 분석</a></li>
 				<%if(user!=null) {%>
 				<li><a href="/recommend?user=<%=user.getId()%>")>영화 추천</a></li>
+				<li><a href="/rate">평점 분석</a></li>
 				<%} %>
 			</ul>
 			<form id="content" class="textright">

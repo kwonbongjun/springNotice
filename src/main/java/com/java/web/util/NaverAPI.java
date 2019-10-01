@@ -90,7 +90,7 @@ public class NaverAPI {
 			title=title.replace("<b>", "");
 			title=title.replace("</b>", "");
 			movie[i] = new Movie((String) mo.get("image"), title,
-					(String) mo.get("director"),(String) mo.get("actor"),(String) mo.get("userRating"));
+					(String) mo.get("director"),(String) mo.get("actor"),0/*(int) mo.get("userRating")*/,0);
 
 			}
 		}catch (UnsupportedEncodingException e) {

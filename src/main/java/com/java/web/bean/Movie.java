@@ -5,13 +5,15 @@ public class Movie {
 	private String title;
 	private String director;
 	private String actor;
-	private String userRating;
-	public Movie(String image,String title, String director, String actor, String userRating) {
+	private int userRating;
+	private int userRatingCnt;
+	public Movie(String image,String title, String director, String actor, int userRating, int userRatingCnt) {
 		this.image=image;
 		this.title=title;
 		this.director=director;
 		this.actor=actor;
 		this.userRating=userRating;
+		this.userRatingCnt=userRatingCnt;
 	}
 	public String getImage() {
 		return image;
@@ -37,11 +39,17 @@ public class Movie {
 	public void setActor(String actor) {
 		this.actor = actor;
 	}
-	public String getUserRating() {
+	public int getUserRating() {
 		return userRating;
 	}
-	public void setUserRating(String userRating) {
+	public void setUserRating(int userRating) {
 		this.userRating = userRating;
+	}
+	public int getUserRatingCnt() {
+		return userRatingCnt;
+	}
+	public void setUserRatingCnt(int userRatingCnt) {
+		this.userRatingCnt = userRatingCnt;
 	}
 	
 }

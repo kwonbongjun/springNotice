@@ -130,6 +130,7 @@ public class DataController {
 		int star=Integer.parseInt(str);
 		UserMovie um = new UserMovie(user_id, m_no, star, 0, 'N');
 		nsi.setstar(um);
+		nsi.setrate(um);
 		System.out.println(1);
 	}
 	

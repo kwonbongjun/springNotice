@@ -243,5 +243,13 @@ p.star{
 }
 .ui-datepicker-calendar {
     display: none;
-    }​
-​
+ }
+ 
+.recommend{
+	margin-top: 30px;
+	margin: 0 30px;
+	display: inline-block;
+	margin-left:30%;
+	text-align: center;
+	width:40%;
+}

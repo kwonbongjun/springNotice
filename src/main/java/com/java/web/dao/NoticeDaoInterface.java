@@ -15,4 +15,8 @@ public interface NoticeDaoInterface {
 	public void setstar(UserMovie um);
 	public void inserUserMovie(UserMovie um);
 	public List<String> recommend(String id);
+	public void setWatchMovie(UserMovie um);
+	public void setrate(UserMovie um);
+	public List<Movie> movieRank(int page);
+	public int movieRankAll();
 }

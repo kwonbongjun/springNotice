@@ -19,4 +19,9 @@ public interface NoticeServiceInterface {
 	public void setstar(UserMovie um);
 	public void insertUserMovie(UserMovie um);
 	public List<String> recommend(String id);
+	public void SetWatchMovie(UserMovie um);
+	public void setrate(UserMovie um);
+	public List<Movie> movieRank(int page);
+	public int movieRankAll();
+
 }

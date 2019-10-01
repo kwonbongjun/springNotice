@@ -106,17 +106,40 @@ where genre1 = (select g1.genre1 from(
     select genre1, avg(um.m_rate) c1
     from usermovie um join movie m
     on(um.m_no=m.no)
-    where um.watchYn='N' and um.m_rate>0 and um.user_id=#{id}
+    where um.m_rate>0 and um.user_id=#{id}
     group by m.genre1
     having avg(um.m_rate)=(select max(c1) from(
         select avg(um.m_rate) c1
         from usermovie um join movie m
         on(um.m_no=m.no)
-        where um.watchYn='N' and um.m_rate>0
+        where um.m_rate>0
         group by m.genre1)
         )
-    order by c1 desc) g1 )
-order by genre1 , genre2 , nation , director    
-		
+    order by c1 desc) g1  )
+and no Not In (select m_no from usermovie where  watchYn='Y')    
+order by genre1 , genre2 , nation , director 
+
   </select>
+  
+  <update id="setWatchMovie" parameterType="com.java.web.bean.UserMovie" >
+	update UserMovie set watchYn='Y' where user_id=#{user_id} and m_no=#{m_no}
+  </update>
+
+  <update id="setrate" parameterType="com.java.web.bean.UserMovie" >
+update Movie set rateCnt=rateCnt+1 
+, rate= (select((rateCnt*rate)+(#{m_rate}))/(rateCnt+1) a
+													from movie
+													where no =#{m_no})
+where no=#{m_no}												
+  </update>
+
+ <select id="movierank" parameterType="int" resultType="com.java.web.bean.Movie">
+  select title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,title,director,rate,rateCnt from movie  order by rate desc) where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= (#{page})*10
+ </select>
+
+ 
+ <select id="movieRankAll" resultType="int">
+ select count(*) from movie
+ </select>
+ 
 </mapper>

@@ -147,5 +147,16 @@ public class NoticeService implements NoticeServiceInterface {
 	public List<String> recommend(String id) {
 		return ndi.recommend(id);
 	}
-
+	public void SetWatchMovie(UserMovie um) {
+		ndi.setWatchMovie(um);
+	}
+	public void setrate(UserMovie um) {
+		ndi.setrate(um);
+	}
+	public List<Movie> movieRank(int page){
+		return ndi.movieRank(page);
+	}
+	public int movieRankAll() {
+		return ndi.movieRankAll();
+	}
 }
