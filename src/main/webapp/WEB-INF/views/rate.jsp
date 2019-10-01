@@ -58,7 +58,7 @@ if(session==null) {
 }
 System.out.println("session"+session.getAttribute("login"));
 List<Movie> list=(List<Movie>) request.getAttribute("list");
-int finalno= (Integer) request.getAttribute("finalno");
+
 
 System.out.println("list"+list);
 %>
@@ -277,7 +277,6 @@ for(int i=1;i<=pagenum;i++){%>
 	</script>
 	
 	<form class="ml10">
-	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/recommend/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
 	<input type="text" name="search">
 	<a href="/"><button type="submit">search</button></a>
 	</form>

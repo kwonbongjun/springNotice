@@ -134,8 +134,8 @@ where no=#{m_no}
   </update>
 
  <select id="movierank" parameterType="int" resultType="com.java.web.bean.Movie">
-  select title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,title,director,rate,rateCnt from movie  order by rate desc) where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= (#{page})*10
- </select>
+  select title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,title,director,rate,rateCnt from movie  order by rate desc) where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= #{page}*10
+ </select> 
 
  
  <select id="movieRankAll" resultType="int">

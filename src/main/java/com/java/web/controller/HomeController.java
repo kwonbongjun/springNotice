@@ -63,4 +63,9 @@ public class HomeController {
 		s.invalidate();
 		return "redirect:/";
 	}
+	@RequestMapping(value="/mypage")
+	public String mypage(HttpServletRequest req, HttpServletResponse res) {
+		//정보보기, 회원탈퇴, 
+		return "mypage";
+	}
 }
