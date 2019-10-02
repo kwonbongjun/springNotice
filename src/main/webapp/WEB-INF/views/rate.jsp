@@ -85,10 +85,13 @@ if(list==null) {
 //Login user=(Login)request.getAttribute("user");}
 } */
 %>
-totalpage=<%=totalpage%>
+
+totalpage=<%=totalpage%><%System.out.println(totalpage);%>
 pagenum=parseInt(totalpage/contentperpage);
+alert(totalpage);
 if(totalpage%contentperpage>0){
 	pagenum++;
+
 }
 
 var checkIndex=-1;
@@ -198,6 +201,7 @@ function onload(){
 search="<%=request.getParameter("search")%>";
 
 if(pagenum-pageIndex<10) {
+
 		pagepernotice=pagenum-pageIndex+1;
 	}
 	
@@ -216,8 +220,8 @@ document.getElementById("page").getElementsByTagName("li")[0].appendChild(lia);
 //document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+curpage );
 document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('onclick', "leftpageclick()" );
 console.log("pageIndex"+pageIndex+"pagepernotice"+pagepernotice);
-for(var i=pageIndex;i<pageIndex+pagepernotice;i++) {
 
+for(var i=pageIndex;i<pageIndex+pagepernotice;i++) {
 pageli=document.createElement('li');
 lia=document.createElement('a');
 pagetext=document.createTextNode("["+i+"]");
@@ -226,9 +230,9 @@ document.getElementById("page").appendChild(pageli);
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].classList.add("content");
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].appendChild(lia);
 <%if(request.getParameter("search")==null){%>
-document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/recommend?pageNum="+i);
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/rate?pageNum="+i);
 <%}else{%>
-document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/recommend?pageNum="+i+"&search="+search);
+document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('href', "/rate?pageNum="+i+"&search="+search);
 <%}%>
 t=i+1-pageIndex;
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('onclick', "pageclick("+t+")" );

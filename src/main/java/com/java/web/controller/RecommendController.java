@@ -40,18 +40,18 @@ public class RecommendController {
 					//update= (String) ja.get(i);
 					int m_no=nsi.titleidmapping(str1);
 					System.out.println("11111"+user_id+m_no);
-					um=new UserMovie(user_id, m_no,0,0,'0');
+					um=new UserMovie(user_id, m_no,0,0,'0',null);
 					nsi.SetWatchMovie(um);
 				//}
 			}
 			if(str2!=null) {
 					int m_no=nsi.titleidmapping(str2);
-					um=new UserMovie(user_id, m_no,0,0,'0');
+					um=new UserMovie(user_id, m_no,0,0,'0',null);
 					nsi.SetWatchMovie(um);
 			}
 			if(str3!=null) {
 				int m_no=nsi.titleidmapping(str3);
-				um=new UserMovie(user_id, m_no,0,0,'0');
+				um=new UserMovie(user_id, m_no,0,0,'0',null);
 				nsi.SetWatchMovie(um);
 		}
 			

@@ -38,6 +38,9 @@ public class RateController {
 		req.setAttribute("list", list);
 		
 		int total;
+		//토탈페이지 구하기
+		total = nsi.selectTotalRank();
+		
 		//검색여부 확인
 		if(req.getParameter("search")!=null) {
 			String title=req.getParameter("search");
@@ -45,9 +48,10 @@ public class RateController {
 //			list=ns.contentReadSearch(page, title);
 		}else {
 			total=nsi.movieRankAll();
+			System.out.println("total"+total);
 //			list=ns.contentRead(page);
 		}
-		req.setAttribute("total", page);
+		req.setAttribute("total", total);
 		return "rate";
 	}
 }

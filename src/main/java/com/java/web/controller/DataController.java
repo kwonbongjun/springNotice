@@ -68,6 +68,12 @@ public class DataController {
 				search=director+" "+search;
 			}
 //			
+			for(int i=0;i<m.length;i++) {
+			int m2 = nsi.existMovie(m[i]);
+			if(m2!=0) {
+				//nsi.insertMovie(m2);
+			}
+			}
 			DaumAPI da = new DaumAPI();
 			da.getsearchAPI(search);
 
@@ -110,9 +116,11 @@ public class DataController {
 		if(request.getParameter("user_id")!=null && request.getParameter("m_no")!=null) {
 			String user_id = request.getParameter("user_id");
 			String title = request.getParameter("m_no");
+			String review = request.getParameter("review");
+
 			int m_no = nsi.titleidmapping(title);
 			System.out.println("1111"+user_id+m_no);
-			UserMovie um = new UserMovie(user_id, m_no, 0, 0, 'N');
+			UserMovie um = new UserMovie(user_id, m_no, 0, 0, 'N',review);
 
 			System.out.println(nsi.isSetScore(um));
 			if(nsi.isSetScore(um)!=0 && m_no!=0) {
@@ -128,7 +136,7 @@ public class DataController {
 		String title = request.getParameter("m_no");
 		int m_no = nsi.titleidmapping(title);
 		int star=Integer.parseInt(str);
-		UserMovie um = new UserMovie(user_id, m_no, star, 0, 'N');
+		UserMovie um = new UserMovie(user_id, m_no, star, 0, 'N',null);
 		nsi.setstar(um);
 		nsi.setrate(um);
 		System.out.println(1);

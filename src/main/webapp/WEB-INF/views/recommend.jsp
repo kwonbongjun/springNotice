@@ -25,11 +25,11 @@ var cnt=0;
 var u=<%="\""+user.getId()+"\""%>
 function check(idx){
 	alert(len);
-	document.getElementsByClassName("inline")[idx].style.display="none"
+	document.getElementsByClassName("recommend")[idx].style.display="none"
 	/* document.getElementsByClassName("inline")[idx].parentNode.removeChild(document.getElementsByClassName("inline")[idx]); */
 
 	for(var i=0;i<len;i++) {
-	if(document.getElementsByClassName("inline")[i].style.display=="none")
+	if(document.getElementsByClassName("recommend")[i].style.display=="none")
 		cnt++;
 	}
 	if(cnt==len){

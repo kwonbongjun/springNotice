@@ -124,4 +124,13 @@ public class NoticeDao implements NoticeDaoInterface{
 	public int movieRankAll() {
 		return s.selectOne("test.movieRankAll");
 	}
+	public int existMovie(Movie movie) {
+		return s.selectOne("test.existMovie",movie);
+	}
+	public void insertMovie(Movie m) {
+		s.insert("insertMovie",m);
+	}
+	public int selectTotalRank() {
+		return s.selectOne("test.selectTotalRank");
+	}
 }

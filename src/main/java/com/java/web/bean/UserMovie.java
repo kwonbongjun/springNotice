@@ -6,12 +6,20 @@ public class UserMovie {
 	private int m_rate;
 	private int searchCnt;
 	private char watchYn;
-	public UserMovie(String user_id, int m_no, int m_rate, int searchCnt, char watchYn) {
+	private String review;
+	public UserMovie(String user_id, int m_no, int m_rate, int searchCnt, char watchYn, String review) {
 		this.user_id=user_id;
 		this.m_no=m_no;
 		this.m_rate=m_rate;
 		this.searchCnt=searchCnt;
 		this.watchYn=watchYn;
+		this.review=review;
+	}
+	public String getReview() {
+		return review;
+	}
+	public void setReview(String review) {
+		this.review = review;
 	}
 	public String getUser_id() {
 		return user_id;

@@ -348,10 +348,12 @@ function star(i) {
 
 
 function setstar(user_id,m_no) {
+	var review=document.getElementById("star").getElementsByTagName("input")[0].value
+	
 	$.ajax({
 		url:"/setstar",
 		dataType:"json",
-		data:{star:rstar,user_id:user_id,m_no:m_no}
+		data:{star:rstar,user_id:user_id,m_no:m_no,review:review}
 	}).done(function(data){
 		alert("평점을 주었습니다.");
 	});
@@ -373,6 +375,7 @@ function setstar(user_id,m_no) {
 	<div onclick="star(3)" class="star">☆</div>
 	<div onclick="star(4)" class="star">☆</div>
 	<div onclick="star(5)" class="star">☆</div>
+	<input type="text" name="review">
 	<button type="button" onclick="setstar(<%="\'"+user.getId()+"\'"%>,<%="\'"+movie[i].getTitle()+"\'"%>)">등록</button>
 </form>
 <%} %>

@@ -159,4 +159,13 @@ public class NoticeService implements NoticeServiceInterface {
 	public int movieRankAll() {
 		return ndi.movieRankAll();
 	}
+	public int existMovie(Movie movie) {
+		return ndi.existMovie(movie);
+	}
+	public void insertMovie(Movie m2) {
+		ndi.insertMovie(m2);
+	}
+	public int selectTotalRank() {
+		return ndi.selectTotalRank();
+	}
 }

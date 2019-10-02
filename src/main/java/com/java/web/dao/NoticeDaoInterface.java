@@ -19,4 +19,7 @@ public interface NoticeDaoInterface {
 	public void setrate(UserMovie um);
 	public List<Movie> movieRank(int page);
 	public int movieRankAll();
+	public int existMovie(Movie movie);
+	public void insertMovie(Movie m);
+	public int selectTotalRank();
 }

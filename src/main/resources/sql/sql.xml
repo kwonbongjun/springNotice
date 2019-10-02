@@ -83,7 +83,7 @@
   </update>
   
    <insert id="insertUM" parameterType="com.java.web.bean.UserMovie">
-  	insert into UserMovie (user_id,m_no,m_rate,searchCnt) values (#{user_id},#{m_no},#{m_rate},#{searchCnt})
+  	insert into UserMovie (user_id,m_no,m_rate,searchCnt,review) values (#{user_id},#{m_no},#{m_rate},#{searchCnt},#{review})
   </insert>
 
   <select id="recommend" parameterType="String" resultType="String">
@@ -102,7 +102,7 @@
 
 select title
 from movie
-where genre1 = (select g1.genre1 from(
+where genre1 in (select g1.genre1 from(
     select genre1, avg(um.m_rate) c1
     from usermovie um join movie m
     on(um.m_no=m.no)
@@ -142,4 +142,17 @@ where no=#{m_no}
  select count(*) from movie
  </select>
  
+  <select id="existMovie" resultType="int" parameterType="com.java.web.bean.UserMovie" >
+ select count(*) from movie where title=#{title} and director=#{director}
+ </select>
+
+   <insert id="insertMovie" parameterType="com.java.web.bean.Movie">
+  	insert into Movie (no,title,genre1,genre2,nation,time,release,director,rate,rateCnt) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},nation,time,release,director,rate,rateCnt)
+  </insert>
+  
+  <select id="selectTotalRank" resultType="int">
+   select count(*) from movie
+  </select>
+	
+		
 </mapper>

@@ -7,6 +7,7 @@ public class Movie {
 	private String actor;
 	private int userRating;
 	private int userRatingCnt;
+
 	public Movie(String image,String title, String director, String actor, int userRating, int userRatingCnt) {
 		this.image=image;
 		this.title=title;
