@@ -7,10 +7,10 @@
     select id,pw from login where id=#{id} and pw=#{pw}
   </select>
   <insert id="test.insertLogin" parameterType="com.java.web.bean.Login">
-    insert into login (id,pw,nickname) values (#{id},#{pw},#{nickname})
+    insert into login (id,pw,nickname,gender,age) values (#{id},#{pw},#{nickname},#{gender},#{age})
   </insert>
   <select id="checkLogin" parameterType="String" resultType="com.java.web.bean.Login">
-    select id,pw,nickname from login where id=#{id}
+    select id,pw,nickname,gender,age from login where id=#{id}
   </select>
    <select id="contentall" resultType="int">
    select count(*) from content where delYn='N'
@@ -70,10 +70,16 @@
   	insert into movie (no,title,genre1,genre2,nation,time,release,director) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
   </insert>
   
+    <insert id="crawling2" parameterType="com.java.web.util.CrawlingBean">
+  	insert into movie (no,title,genre1,genre2,nation,time,release,director) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
+  </insert>
+  
   <select id="titleidmapping" parameterType="String" resultType="int">
     select no from movie where title=#{title}
   </select>
-  
+    <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="Integer">
+    select NVL(no,0) from movie where title LIKE '%' || #{title} || '%' and director=#{director}
+  </select>
    <select id="isSetScore" parameterType="com.java.web.bean.UserMovie" resultType="Integer">
     select count(*) from UserMovie where user_id=#{user_id} and m_no=#{m_no}
   </select>
@@ -134,7 +140,7 @@ where no=#{m_no}
   </update>
 
  <select id="movierank" parameterType="int" resultType="com.java.web.bean.Movie">
-  select title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,title,director,rate,rateCnt from movie  order by rate desc) where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= #{page}*10
+  select no,title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,no,title,director,rate,rateCnt from movie  order by rate desc) where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= #{page}*10
  </select> 
 
  
@@ -142,9 +148,10 @@ where no=#{m_no}
  select count(*) from movie
  </select>
  
-  <select id="existMovie" resultType="int" parameterType="com.java.web.bean.UserMovie" >
- select count(*) from movie where title=#{title} and director=#{director}
+  <select id="existMovie" resultType="Integer" parameterType="com.java.web.bean.Movie" >
+ select NVL(count(*),0) from movie where title=#{title} and director=#{director}
  </select>
+
 
    <insert id="insertMovie" parameterType="com.java.web.bean.Movie">
   	insert into Movie (no,title,genre1,genre2,nation,time,release,director,rate,rateCnt) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},nation,time,release,director,rate,rateCnt)
@@ -155,4 +162,68 @@ where no=#{m_no}
   </select>
 	
 		
+	<select id="getMaleRate" parameterType="int" resultType="int">
+		select NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=#{no}) 
+	    and user_id in( 
+	                  select id from login 
+	                   where gender='m')
+	</select>
+	
+	<select id="getFemaleRate" parameterType="int" resultType="int">
+		select NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=#{no}) 
+	    and user_id in( 
+	                  select id from login 
+	                   where gender='f')
+	</select>
+	
+	<select id="getRate10" parameterType="int" resultType="int">
+		select  NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=#{no}) 
+	    and user_id in( 
+	                  select id from login 
+	                   where age between 10 and 20)
+	</select>
+
+	<select id="getRate20" parameterType="int" resultType="int">
+		select  NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=#{no}) 
+	    and user_id in( 
+	                  select id from login 
+	                   where age between 20 and 30)
+	</select>
+
+	<select id="getRate30" parameterType="int" resultType="int">
+		select  NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=#{no}) 
+	    and user_id in( 
+	                  select id from login 
+	                   where age between 30 and 40)
+	</select>
+	
+	<select id="getRate40" parameterType="int" resultType="int">
+		select  NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=#{no}) 
+	    and user_id in( 
+	                  select id from login 
+	                   where age between 40 and 50)
+	</select>
+	
+	<select id="getRate50" parameterType="int" resultType="int">
+		select  NVL(avg(m_rate),0) from usermovie where m_no=
+	    (select no 
+	    from movie where no=42) 
+	    and user_id in( 
+	                  select id from login 
+	                   where age >=50)
+			
+	</select>
+
 </mapper>

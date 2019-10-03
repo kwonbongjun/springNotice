@@ -22,16 +22,24 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.java.web.bean.Movie;
+import com.java.web.dao.NoticeDaoInterface;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+
 @Controller
 public class NaverAPI {
+	@Autowired
+	SqlSession s;
+	@Autowired
+	NoticeDaoInterface ndi;
 	public Movie[] naverMovie (String search,String sdate, String edate, String  nation) {
 		String urlAddress;
 		Movie[] movie=null;
@@ -89,9 +97,14 @@ public class NaverAPI {
 			System.out.println(title);
 			title=title.replace("<b>", "");
 			title=title.replace("</b>", "");
+			
+			
+			String director=(String)mo.get("director");
+			director=director.replace("|", "");
 			movie[i] = new Movie((String) mo.get("image"), title,
-					(String) mo.get("director"),(String) mo.get("actor"),0/*(int) mo.get("userRating")*/,0);
-
+					director,(String) mo.get("actor"),0/*(int) mo.get("userRating")*/,0);
+			
+	
 			}
 		}catch (UnsupportedEncodingException e) {
 			e.printStackTrace();

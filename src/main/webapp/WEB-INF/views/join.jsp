@@ -176,6 +176,8 @@ button:active {
                 <input type="text" name="id" class="Name" placeholder="ID">
                 <input type="password" name="pw" class="Tele" placeholder="Password">
 				<input type="text" name="nickname" class="Address" placeholder="nickname">
+				<input type="text" name="gender" class="Address" placeholder="gender">
+				<input type="text" name="age" class="Address" placeholder="age">
                 <button type="submit" value="Add" name="submit">Submit</button>
             </form>
         </div>

@@ -14,6 +14,7 @@ import com.java.web.bean.FileBean;
 import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
 import com.java.web.bean.UserMovie;
+import com.java.web.util.CrawlingBean;
 
 @Repository
 public class NoticeDao implements NoticeDaoInterface{
@@ -133,4 +134,45 @@ public class NoticeDao implements NoticeDaoInterface{
 	public int selectTotalRank() {
 		return s.selectOne("test.selectTotalRank");
 	}
+	
+	@Override
+	public int getMaleRate(int no) {
+		return s.selectOne("test.getMaleRate",no);
+	}
+	@Override
+	public int getFemaleRate(int no) {
+		return s.selectOne("test.getFemaleRate",no);
+	}
+	@Override
+	public int getRate10(int no) {
+		return s.selectOne("test.getRate10",no);
+	}
+	@Override
+	public int getRate20(int no) {
+		return s.selectOne("test.getRate20",no);
+	}
+	@Override
+	public int getRate30(int no) {
+		return s.selectOne("test.getRate30",no);
+	}
+	@Override
+	public int getRate40(int no) {
+		return s.selectOne("test.getRate40",no);
+	}
+	@Override
+	public int getRate50(int no) {
+		return s.selectOne("test.getRate50",no);
+	}
+	
+	@Override
+	public void crawling(CrawlingBean c) {
+		s.insert("test.crawling",c);
+	}
+	@Override
+	public int tdidmapping(Movie movie) {
+		System.out.println(movie.getDirector()+","+movie.getTitle());
+		return (int) s.selectOne("test.tdidmapping",movie);
+	}
+	
+	
 }

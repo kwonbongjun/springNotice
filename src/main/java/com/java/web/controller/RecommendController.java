@@ -29,7 +29,9 @@ public class RecommendController {
 		String str1=req.getParameter("update1");
 		String str2=req.getParameter("update2");
 		String str3=req.getParameter("update3");
-		
+		String d1=req.getParameter("director1");
+		String d2=req.getParameter("director2");
+		String d3=req.getParameter("director3");
 //		if(str!=null) {
 			//JSONArray ja = JSONArray.fromObject(str);
 //			System.out.println("2222"+ja);
@@ -38,19 +40,26 @@ public class RecommendController {
 			if(str1!=null) {
 				//for(int i=0;i<ja.size();i++) {
 					//update= (String) ja.get(i);
-					int m_no=nsi.titleidmapping(str1);
+					//int m_no=nsi.titleidmapping(str1);
+					int m_no=nsi.tdidmapping(new Movie(str1,d1));
 					System.out.println("11111"+user_id+m_no);
 					um=new UserMovie(user_id, m_no,0,0,'0',null);
+					//1111111if(nsi.isWatch(um)==null) {
+					//1	nsi.insertWatchMovie(um);
+					//1}else {
 					nsi.SetWatchMovie(um);
+					//}
 				//}
 			}
 			if(str2!=null) {
-					int m_no=nsi.titleidmapping(str2);
+					//int m_no=nsi.titleidmapping(str2);
+					int m_no=nsi.tdidmapping(new Movie(str2,d2));
 					um=new UserMovie(user_id, m_no,0,0,'0',null);
 					nsi.SetWatchMovie(um);
 			}
 			if(str3!=null) {
-				int m_no=nsi.titleidmapping(str3);
+				//int m_no=nsi.titleidmapping(str3);
+				int m_no=nsi.tdidmapping(new Movie(str3,d3));
 				um=new UserMovie(user_id, m_no,0,0,'0',null);
 				nsi.SetWatchMovie(um);
 		}

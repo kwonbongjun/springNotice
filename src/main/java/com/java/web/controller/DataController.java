@@ -12,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +36,8 @@ import com.java.web.bean.UserMovie;
 import com.java.web.hadoop.JobMap;
 import com.java.web.hadoop.JobReducer;
 import com.java.web.service.NoticeServiceInterface;
+import com.java.web.util.CrawlingBean;
+import com.java.web.util.CrawlingController;
 import com.java.web.util.DaumAPI;
 import com.java.web.util.NaverAPI;
 import com.sun.jersey.core.impl.provider.entity.XMLJAXBElementProvider.Text;
@@ -68,12 +71,18 @@ public class DataController {
 				search=director+" "+search;
 			}
 //			
-			for(int i=0;i<m.length;i++) {
-			int m2 = nsi.existMovie(m[i]);
-			if(m2!=0) {
-				//nsi.insertMovie(m2);
-			}
-			}
+
+				//크롤링	
+					CrawlingController cc = new CrawlingController();
+					List<CrawlingBean> c = cc.getHtmlData2(search);
+					for(int j=0;j<c.size();j++) {
+						Integer m3 = nsi.existMovie(new Movie(c.get(j).getTitle(),c.get(j).getDirector()));
+						System.out.println(m3);
+						if(m3==0) {
+							nsi.crawling(c.get(j));
+						}
+					}
+
 			DaumAPI da = new DaumAPI();
 			da.getsearchAPI(search);
 
@@ -117,8 +126,10 @@ public class DataController {
 			String user_id = request.getParameter("user_id");
 			String title = request.getParameter("m_no");
 			String review = request.getParameter("review");
-
-			int m_no = nsi.titleidmapping(title);
+			String director=request.getParameter("director");
+			System.out.println(director);
+			//int m_no = nsi.titleidmapping(title);
+			int m_no=nsi.tdidmapping(new Movie(title,director));
 			System.out.println("1111"+user_id+m_no);
 			UserMovie um = new UserMovie(user_id, m_no, 0, 0, 'N',review);
 
@@ -134,7 +145,9 @@ public class DataController {
 		String str=request.getParameter("star");
 		String user_id=request.getParameter("user_id");
 		String title = request.getParameter("m_no");
-		int m_no = nsi.titleidmapping(title);
+		String director=request.getParameter("director");
+		//int m_no = nsi.titleidmapping(title);
+		int m_no=nsi.tdidmapping(new Movie(title,director));
 		int star=Integer.parseInt(str);
 		UserMovie um = new UserMovie(user_id, m_no, star, 0, 'N',null);
 		nsi.setstar(um);
