@@ -153,6 +153,5 @@ where no=#{m_no}
   <select id="selectTotalRank" resultType="int">
    select count(*) from movie
   </select>
-	
 		
 </mapper>
