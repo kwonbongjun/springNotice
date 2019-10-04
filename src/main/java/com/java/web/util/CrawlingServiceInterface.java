@@ -4,4 +4,5 @@ import java.util.HashMap;
 
 public interface CrawlingServiceInterface {
 	public HashMap<String,Object> getHtmlData(HashMap<String, Object> paramMap);
+	public void getHtmlData2(String title);
 }

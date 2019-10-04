@@ -5,6 +5,7 @@ import java.util.List;
 import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
 import com.java.web.bean.UserMovie;
+import com.java.web.util.CrawlingBean;
 
 public interface NoticeDaoInterface {
 	public void insertLogin(Login login);
@@ -22,4 +23,19 @@ public interface NoticeDaoInterface {
 	public int existMovie(Movie movie);
 	public void insertMovie(Movie m);
 	public int selectTotalRank();
+	
+	public int getMaleRate(int no);
+	public int getFemaleRate(int no);
+	public int getRate10(int no);
+	public int getRate20(int no);
+	public int getRate30(int no);
+	public int getRate40(int no);
+	public int getRate50(int no);
+	
+	public void crawling(CrawlingBean c);
+	
+	public int tdidmapping(Movie movie);
+	
+	
+	
 }

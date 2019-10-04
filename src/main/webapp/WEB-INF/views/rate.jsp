@@ -289,7 +289,9 @@ for(int i=1;i<=pagenum;i++){%>
 		<tr>
 			<td>글 번호</td>
 			<td class="title">제목</td>
+			<td>감동</td>
 			<td>평점</td>
+			<td>평점수</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -299,7 +301,7 @@ for(int i=1;i<=pagenum;i++){%>
 		%><tr> 
 		<%-- <input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)"> --%>	
 		<td><%=i%></td>
-		<td><a href="/recommend/?boardNum=<%=list.get(i).getTitle()%>"><%=list.get(i).getTitle() %></a></td>
+		<td><a href="/rate/?code=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></td>
 		<td><%=list.get(i).getDirector() %></td>
 		<td><%=list.get(i).getUserRating()%></td>
 		<td><%=list.get(i).getUserRatingCnt()%></td>

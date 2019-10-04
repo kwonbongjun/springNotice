@@ -35,12 +35,15 @@ public class HomeController {
 		String id=req.getParameter("id");
 		String pw=req.getParameter("pw");
 		String nickname=req.getParameter("nickname");
+		String gender = req.getParameter("gender");
+		int age = Integer.parseInt(req.getParameter("age"));
+		
 		Login checklogin = nsi.checkLogin(id);
 		if(checklogin!=null) {
 			req.setAttribute("dup", true);
 			return "join";
 		}
-		Login login = new Login(id,pw,nickname);
+		Login login = new Login(id,pw,nickname,gender,age);
 		nsi.insertLogin(login);
 		return "home";
 	}

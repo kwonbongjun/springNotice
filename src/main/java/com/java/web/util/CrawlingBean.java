@@ -11,6 +11,8 @@ public class CrawlingBean {
 	String release;
 	//HashMap<String, Object> columns;
 	String director;
+	String actor1;
+	String actor2;
 	public CrawlingBean(String title,String genre1, String genre2,String nation,
 			String time, String release,String director) {
 		this.title=title;
@@ -20,6 +22,18 @@ public class CrawlingBean {
 		this.time=time;
 		this.release=release;
 		this.director=director;
+	}
+	public CrawlingBean(String title,String genre1, String genre2,String nation,
+			String time, String release,String director,String actor1,String actor2) {
+		this.title=title;
+		this.genre1=genre1;
+		this.genre2=genre2;
+		this.nation=nation;
+		this.time=time;
+		this.release=release;
+		this.director=director;
+		this.actor1=actor1;
+		this.actor2=actor2;
 	}
 	public String getTitle() {
 		return title;

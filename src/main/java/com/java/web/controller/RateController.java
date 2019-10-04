@@ -1,6 +1,8 @@
 package com.java.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,27 @@ public class RateController {
 	
 	@RequestMapping(value="/rate")
 	public String rate(HttpServletRequest req, HttpServletResponse res) {
+		String code=req.getParameter("code");
+		if(code!=null) {
+			Map<String,Integer> map=new HashMap<String, Integer>();
+			int no=Integer.parseInt(code);
+			int mrate=nsi.getMaleRate(no);
+			int frate=nsi.getFemaleRate(no);
+			int rate10 = nsi.getRate10(no);
+			int rate20 = nsi.getRate20(no);
+			int rate30 = nsi.getRate30(no);
+			int rate40 = nsi.getRate40(no);
+			int rate50 = nsi.getRate50(no);
+			map.put("mrate", mrate);
+			map.put("frate", frate);
+			map.put("rate10", rate10);
+			map.put("rate20", rate20);
+			map.put("rate30", rate30);
+			map.put("rate40", rate40);
+			map.put("rate50", rate50);
+			req.setAttribute("map", map);
+			return "rateAnalysis";
+		}
 		String tpage=req.getParameter("pageNum");
 		int page=1;
 		if(tpage==null) {

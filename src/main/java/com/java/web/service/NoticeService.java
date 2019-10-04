@@ -20,6 +20,7 @@ import com.java.web.bean.Movie;
 import com.java.web.bean.UserMovie;
 import com.java.web.dao.NoticeDao;
 import com.java.web.dao.NoticeDaoInterface;
+import com.java.web.util.CrawlingBean;
 
 @Service
 public class NoticeService implements NoticeServiceInterface {
@@ -168,4 +169,43 @@ public class NoticeService implements NoticeServiceInterface {
 	public int selectTotalRank() {
 		return ndi.selectTotalRank();
 	}
+	
+	@Override
+	public int getMaleRate(int no) {
+			return ndi.getMaleRate(no);
+	}
+	@Override
+	public int getFemaleRate(int no) {
+		return ndi.getFemaleRate(no);
+	}
+	@Override
+	public int getRate10(int no) {
+		return ndi.getRate10(no);
+	}
+	@Override
+	public int getRate20(int no) {
+		return ndi.getRate20(no);
+	}
+	@Override
+	public int getRate30(int no) {
+		return ndi.getRate30(no);
+	}
+	@Override
+	public int getRate40(int no) {
+		return ndi.getRate40(no);
+	}
+	@Override
+	public int getRate50(int no) {
+		return ndi.getRate50(no);
+	}
+	
+	@Override
+	public void crawling(CrawlingBean c) {
+		ndi.crawling(c);
+	}
+	@Override
+	public int tdidmapping(Movie movie) {
+		return ndi.tdidmapping(movie);
+	}
+	
 }

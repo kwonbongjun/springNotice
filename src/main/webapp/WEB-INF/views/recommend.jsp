@@ -15,9 +15,12 @@ Movie[] movie = (Movie[]) request.getAttribute("mlist");
 
 if(movie!=null) {
 %>var m=new Array();
+var d = new Array();
 var len=<%=movie.length%>;<%
 for(int i=0;i<movie.length;i++) {
-	%>m[<%=i%>]=<%="\""+movie[i].getTitle()+"\""%>;<%
+	%>m[<%=i%>]=<%="\""+movie[i].getTitle()+"\""%>;
+	d[<%=i%>]=<%="\""+movie[i].getDirector()+"\""%>;
+	<%
 }
 }%>
 var cnt=0;
@@ -37,7 +40,7 @@ function check(idx){
 		$.ajax({
 			url:"/recommend",
 			dataType:"json",
-			data:{update1:m[0],update2:m[1],update3:m[2],user:u},
+			data:{update1:m[0],update2:m[1],update3:m[2],user:u,director1:d[0],director2:d[1],director3:d[2]},
 			async: false
 		}).done(function(data){
 			alert("ÃßÃµ")
