@@ -86,7 +86,7 @@ public class DataController {
 			DaumAPI da = new DaumAPI();
 			da.getsearchAPI(search);
 
-			String localStr= "C:\\Resources\\"; //"C:\\Resources\\" "D:\\workspace\\data"
+			String localStr= "/home/kbj"; //"C:\\Resources\\" "D:\\workspace\\data"
 			String hadoopStr="/input/data/";
 			Configuration conf = new Configuration();
 			Configuration hadoopConf = new Configuration();

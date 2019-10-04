@@ -33,7 +33,7 @@ import net.sf.json.JSONObject;
 @Controller
 public class DaumAPI {
 	public void getsearchAPI (String search) {
-		String path="C:\\Resources\\"; //C:\\Resources\\"; D:\\workspace\\data"
+		String path="/home/kbj"; //C:\\Resources\\"; D:\\workspace\\data"
 		File f = new File(path);
 		File newfile=new File(path+"\\"+search+".txt");
 		FileOutputStream os=null;
