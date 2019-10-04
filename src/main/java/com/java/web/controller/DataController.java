@@ -90,7 +90,7 @@ public class DataController {
 			String hadoopStr="/input/data/";
 			Configuration conf = new Configuration();
 			Configuration hadoopConf = new Configuration();
-			hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
+			hadoopConf.set("fs.defaultFS", "hdfs://192.168.3.34:9000");  //"hdfs://192.168.3.34:9000"
 			Path localPath = new Path(localStr);
 			Path hadoopPath = new Path(hadoopStr);
 
