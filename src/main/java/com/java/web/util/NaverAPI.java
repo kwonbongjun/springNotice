@@ -51,7 +51,7 @@ public class NaverAPI {
 			if(edate==null) {
 				edate="2019";
 			}
-
+			System.out.println(sdate+edate+nation);
 			urlAddress = "https://openapi.naver.com/v1/search/movie.json"
 					+ "?query="+URLEncoder.encode(search,"UTF-8")+"&yearfrom="+sdate+"&yearto="+edate;
 			//+"\"" +"\""
@@ -68,7 +68,8 @@ public class NaverAPI {
 			//conn.setRequestProperty("Accept", "application/json");
 			conn.setRequestProperty("X-Naver-Client-Id", "GToteGS4spO1kZbI1BT9");
 			conn.setRequestProperty("X-Naver-Client-Secret", "_uWb8xA2uB");
-			
+			//System.out.println("responsecode"+conn+conn.getInputStream());
+			if(conn.getResponseCode()!=200) return null;
 			InputStream input = conn.getInputStream();
 			InputStreamReader inputReader = new InputStreamReader(input);
 			BufferedReader br = new BufferedReader(inputReader);
@@ -82,6 +83,8 @@ public class NaverAPI {
 			
 			JSONObject jtoken = JSONObject.fromObject(result);
 			JSONArray ma=JSONArray.fromObject(jtoken.get("items"));
+			System.out.println("items size"+ma.size());
+			if(ma.size()==0) return null;
 			movie = new Movie[ma.size()];
 			for(int i = 0;i<ma.size();i++) {
 

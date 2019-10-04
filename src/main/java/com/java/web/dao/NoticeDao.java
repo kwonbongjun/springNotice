@@ -110,7 +110,7 @@ public class NoticeDao implements NoticeDaoInterface{
 	public void inserUserMovie(UserMovie um) {
 		s.insert("test.insertUM", um);
 	}
-	public List<String> recommend(String id) {
+	public List<CrawlingBean> recommend(String id) {
 		return s.selectList("test.recommend", id);
 	}
 	public void setWatchMovie(UserMovie um) {
@@ -171,7 +171,15 @@ public class NoticeDao implements NoticeDaoInterface{
 	@Override
 	public int tdidmapping(Movie movie) {
 		System.out.println(movie.getDirector()+","+movie.getTitle());
-		return (int) s.selectOne("test.tdidmapping",movie);
+		return s.selectOne("test.tdidmapping",movie);
+	}
+	@Override
+	public int isWatch(UserMovie um) {
+		return s.selectOne("test.isWatch",um);
+	}
+	@Override
+	public void insertWatchMovie(UserMovie um) {
+		s.insert("test.insertWatchMovie",um);
 	}
 	
 	

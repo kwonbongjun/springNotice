@@ -35,6 +35,11 @@ public class CrawlingBean {
 		this.actor1=actor1;
 		this.actor2=actor2;
 	}
+	public CrawlingBean(String title,String release, String nation) {
+		this.title=title;
+		this.nation=nation;
+		this.release=release;
+	}
 	public String getTitle() {
 		return title;
 	}

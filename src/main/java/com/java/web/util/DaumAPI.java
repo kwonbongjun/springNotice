@@ -33,9 +33,9 @@ import net.sf.json.JSONObject;
 @Controller
 public class DaumAPI {
 	public void getsearchAPI (String search) {
-		String path="/home/kbj"; //C:\\Resources\\"; D:\\workspace\\data"
+		String path="C:\\Resources\\"; //"/home/kbj" C:\\Resources\\"; D:\\workspace\\data"
 		File f = new File(path);
-		File newfile=new File(path+"/"+search+".txt"); //\\
+		File newfile=new File(path+"\\"+search+".txt"); //\\
 		FileOutputStream os=null;
 		if(!f.isDirectory()) {
 			f.mkdirs();

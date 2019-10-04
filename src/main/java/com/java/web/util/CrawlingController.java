@@ -72,7 +72,12 @@ public class CrawlingController {
 
 				for(Element headline : pages2) {
 					title=headline.getElementsByTag("a").eq(0).text();
-
+					
+					int idx=title.indexOf("(");
+//					if(idx!=-1) {
+//					System.out.println(idx);
+//					title=title.substring(0,idx);
+//					}
 					break;
 				}
 				pages2 = doc.select(".search_list_1 li").eq(i).select(".etc").eq(0);

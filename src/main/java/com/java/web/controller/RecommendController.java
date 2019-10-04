@@ -1,5 +1,6 @@
 package com.java.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.java.web.bean.Movie;
 import com.java.web.bean.UserMovie;
 import com.java.web.service.NoticeServiceInterface;
+import com.java.web.util.CrawlingBean;
 import com.java.web.util.NaverAPI;
 
 import net.sf.json.JSONArray;
@@ -41,46 +43,82 @@ public class RecommendController {
 				//for(int i=0;i<ja.size();i++) {
 					//update= (String) ja.get(i);
 					//int m_no=nsi.titleidmapping(str1);
+				System.out.println(str1+d1);
 					int m_no=nsi.tdidmapping(new Movie(str1,d1));
 					System.out.println("11111"+user_id+m_no);
 					um=new UserMovie(user_id, m_no,0,0,'0',null);
-					//1111111if(nsi.isWatch(um)==null) {
-					//1	nsi.insertWatchMovie(um);
-					//1}else {
+					if(nsi.isWatch(um)==0) {
+						nsi.insertWatchMovie(um);
+						nsi.SetWatchMovie(um);
+					}else {
 					nsi.SetWatchMovie(um);
-					//}
+					}
 				//}
 			}
 			if(str2!=null) {
 					//int m_no=nsi.titleidmapping(str2);
 					int m_no=nsi.tdidmapping(new Movie(str2,d2));
 					um=new UserMovie(user_id, m_no,0,0,'0',null);
+					if(nsi.isWatch(um)==0) {
+						nsi.insertWatchMovie(um);
+						nsi.SetWatchMovie(um);
+					}else {
 					nsi.SetWatchMovie(um);
+					}
 			}
 			if(str3!=null) {
 				//int m_no=nsi.titleidmapping(str3);
 				int m_no=nsi.tdidmapping(new Movie(str3,d3));
 				um=new UserMovie(user_id, m_no,0,0,'0',null);
+				if(nsi.isWatch(um)==0) {
+					nsi.insertWatchMovie(um);
+					nsi.SetWatchMovie(um);
+				}else {
 				nsi.SetWatchMovie(um);
+				}
 		}
 			
 		String id=req.getParameter("user");
 		System.out.println(id);
-		List<String> title=nsi.recommend(id);
+		List<CrawlingBean> title=nsi.recommend(id);
 //		if(title==null) {
 //			title=nsi.recommend(user_id);
 //		}
 		NaverAPI na = new NaverAPI();
 		int len=0;
+		Movie temp=null;
 		if(title!=null) {
 			len=title.size();
 			if(title.size()>3) {
 				len=3;
 			}
 		}
-		Movie[] m = new Movie[len];
+
+		String[] nation=new String[len];
 		for(int i=0;i<len;i++) {
-			m[i]=na.naverMovie(title.get(i),null,null,null)[0];
+	
+		System.out.println("11111"+title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation());
+		if(title.get(i).getNation().equals("영국")) {
+			nation[i]="GB";
+		}else if(title.get(i).getNation().equals("오스트레일리아")){
+				nation[i]="ETC";
+			}
+		}
+		//Movie[] m = new Movie[len];
+		List<Movie> m = new ArrayList<Movie>();
+		for(int i=0;i<len;i++) {
+			System.out.println(title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation());
+			if(na.naverMovie(title.get(i).getTitle(),null,null,null)==null) {
+//				System.out.println("222222");
+//				m[i]=null;
+//				title.remove(i);
+//				i--;
+//				len=len-1;
+				continue;
+			}
+			m.add(na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)[0]);
+			
+			
 		}
 		
 		req.setAttribute("mlist", m);

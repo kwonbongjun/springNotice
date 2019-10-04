@@ -145,7 +145,7 @@ public class NoticeService implements NoticeServiceInterface {
 	public void insertUserMovie(UserMovie um) {
 		ndi.inserUserMovie(um);
 	}
-	public List<String> recommend(String id) {
+	public List<CrawlingBean> recommend(String id) {
 		return ndi.recommend(id);
 	}
 	public void SetWatchMovie(UserMovie um) {
@@ -206,6 +206,15 @@ public class NoticeService implements NoticeServiceInterface {
 	@Override
 	public int tdidmapping(Movie movie) {
 		return ndi.tdidmapping(movie);
+	}
+	@Override
+	public int isWatch(UserMovie um) {
+		return ndi.isWatch(um);
+	}
+	@Override
+	public void insertWatchMovie(UserMovie um) {
+		ndi.insertWatchMovie(um);
+		
 	}
 	
 }

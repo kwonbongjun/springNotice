@@ -86,17 +86,17 @@ public class DataController {
 			DaumAPI da = new DaumAPI();
 			da.getsearchAPI(search);
 
-			String localStr= "/home/kbj"; //"C:\\Resources\\" "D:\\workspace\\data"
+			String localStr= "C:\\Resources\\"; //"/home/kbj" "C:\\Resources\\" "D:\\workspace\\data"
 			String hadoopStr="/input/data/";
 			Configuration conf = new Configuration();
 			Configuration hadoopConf = new Configuration();
-			hadoopConf.set("fs.defaultFS", "hdfs://192.168.3.34:9000");  //"hdfs://192.168.3.34:9000"
+			hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
 			Path localPath = new Path(localStr);
 			Path hadoopPath = new Path(hadoopStr);
 
 			FileSystem localSystem=FileSystem.getLocal(conf);
 			FileSystem hadoopSystem=FileSystem.get(hadoopConf);
-			FSDataInputStream fsis = localSystem.open(new Path(localPath+"/"+search+".txt")); //\\
+			FSDataInputStream fsis = localSystem.open(new Path(localPath+"\\"+search+".txt")); //\\
 			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/a.txt"));
 			int byteRead=0;
 			while((byteRead=fsis.read())>0) {

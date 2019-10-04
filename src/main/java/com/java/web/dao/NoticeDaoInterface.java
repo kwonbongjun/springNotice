@@ -15,7 +15,7 @@ public interface NoticeDaoInterface {
 	public int isSetScore(UserMovie um);
 	public void setstar(UserMovie um);
 	public void inserUserMovie(UserMovie um);
-	public List<String> recommend(String id);
+	public List<CrawlingBean> recommend(String id);
 	public void setWatchMovie(UserMovie um);
 	public void setrate(UserMovie um);
 	public List<Movie> movieRank(int page);
@@ -35,6 +35,8 @@ public interface NoticeDaoInterface {
 	public void crawling(CrawlingBean c);
 	
 	public int tdidmapping(Movie movie);
+	public int isWatch(UserMovie um);
+	public void insertWatchMovie(UserMovie um);
 	
 	
 	

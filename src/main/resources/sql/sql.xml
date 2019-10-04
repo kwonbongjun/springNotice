@@ -77,8 +77,9 @@
   <select id="titleidmapping" parameterType="String" resultType="int">
     select no from movie where title=#{title}
   </select>
-    <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="Integer">
+    <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="int">
     select NVL(no,0) from movie where title LIKE '%' || #{title} || '%' and director=#{director}
+<!--  and NOT regexp_like(title, '*[0-9]')-->  
   </select>
    <select id="isSetScore" parameterType="com.java.web.bean.UserMovie" resultType="Integer">
     select count(*) from UserMovie where user_id=#{user_id} and m_no=#{m_no}
@@ -92,7 +93,7 @@
   	insert into UserMovie (user_id,m_no,m_rate,searchCnt,review) values (#{user_id},#{m_no},#{m_rate},#{searchCnt},#{review})
   </insert>
 
-  <select id="recommend" parameterType="String" resultType="String">
+  <select id="recommend" parameterType="String" resultType="com.java.web.util.CrawlingBean">
 <!--         select title from movie 
         where genre1 in (select genre1 
 	        from(
@@ -106,7 +107,7 @@
 	        order by  cnt1 desc))
 	        select title, genre1, genre2, nation, director -->
 
-select title
+select title,release,nation
 from movie
 where genre1 in (select g1.genre1 from(
     select genre1, avg(um.m_rate) c1
@@ -118,7 +119,7 @@ where genre1 in (select g1.genre1 from(
         select avg(um.m_rate) c1
         from usermovie um join movie m
         on(um.m_no=m.no)
-        where um.m_rate>0
+        where um.m_rate>0  and um.user_id=#{id}
         group by m.genre1)
         )
     order by c1 desc) g1  )
@@ -224,5 +225,14 @@ where no=#{m_no}
 	                   where age >=50)
 			
 	</select>
+
+	<select id="isWatch" parameterType="com.java.web.bean.UserMovie" resultType="int">
+		select count(*) from usermovie where user_id=#{user_id} and m_no=#{m_no}	
+	</select>
+	
+	    <insert id="insertWatchMovie" parameterType="com.java.web.bean.UserMovie">
+  	insert into usermovie (user_id,m_no,m_rate,searchCnt,watchYn,review) values (#{user_id},#{m_no},0,0,'N',null)
+  </insert>
+  
 
 </mapper>

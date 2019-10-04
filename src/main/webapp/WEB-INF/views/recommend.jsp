@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="com.java.web.bean.Login"%>
 <%@page import="com.java.web.bean.Movie"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
@@ -11,15 +12,15 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
 <script>
 <%Login user = (Login) session.getAttribute("login");
-Movie[] movie = (Movie[]) request.getAttribute("mlist"); 
-
+/* Movie[] movie = (Movie[]) request.getAttribute("mlist");  */
+List<Movie> movie = (List<Movie>) request.getAttribute("mlist");
 if(movie!=null) {
 %>var m=new Array();
 var d = new Array();
-var len=<%=movie.length%>;<%
-for(int i=0;i<movie.length;i++) {
-	%>m[<%=i%>]=<%="\""+movie[i].getTitle()+"\""%>;
-	d[<%=i%>]=<%="\""+movie[i].getDirector()+"\""%>;
+var len=<%=movie.size()%>;<%
+for(int i=0;i<movie.size();i++) {
+	%>m[<%=i%>]=<%="\""+movie.get(i).getTitle()+"\""%>;
+	d[<%=i%>]=<%="\""+movie.get(i).getDirector()+"\""%>;
 	<%
 }
 }%>
@@ -55,13 +56,13 @@ function check(idx){
 <body>
 
 <%if(movie!=null) { 
-for(int i=0;i<movie.length;i++){%>
+for(int i=0;i<movie.size();i++){%>
 <div class="recommend">
 <input type="checkbox" onclick="check(<%=i%>)">
-<img src="<%=movie[i].getImage()%>" alt="movie" width=110; height=150;>
-<p>제목:<%=movie[i].getTitle()%></p>
-<p>감독:<%=movie[i].getDirector() %>
-<p>배우:<%=movie[i].getActor() %>
+<img src="<%=movie.get(i).getImage()%>" alt="movie" width=110; height=150;>
+<p>제목:<%=movie.get(i).getTitle()%></p>
+<p>감독:<%=movie.get(i).getDirector() %>
+<p>배우:<%=movie.get(i).getActor() %>
 </div><%} 
 }else{%>
 	추천할 영화가 없습니다.
