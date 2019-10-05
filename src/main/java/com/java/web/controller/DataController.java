@@ -76,7 +76,7 @@ public class DataController {
 					CrawlingController cc = new CrawlingController();
 					List<CrawlingBean> c = cc.getHtmlData2(search);
 					for(int j=0;j<c.size();j++) {
-						Integer m3 = nsi.existMovie(new Movie(c.get(j).getTitle(),c.get(j).getDirector()));
+						Integer m3 = nsi.existMovie(new Movie(c.get(j).getTitle(),c.get(j).getDirector(),c.get(j).getRelease()));
 						System.out.println(m3);
 						if(m3==0) {
 							nsi.crawling(c.get(j));
@@ -127,9 +127,10 @@ public class DataController {
 			String title = request.getParameter("m_no");
 			String review = request.getParameter("review");
 			String director=request.getParameter("director");
+			String release = request.getParameter("release");
 			System.out.println(director);
 			//int m_no = nsi.titleidmapping(title);
-			int m_no=nsi.tdidmapping(new Movie(title,director));
+			int m_no=nsi.tdidmapping(new Movie(title,director,release));
 			System.out.println("1111"+user_id+m_no);
 			UserMovie um = new UserMovie(user_id, m_no, 0, 0, 'N',review);
 
@@ -146,8 +147,9 @@ public class DataController {
 		String user_id=request.getParameter("user_id");
 		String title = request.getParameter("m_no");
 		String director=request.getParameter("director");
+		String release = request.getParameter("release");
 		//int m_no = nsi.titleidmapping(title);
-		int m_no=nsi.tdidmapping(new Movie(title,director));
+		int m_no=nsi.tdidmapping(new Movie(title,director,release));
 		int star=Integer.parseInt(str);
 		UserMovie um = new UserMovie(user_id, m_no, star, 0, 'N',null);
 		nsi.setstar(um);

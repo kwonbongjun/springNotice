@@ -77,9 +77,9 @@
   <select id="titleidmapping" parameterType="String" resultType="int">
     select no from movie where title=#{title}
   </select>
-    <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="int">
-    select NVL(no,0) from movie where title LIKE '%' || #{title} || '%' and director=#{director}
-<!--  and NOT regexp_like(title, '*[0-9]')-->  
+    <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="Integer">
+    select NVL(no,0) from movie where title LIKE '%' || #{title} || '%'   and director=#{director} and release=#{release}
+<!--LIKE '%' || #{title} || '%'  and NOT regexp_like(title, '*[0-9]')-->  
   </select>
    <select id="isSetScore" parameterType="com.java.web.bean.UserMovie" resultType="Integer">
     select count(*) from UserMovie where user_id=#{user_id} and m_no=#{m_no}
@@ -107,7 +107,7 @@
 	        order by  cnt1 desc))
 	        select title, genre1, genre2, nation, director -->
 
-select title,release,nation
+select title,release,nation,director
 from movie
 where genre1 in (select g1.genre1 from(
     select genre1, avg(um.m_rate) c1

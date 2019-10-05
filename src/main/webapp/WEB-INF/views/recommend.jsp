@@ -17,10 +17,12 @@ List<Movie> movie = (List<Movie>) request.getAttribute("mlist");
 if(movie!=null) {
 %>var m=new Array();
 var d = new Array();
+var r = new Array();
 var len=<%=movie.size()%>;<%
 for(int i=0;i<movie.size();i++) {
 	%>m[<%=i%>]=<%="\""+movie.get(i).getTitle()+"\""%>;
 	d[<%=i%>]=<%="\""+movie.get(i).getDirector()+"\""%>;
+	r[<%=i%>]=<%="\""+movie.get(i).getRelease()+"\""%>;
 	<%
 }
 }%>
@@ -41,7 +43,7 @@ function check(idx){
 		$.ajax({
 			url:"/recommend",
 			dataType:"json",
-			data:{update1:m[0],update2:m[1],update3:m[2],user:u,director1:d[0],director2:d[1],director3:d[2]},
+			data:{update1:m[0],update2:m[1],update3:m[2],user:u,director1:d[0],director2:d[1],director3:d[2],release1:r[0],release2:r[1],release3:r[2]},
 			async: false
 		}).done(function(data){
 			alert("ÃßÃµ")

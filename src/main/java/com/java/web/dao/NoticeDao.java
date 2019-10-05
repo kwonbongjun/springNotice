@@ -169,7 +169,7 @@ public class NoticeDao implements NoticeDaoInterface{
 		s.insert("test.crawling",c);
 	}
 	@Override
-	public int tdidmapping(Movie movie) {
+	public Integer tdidmapping(Movie movie) {
 		System.out.println(movie.getDirector()+","+movie.getTitle());
 		return s.selectOne("test.tdidmapping",movie);
 	}

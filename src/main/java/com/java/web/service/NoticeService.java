@@ -204,7 +204,7 @@ public class NoticeService implements NoticeServiceInterface {
 		ndi.crawling(c);
 	}
 	@Override
-	public int tdidmapping(Movie movie) {
+	public Integer tdidmapping(Movie movie) {
 		return ndi.tdidmapping(movie);
 	}
 	@Override

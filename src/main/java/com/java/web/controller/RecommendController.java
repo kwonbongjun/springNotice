@@ -34,6 +34,9 @@ public class RecommendController {
 		String d1=req.getParameter("director1");
 		String d2=req.getParameter("director2");
 		String d3=req.getParameter("director3");
+		String r1=req.getParameter("release1");
+		String r2=req.getParameter("release2");
+		String r3=req.getParameter("release3");
 //		if(str!=null) {
 			//JSONArray ja = JSONArray.fromObject(str);
 //			System.out.println("2222"+ja);
@@ -43,8 +46,8 @@ public class RecommendController {
 				//for(int i=0;i<ja.size();i++) {
 					//update= (String) ja.get(i);
 					//int m_no=nsi.titleidmapping(str1);
-				System.out.println(str1+d1);
-					int m_no=nsi.tdidmapping(new Movie(str1,d1));
+				System.out.println(str1+d1+r1);
+					int m_no=nsi.tdidmapping(new Movie(str1,d1,r1));
 					System.out.println("11111"+user_id+m_no);
 					um=new UserMovie(user_id, m_no,0,0,'0',null);
 					if(nsi.isWatch(um)==0) {
@@ -57,7 +60,7 @@ public class RecommendController {
 			}
 			if(str2!=null) {
 					//int m_no=nsi.titleidmapping(str2);
-					int m_no=nsi.tdidmapping(new Movie(str2,d2));
+					int m_no=nsi.tdidmapping(new Movie(str2,d2,r2));
 					um=new UserMovie(user_id, m_no,0,0,'0',null);
 					if(nsi.isWatch(um)==0) {
 						nsi.insertWatchMovie(um);
@@ -68,7 +71,7 @@ public class RecommendController {
 			}
 			if(str3!=null) {
 				//int m_no=nsi.titleidmapping(str3);
-				int m_no=nsi.tdidmapping(new Movie(str3,d3));
+				int m_no=nsi.tdidmapping(new Movie(str3,d3,r3));
 				um=new UserMovie(user_id, m_no,0,0,'0',null);
 				if(nsi.isWatch(um)==0) {
 					nsi.insertWatchMovie(um);
@@ -97,7 +100,7 @@ public class RecommendController {
 		String[] nation=new String[len];
 		for(int i=0;i<len;i++) {
 	
-		System.out.println("11111"+title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation());
+		System.out.println("11111"+title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation()+title.get(i).getDirector());
 		if(title.get(i).getNation().equals("영국")) {
 			nation[i]="GB";
 		}else if(title.get(i).getNation().equals("오스트레일리아")){
@@ -108,7 +111,7 @@ public class RecommendController {
 		List<Movie> m = new ArrayList<Movie>();
 		for(int i=0;i<len;i++) {
 			System.out.println(title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation());
-			if(na.naverMovie(title.get(i).getTitle(),null,null,null)==null) {
+			if(na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)==null) {
 //				System.out.println("222222");
 //				m[i]=null;
 //				title.remove(i);
@@ -116,7 +119,11 @@ public class RecommendController {
 //				len=len-1;
 				continue;
 			}
-			m.add(na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)[0]);
+//			if(nsi.tdidmapping(new Movie(na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)[0].getTitle(),
+//					na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)[0].getDirector()))==0) {
+//				continue;
+//			}
+			m.add(na.naverMovie(title.get(i).getTitle(),null,null,null)[0]);
 			
 			
 		}

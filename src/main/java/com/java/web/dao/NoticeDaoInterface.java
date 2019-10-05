@@ -34,7 +34,7 @@ public interface NoticeDaoInterface {
 	
 	public void crawling(CrawlingBean c);
 	
-	public int tdidmapping(Movie movie);
+	public Integer tdidmapping(Movie movie);
 	public int isWatch(UserMovie um);
 	public void insertWatchMovie(UserMovie um);
 	

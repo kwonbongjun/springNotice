@@ -104,8 +104,9 @@ public class NaverAPI {
 			
 			String director=(String)mo.get("director");
 			director=director.replace("|", "");
+			String pubdate=(String)mo.get("pubDate");
 			movie[i] = new Movie((String) mo.get("image"), title,
-					director,(String) mo.get("actor"),0/*(int) mo.get("userRating")*/,0);
+					director,(String) mo.get("actor"),0/*(int) mo.get("userRating")*/,0,pubdate);
 			
 	
 			}
