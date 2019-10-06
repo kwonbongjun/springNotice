@@ -107,7 +107,8 @@
 	        order by  cnt1 desc))
 	        select title, genre1, genre2, nation, director -->
 
-select title,release,nation,director
+
+<!-- select title,release,nation,director
 from movie
 where genre1 in (select g1.genre1 from(
     select genre1, avg(um.m_rate) c1
@@ -125,7 +126,28 @@ where genre1 in (select g1.genre1 from(
     order by c1 desc) g1  )
 and no Not In (select m_no from usermovie where  watchYn='Y')    
 order by genre1 , genre2 , nation , director 
-
+ -->
+ 
+ select title,release,nation,director
+from movie
+where genre1 in (
+    select genre1 from(
+    select rownum numrow,g1.genre1 from(
+    select genre1, avg(um.m_rate) c1
+    from usermovie um join movie m
+    on(um.m_no=m.no)
+    where um.m_rate>0 and um.user_id=#{id}
+    group by m.genre1
+    having avg(um.m_rate)=(select max(c1) from(
+        select avg(um.m_rate) c1
+        from usermovie um join movie m
+        on(um.m_no=m.no)
+        where um.m_rate>0  and um.user_id=#{id}
+        group by m.genre1)
+        )
+    order by c1 desc) g1  ) g2  where numrow = 1)
+and no Not In (select m_no from usermovie where  watchYn='Y')    
+order by genre1 , genre2 , nation , director
   </select>
   
   <update id="setWatchMovie" parameterType="com.java.web.bean.UserMovie" >
