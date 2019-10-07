@@ -7,6 +7,12 @@ public class Login {
 	private String gender;
 	private int age;
 	
+	public Login(String id,String password,String nickname) {
+		this.id=id;
+		this.pw=password;
+		this.nickname=nickname;
+	}
+	
 	public Login(String id,String nickname) {
 		this.id=id;
 		this.nickname=nickname;

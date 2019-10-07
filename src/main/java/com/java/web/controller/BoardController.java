@@ -113,7 +113,7 @@ public class BoardController { //인터페이스
 	public String Login(HttpServletRequest request, HttpServletResponse response) {
 		String id=request.getParameter("no");
 		String pw=request.getParameter("val");
-		Login login = ns.loginRead(id,pw);
+		Login login = ns.loginRead(new Login(id,pw,""));
 		HttpSession s=request.getSession();
 //		s.setAttribute("login", false);
 		if(login!=null) {

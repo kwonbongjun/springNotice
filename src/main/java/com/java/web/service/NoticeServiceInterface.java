@@ -9,7 +9,7 @@ import com.java.web.bean.UserMovie;
 import com.java.web.util.CrawlingBean;
 
 public interface NoticeServiceInterface {
-	public Login loginRead(String id,String pw);
+	public Login loginRead(Login login);
 	public Bean detailRead(int no);
 	
 	public void insertLogin(Login login);
@@ -41,6 +41,7 @@ public interface NoticeServiceInterface {
 	public Integer tdidmapping(Movie movie);
 	public int isWatch(UserMovie um);
 	public void insertWatchMovie(UserMovie um);
+	public Login checkNickname(String nickname);
 
 	
 }

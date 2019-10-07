@@ -18,6 +18,7 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <!--  -->
 <style>
 </style>
@@ -25,6 +26,16 @@
 /* document.getElementById("content").onclick=function (){
 	alert("로그인필요");
 } */
+<%String ac="false";
+Login user = (Login) session.getAttribute("login"); 
+String ra =(String) request.getAttribute("recommendAccess");
+String ra2 =(String) request.getAttribute("rateAccess");
+if(ra==null) {ra="false";}
+if(ra2==null) {ra2="false";}
+String uid=null;
+if(user!=null) {uid=user.getId();}
+if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
+
 var login=false;
 var a;
 var contentperpage=10;
@@ -248,26 +259,32 @@ for(int i=1;i<=pagenum;i++){%>
 	<li class="content"><a href="/?pageNum=<%=i%>" onclick="return pageclick(<%=i%>);">[<%=i%>]</a></li>
 <%}} %>
 <li class="content"><a href="/?pageNum=<%=1%>">></a></li> --%>
+
 </script>
 </head>
 
 <body onload="onload()">
 	<div class="main_blk">
-		<div>
-			<a href="/">bong's movie</a>
+<div class="logo">
+			<a href="/">영화 분석 사이트</a>
 		</div>
 		<div class="nav">
-			<ul>
-				<li><a href="/board">게시판</a></li>
+			<ul onclick="nav(this)">
+				<li><a href="/board" class="navClick">게시판</a></li>
 				<li><a href="/search">키워드 분석</a></li>
+				<li><a href="/recommend?user=<%=uid%>")>영화 추천</a></li>
+				<li><a href="/rate">평점 분석</a></li>
 			</ul>
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>
-				<%Login user = (Login) session.getAttribute("login"); %>
-				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/loginpage" value="login"  onclick="logout()"><%
-				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout"">logout</button><% }%>
+				
+				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><button type="submit"  formaction="/loginpage" value="login"  onclick="logout() " class="login"><i class="fas fa-sign-in-alt"></i></button><%
+				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout" class="login"><i class="fas fa-sign-out-alt"></i></button><% }%>
 				<%if(session.getAttribute("login")!=null){%><%=user.getNickname()%><%} %>
-				<button type="submit" formaction="/join" value="회원가입">회원가입</button>
+				<%if(session.getAttribute("login")==null) {%><button  type="submit" formaction="/join" class="login"><i class="fas fa-user-plus"></i></button><%
+				}else{%><button type="submit" formaction="/mypage" method="post" id="mypage" value="mypage" class="mypage"><i class="fas fa-user"></i></button><% }%>
+
+
 			</form>
 		</div>
 	</div>
@@ -330,6 +347,12 @@ for(int i=1;i<=pagenum;i++){%>
 	<ul id="page" class="pagination"></ul>
 	</div>
 
-	
+		<div class="footer">
+		<ul>
+			<li>tel:010-1111-2222</li>
+			<li>address:경기도 군포시</li>
+			<li>Copyright@Bong Corp.All rights reserved.</li>
+		</ul>
+	</div>
 </body>
 </html>

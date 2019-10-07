@@ -1,7 +1,7 @@
 @charset "EUC-KR";
 body{
 	margin:0;
-
+	height:100%;
 }
 ul{
 	display:inline-block;
@@ -74,6 +74,7 @@ img{
 	font-family:serif;
 	margin-bottom: 30px;
 	color: aqua;
+	text-align: center;
 }
 .nav{
 	display:block;
@@ -86,6 +87,7 @@ img{
 	font-size: 25px;
 	font-family: sans-serif;
 	color: black;
+	margin : 0 10px;
 }
 .nav li:hover{
 	opacity: 0.5;
@@ -101,6 +103,10 @@ img{
 .nav button:hover {
   background-color: RoyalBlue;
 }
+.navClick{
+	border-bottom: 1px solid blue;
+}
+
 .textright{
 	position:absolute;
 	display:inline-block;
@@ -140,12 +146,14 @@ img{
 	background-color: gray;
 	clear: both;
 	font-size: 20px;
+	margin-top: 100px;
 }
 .footer ul{
 	display: list-item;
 }
 .footer li{
 	display: list-item;
+	text-align: center;
 }
 div.body{
 
@@ -192,7 +200,8 @@ div.body:after {
 	margin-left:30%;
 }
 #list{
-	margin-top:30px;
+	min-height: 65vh !important;
+   margin: 0 auto -100px;
 }
 .ml10{
 	margin-left:5%;
@@ -225,6 +234,10 @@ div.body:after {
 	display: inline-block;
 	width:45%;
 }
+.container {
+	min-height: 50%;
+   margin: 0 auto -100px;
+}
 .container button{
 	border:none;
 	background-color: white;
@@ -252,4 +265,35 @@ p.star{
 	margin-left:30%;
 	text-align: center;
 	width:40%;
+	min-height: 65vh;
+/*    	margin: 0 auto -100px; */
+}
+
+.page-container h1{
+	text-shadow: 0 1px 4px rgba(0,0,200,0.9);
+}
+.page-container button{
+	background:rgba(0,0,200,0.5);
+	border: 1px solid rgb(0,0,200);
+}
+.page-container .fieldset{
+	border-width: 2px;
+    border-style: groove;
+    border-color: aqua;
+    border-image: initial;
+}
+.page-container legend{
+	width: auto;
+	display: block !important;
+	color:black;
+}
+.form-group button{
+	cursor: pointer;
+}
+.form-group img{
+	max-width:none;
+	margin: 0;
+}
+.card-header h3 {
+	color:black !important;
 }

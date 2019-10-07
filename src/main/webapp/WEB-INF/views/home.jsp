@@ -11,6 +11,9 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+
+
+
 function user(id) {
 	$.ajax({
 		url:"/recommend",
@@ -20,22 +23,31 @@ function user(id) {
 		alert("추천")
 	});
 }
+<%String ac="false";
+Login user = (Login) session.getAttribute("login"); 
+String ra =(String) request.getAttribute("recommendAccess");
+String ra2 =(String) request.getAttribute("rateAccess");
+if(ra==null) {ra="false";}
+if(ra2==null) {ra2="false";}
+String uid=null;
+if(user!=null) {uid=user.getId();}
+if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
+
+
 </script>
 </head>
 <body>
-<%Login user = (Login) session.getAttribute("login"); %>
+
 	<div class="main_blk">
 		<div class="logo">
-			<a href="/">bong's movie</a>
+			<a href="/">영화 분석 사이트</a>
 		</div>
 		<div class="nav">
-			<ul>
+			<ul onclick="nav(this)">
 				<li><a href="/board">게시판</a></li>
 				<li><a href="/search">키워드 분석</a></li>
-				<%if(user!=null) {%>
-				<li><a href="/recommend?user=<%=user.getId()%>")>영화 추천</a></li>
+				<li><a href="/recommend?user=<%=uid%>")>영화 추천</a></li>
 				<li><a href="/rate">평점 분석</a></li>
-				<%} %>
 			</ul>
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>

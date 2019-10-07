@@ -181,6 +181,10 @@ public class NoticeDao implements NoticeDaoInterface{
 	public void insertWatchMovie(UserMovie um) {
 		s.insert("test.insertWatchMovie",um);
 	}
+	@Override
+	public Login checkNickname(String nickname) {
+		return s.selectOne("test.checkNickname",nickname);
+	}
 	
 	
 }

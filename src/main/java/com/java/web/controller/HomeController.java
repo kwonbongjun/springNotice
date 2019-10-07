@@ -36,11 +36,23 @@ public class HomeController {
 		String pw=req.getParameter("pw");
 		String nickname=req.getParameter("nickname");
 		String gender = req.getParameter("gender");
-		int age = Integer.parseInt(req.getParameter("age"));
+		String temp=req.getParameter("age");
+		System.out.println(gender);
 		
+		//int age = Integer.parseInt(req.getParameter("age"));
+		int age= 2019-Integer.parseInt(temp.substring(0,4))+1;
 		Login checklogin = nsi.checkLogin(id);
-		if(checklogin!=null) {
+		if(checklogin!=null ) {
 			req.setAttribute("dup", true);
+			return "join";
+		}
+		Login checkNickname = nsi.checkNickname(nickname);
+		if(checkNickname!=null ) {
+			req.setAttribute("nickname", true);
+			return "join";
+		}
+		if(!gender.equals("m") && !gender.equals("f")) {
+			req.setAttribute("gen", true);
 			return "join";
 		}
 		Login login = new Login(id,pw,nickname,gender,age);
@@ -51,12 +63,14 @@ public class HomeController {
 	public String submitlogin(HttpServletRequest req, HttpServletResponse res){
 		String id=req.getParameter("no");
 		String pw=req.getParameter("val");
-		Login login = nsi.checkLogin(id);
+		Login login = nsi.loginRead(new Login(id,pw,""));
 		HttpSession s=req.getSession();
 		if(login!=null) {
 			s.setAttribute("login", new Login(id,login.getNickname()));
 		}else {
+			req.setAttribute("login", "false");
 			s.invalidate();
+			return "login";
 		}
 		return "home";
 	}

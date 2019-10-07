@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
 import com.java.web.bean.UserMovie;
 import com.java.web.service.NoticeServiceInterface;
@@ -27,6 +29,12 @@ public class RecommendController {
 	
 	@RequestMapping(value="/recommend" /*method=RequestMethod.POST*/)
 	public String recommend(HttpServletRequest req, HttpServletResponse res) {
+		System.out.println("11"+req.getParameter("user"));
+		if(req.getParameter("user").equals("null")) {
+			System.out.println("111");
+			req.setAttribute("recommendAccess", "true");
+			return "home";
+		}
 		String user_id=req.getParameter("user");
 		String str1=req.getParameter("update1");
 		String str2=req.getParameter("update2");

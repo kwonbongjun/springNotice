@@ -1,3 +1,4 @@
+<%@page import="com.java.web.bean.Login"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -8,6 +9,7 @@
 <html>
 <head>
 	<title>Login Page</title>
+	<link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
    <!--Made with love by Mutiullah Samim -->
    
 	<!--Bootsrap 4 CDN-->
@@ -121,6 +123,11 @@ color: white;
 margin-left: 4px;
 }
 </style>
+<script>
+<%String result="fail";
+String l= (String) request.getAttribute("login");
+if(l!=null) {if(l.equals("false")){%>alert("로그인 실패");<%}}%>
+</script>
 </head>
 <body>
 <div class="container">
@@ -131,7 +138,7 @@ margin-left: 4px;
 
 			</div>
 			<div class="card-body">
-				<form>
+				<form method="POST">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -150,7 +157,7 @@ margin-left: 4px;
 					</div> -->
 					
 					<div class="form-group">
-						<input type="submit" formaction="/submitlogin" value="login" class="btn float-right login_btn">
+						<input type="submit" formaction="/submitlogin"  value="login" class="btn float-right login_btn">
 						<%if(session.getAttribute("login")==null) {%><span><button type="submit"  formaction="/kakao" value="카카오"><img src="/resources/img/kakaologin.png" class="fab fa-facebook-square" alt="kakao image" /></button></span><%
 						}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/kakaologout" value="카카오로그아웃"">카카오로그아웃</button><% }%>
 					</div>

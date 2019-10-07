@@ -259,6 +259,16 @@ var svg = d3.select("#my_dataviz")
 </script> --%>
 
 <script>
+<%String ac="false";
+Login user = (Login) session.getAttribute("login"); 
+String ra =(String) request.getAttribute("recommendAccess");
+String ra2 =(String) request.getAttribute("rateAccess");
+if(ra==null) {ra="false";}
+if(ra2==null) {ra2="false";}
+String uid=null;
+if(user!=null) {uid=user.getId();}
+if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
+
 $(document).ready(function(){$(".datepicker").datepicker({
         changeYear: true,
         showButtonPanel: true,
@@ -277,24 +287,28 @@ $(document).ready(function(){$(".datepicker").datepicker({
  	
   <body>
 
-	<div class="main_blk tc">
-		<div>
-			<a href="/">bong's movie</a>
+	<div class="tc">
+		<div class="logo">
+			<a href="/">영화 분석 사이트</a>
 		</div>
 		<div class="nav">
-			<ul>
+			<ul onclick="nav(this)">
 				<li><a href="/board">게시판</a></li>
-				<li><a href="/search">키워드 분석</a></li>
+				<li><a href="/search" class="navClick">키워드 분석</a></li>
+				<li><a href="/recommend?user=<%=uid%>")>영화 추천</a></li>
+				<li><a href="/rate">평점 분석</a></li>
 			</ul>
 			<form id="content" class="textright">
 <%-- 							<%String user= (String) request.getAttribute("user"); %> --%>
-				<%Login user = (Login) session.getAttribute("login"); %>
-				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><input type="submit"  formaction="/loginpage" value="login"  onclick="logout()"><%
-				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout"">logout</button><% }%>
+				
+				<%if(session.getAttribute("login")==null) {%><input type="hidden" name="flag" value="1"><button type="submit"  formaction="/loginpage" value="login"  onclick="logout() " class="login"><i class="fas fa-sign-in-alt"></i></button><%
+				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout" class="login"><i class="fas fa-sign-out-alt"></i></button><% }%>
 				<%if(session.getAttribute("login")!=null){%><%=user.getNickname()%><%} %>
-				<button type="submit" formaction="/join" value="회원가입">회원가입</button>
+				<%if(session.getAttribute("login")==null) {%><button  type="submit" formaction="/join" class="login"><i class="fas fa-user-plus"></i></button><%
+				}else{%><button type="submit" formaction="/mypage" method="post" id="mypage" value="mypage" class="mypage"><i class="fas fa-user"></i></button><% }%>
+
+
 			</form>
-		</div>
 	</div>
   
     <div class="container h-100">
@@ -333,6 +347,9 @@ $(document).ready(function(){$(".datepicker").datepicker({
 <p>감독:<%=movie[i].getDirector() %>
 <p>배우:<%=movie[i].getActor() %>
 <%if(request.getAttribute("isSetScore")==null && (user!=null)) {%>
+
+
+	
 <script>
 
 var rstar;
@@ -442,5 +459,12 @@ function draw(words) {
 }
 </script>
 <%}%>
+	<div class="footer">
+		<ul>
+			<li>tel:010-1111-2222</li>
+			<li>address:경기도 군포시</li>
+			<li>Copyright@Bong Corp.All rights reserved.</li>
+		</ul>
+	</div>
   </body>
   

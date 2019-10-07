@@ -29,8 +29,7 @@ public class NoticeService implements NoticeServiceInterface {
  @Autowired
  NoticeDaoInterface ndi;
 	
-	public Login loginRead(String id, String pw){
-		Login login=new Login(id, pw);
+	public Login loginRead(Login login){
 		return nd.loginselect(login); 
 	}
 	public void insertLogin(Login login) {
@@ -215,6 +214,10 @@ public class NoticeService implements NoticeServiceInterface {
 	public void insertWatchMovie(UserMovie um) {
 		ndi.insertWatchMovie(um);
 		
+	}
+	@Override
+	public Login checkNickname(String nickname) {
+		return ndi.checkNickname(nickname);
 	}
 	
 }

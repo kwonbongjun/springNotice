@@ -37,6 +37,7 @@ public interface NoticeDaoInterface {
 	public Integer tdidmapping(Movie movie);
 	public int isWatch(UserMovie um);
 	public void insertWatchMovie(UserMovie um);
+	public Login checkNickname(String nickname);
 	
 	
 	

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -7,7 +7,7 @@
 
 <html>
 <head><title>ADD</title>
-<link href="CSS/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
 <style>
 body {
 font-family:'PT Sans',Helvetica, Arial, sans-serif;
@@ -15,26 +15,21 @@ color:#fff;
    background-repeat: no-repeat;
    background-size:cover;
 }
-
 .page-container {
 margin: 120px auto 0 auto;
 }
-
 h1 {
 	font-size: 30px;
 	font-weight: 700;
 	text-shadow:0 1px 4px rgba(0,0,0,.2);
 	text-align:center;
 }
-
 form {
 position:relative;
 width:305px;
 margin:15px auto 0 auto;
 text-align:center;
-
 }
-
 input {
 width:270px;
 height:42px;
@@ -60,11 +55,9 @@ text-shadow:0 1px 2px rgba(0,0,0,.1);
 -webkit-transition: all .2s;
 -ms-transition: all .2s;
 }
-
 input:-moz-placeholder { color: #fff; }
 input:-ms-input-placeholder { color: #fff; }
 input::-webkit-input-placeholder { color: #fff; }
-
 input:focus {
 outline:none;
 -moz-box-shadow:
@@ -77,7 +70,6 @@ box-shadow:
         0 2px 3px 0 rgba(0,0,0,.1) inset,
         0 2px 7px 0 rgba(0,0,0,.2);
 }
-
 button {
 cursor:pointer;
 width:300px;
@@ -108,7 +100,6 @@ text-shadow:0 1px 2px rgba(0,0,0,.1);
     -webkit-transition: all .2s;
     -ms-transition: all .2s;
 }
-
 button:hover {
     -moz-box-shadow:
         0 15px 30px 0 rgba(255,255,255,.15) inset,
@@ -120,7 +111,6 @@ button:hover {
         0 15px 30px 0 rgba(255,255,255,.15) inset,
         0 2px 7px 0 rgba(0,0,0,.2);
 }
-
 button:active {
     -moz-box-shadow:
         0 15px 30px 0 rgba(255,255,255,.15) inset,
@@ -131,32 +121,20 @@ button:active {
     box-shadow:        
         0 5px 8px 0 rgba(0,0,0,.1) inset,
         0 1px 4px 0 rgba(0,0,0,.1);
-
     border: 0px solid #ef4300;
 }
-
-
-
 .navbar {
     overflow: hidden;
     background-color: #333;
     font-family: Arial;
 }
-
 .navbar a {float: left;font-size: 16px;color: white;text-align: center;padding: 14px 16px;text-decoration: none;}
-
 .dropdown {float: left;overflow: hidden;}
-
 .dropdown .dropbtn {font-size: 16px;border: none;outline: none;color: white;padding: 14px 16px;background-color: inherit;}
-
 .navbar a:hover, .dropdown:hover .dropbtn {background-color: red}
-
 .dropdown-content {display: none;position: absolute;background-color: #f9f9f9;width: 160px;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);z-index: 1;}
-
 .dropdown-content a {float: none;color: black;padding: 12px 16px;text-decoration: none;display: block;text-align: left;}
-
 .dropdown-content a:hover {background-color: #ddd;}
-
 .dropdown:hover .dropdown-content {display: block;}
 </style>
 
@@ -164,14 +142,19 @@ button:active {
 <body>
 <script>
 <%if(request.getAttribute("dup")!=null){ %>
-	alert("id �ߺ�");
-	
+	alert("id 중복");
+<%} %>
+<%if(request.getAttribute("nickname")!=null){ %>
+alert("nickname 중복");
+<%} %>
+<%if(request.getAttribute("gen")!=null){ %>
+alert("성별 m 혹은 f만 입력");
 <%} %>
 </script>
 
 <div class="page-container">
             
-            <form action="/submitjoin" method="POST">
+<!--             <form action="/submitjoin" method="POST">
 			<h1>Sign Up</h1>
                 <input type="text" name="id" class="Name" placeholder="ID">
                 <input type="password" name="pw" class="Tele" placeholder="Password">
@@ -180,8 +163,21 @@ button:active {
 				<input type="text" name="age" class="Address" placeholder="age">
                 <button type="submit" value="Add" name="submit">Submit</button>
             </form>
-        </div>
-		
+        </div> -->
+		     <form action="/submitjoin" method="POST" >
+		       <fieldset class="fieldset">
+		       <legend>회원가입</legend>
+			<!-- <h1>Sign Up</h1> -->
+                <input type="text" name="id" class="Name" placeholder="ID" required="required">
+                <input type="password" name="pw" class="Tele" placeholder="Password" required="required">
+				<input type="text" name="nickname" class="Address" placeholder="nickname" required="required">
+				<input type="text" name="gender" class="Address" placeholder="gender(남성:m 여성:f 입력)">
+<!-- 				<input class="radio" type="radio" name="gender" value="m">남성
+				<input class="radio" type="radio" name="gender" value="f">여성 -->
+				<input class="textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" name="age" class="Address" placeholder="생년월일" required="required">
+                <button type="submit" value="Add" name="submit">Submit</button>
+                </fieldset>
+            </form>
 
 </body>
 </html>
