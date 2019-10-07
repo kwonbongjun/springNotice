@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.java.web.bean.Login;
 import com.java.web.service.NoticeService;
@@ -83,6 +84,11 @@ public class HomeController {
 	@RequestMapping(value="/mypage")
 	public String mypage(HttpServletRequest req, HttpServletResponse res) {
 		//정보보기, 회원탈퇴, 
+		String id=(String) req.getParameter("id");
+		System.out.println("id"+id);
+		Login login = nsi.checkLogin(id);
+		System.out.println(login.getId());
+		req.setAttribute("user", login);
 		return "mypage";
 	}
 }

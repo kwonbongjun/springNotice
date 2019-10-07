@@ -11,18 +11,6 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-
-
-
-function user(id) {
-	$.ajax({
-		url:"/recommend",
-		dataType:"json",
-		data:{user:id}
-	}).done(function(data){
-		alert("추천")
-	});
-}
 <%String ac="false";
 Login user = (Login) session.getAttribute("login"); 
 String ra =(String) request.getAttribute("recommendAccess");
@@ -32,7 +20,6 @@ if(ra2==null) {ra2="false";}
 String uid=null;
 if(user!=null) {uid=user.getId();}
 if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
-
 
 </script>
 </head>
@@ -61,20 +48,12 @@ if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
 
 			</form>
 		</div>
-		<div class="body">
-	 	<p>☆사이트 소개☆</p><br>
-	 		<div class="c1">
-	 		<p>1.게시판</p>
-	 		<img class="fl" src="/resources/img/board.PNG" alt="board">
-	 		<p>영화에 대해 자유롭게 이야기 나누고 생각을 공유할 수 있는 게시판 기능</p>
-	 		</div>
-	 		<div class="c2">
-			 	<p>2.키워드 분석</p>
-			 	<p>영화를 검색했을 때 웹에서 영화와 관련된 키워드 추출해서 WordCloud 형식으로 시각화</p>
-			 	<img  class="tr" src="/resources/img/analysis1.jpg" alt="analysis" >
-				
-			</div>
-	</div>
+		<div class="mypage">
+	 		<p>id:<%=user.getId() %></p>
+	 		<p>nickname:<%=user.getNickname() %></p>
+	 		<p>gender:<%=user.getGender() %></p>
+	 		<p>age:<%=user.getAge() %></p>
+		</div>
 	<div class="footer">
 		<ul>
 			<li>tel:010-1111-2222</li>

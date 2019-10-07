@@ -282,7 +282,7 @@ for(int i=1;i<=pagenum;i++){%>
 				}else{%><input type="hidden" name="flag" value="0"><button type="submit" formaction="/submitlogout" id="logout" value="logout" class="login"><i class="fas fa-sign-out-alt"></i></button><% }%>
 				<%if(session.getAttribute("login")!=null){%><%=user.getNickname()%><%} %>
 				<%if(session.getAttribute("login")==null) {%><button  type="submit" formaction="/join" class="login"><i class="fas fa-user-plus"></i></button><%
-				}else{%><button type="submit" formaction="/mypage" method="post" id="mypage" value="mypage" class="mypage"><i class="fas fa-user"></i></button><% }%>
+				}else{%><button type="submit" formaction="/mypage" method="post" id="mypage" value="mypage"><i class="fas fa-user"></i></button><% }%>
 
 
 			</form>
@@ -344,7 +344,7 @@ for(int i=1;i<=pagenum;i++){%>
 	<%}} %>
 	<li class="content"><a href="/?pageNum=<%=1%>">></a></li>
 	</ul> --%>
-	<ul id="page" class="pagination"></ul>
+	<div class="page2"><ul id="page" class="pagination"></ul></div>
 	</div>
 
 		<div class="footer">
