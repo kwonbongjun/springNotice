@@ -28,6 +28,7 @@
 	alert("로그인필요");
 } */
 <%String ac="false";
+int pageNum=1;
 Login user = (Login) session.getAttribute("login"); 
 String ra =(String) request.getAttribute("recommendAccess");
 String ra2 =(String) request.getAttribute("rateAccess");
@@ -35,8 +36,12 @@ if(ra==null) {ra="false";}
 if(ra2==null) {ra2="false";}
 String uid=null;
 if(user!=null) {uid=user.getId();}
-if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
-
+if(ra!="false") {%>alert("로그인 후 이용 가능");
+<%}%>
+<%if(request.getParameter("pageNum")!=null) {
+String pagestr=(String) request.getParameter("pageNum");
+pageNum=(Integer.parseInt(pagestr)-1)*10+1;
+}%>
 var login=false;
 var a;
 var contentperpage=10;
@@ -99,7 +104,7 @@ if(list==null) {
 
 totalpage=<%=totalpage%><%System.out.println(totalpage);%>
 pagenum=parseInt(totalpage/contentperpage);
-alert(totalpage);
+//alert(totalpage);
 if(totalpage%contentperpage>0){
 	pagenum++;
 
@@ -316,7 +321,7 @@ for(int i=1;i<=pagenum;i++){%>
 		
 		%><tr> 
 		<%-- <input type="checkbox" name="check"  id="check" onclick="check(<%=i%>)"> --%>	
-		<td><%=i%></td>
+		<td><%=pageNum+i%></td>
 		<td><a href="/rate/?code=<%=list.get(i).getNo()%>"><%=list.get(i).getTitle() %></a></td>
 		<td><%=list.get(i).getDirector() %></td>
 		<td><%=list.get(i).getUserRating()%></td>
@@ -337,7 +342,7 @@ for(int i=1;i<=pagenum;i++){%>
 	<%}} %>
 	<li class="content"><a href="/?pageNum=<%=1%>">></a></li>
 	</ul> --%>
-	<ul id="page" class="pagination"></ul>
+	<div class="page2"><ul id="page" class="pagination"></ul></div>
 	</div>
 	<div class="footer">
 		<ul>

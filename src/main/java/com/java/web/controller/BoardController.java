@@ -175,9 +175,9 @@ public class BoardController { //인터페이스
 	@RequestMapping("/kakao")
 	public void kakao(HttpServletRequest request, HttpServletResponse response) {
 				try {
-					//http://gdj16.gudi.kr:20003/KakaoBack 
+					//http://gdj16.gudi.kr:20003/KakaoBack  http://localhost:8080/KakaoBack
 					String url="https://kauth.kakao.com/oauth/authorize?client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87"
-							+ "&redirect_uri="+URLEncoder.encode("http://localhost:8080/KakaoBack","UTF-8")
+							+ "&redirect_uri="+URLEncoder.encode("http://gdj16.gudi.kr:20003/KakaoBack","UTF-8")
 							+ "&response_type=code";
 					System.out.println(request.getParameter("code"));
 					
@@ -191,12 +191,12 @@ public class BoardController { //인터페이스
 	
 	@RequestMapping("/KakaoBack")
 	public String kakaoback(HttpServletRequest request, HttpServletResponse response){
-	//http://gdj16.gudi.kr:20003/KakaoBack
+	//http://gdj16.gudi.kr:20003/KakaoBack http://localhost:8080/KakaoBack
 		try {
 			String url="https://kauth.kakao.com/oauth/token"
 					 +"?grant_type=authorization_code"
 					 +"&client_id=ed94698d2dd2bbca37dbb1ad2cd5ae87"
-					 +"&redirect_uri="+URLEncoder.encode("http://localhost:8080/KakaoBack","UTF-8")
+					 +"&redirect_uri="+URLEncoder.encode("http://gdj16.gudi.kr:20003/KakaoBack","UTF-8")
 					 +"&code="+request.getParameter("code");
 			URL uri = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) uri.openConnection();

@@ -64,16 +64,39 @@ if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
 		<div class="body">
 	 	<p>☆사이트 소개☆</p><br>
 	 		<div class="c1">
-	 		<p>1.게시판</p>
-	 		<img class="fl" src="/resources/img/board.PNG" alt="board">
-	 		<p>영화에 대해 자유롭게 이야기 나누고 생각을 공유할 수 있는 게시판 기능</p>
+		 		<div class="w5">
+		 		<img src="/resources/img/board.PNG" alt="board">
+		 		</div>
+		 		<div class="w5">
+				<p>1.게시판<br>
+		 		영화에 대해 자유롭게 이야기 나누고 생각을 공유할 수 있는 게시판 기능</p>
+		 		</div>
 	 		</div>
-	 		<div class="c2">
-			 	<p>2.키워드 분석</p>
-			 	<p>영화를 검색했을 때 웹에서 영화와 관련된 키워드 추출해서 WordCloud 형식으로 시각화</p>
-			 	<img  class="tr" src="/resources/img/analysis1.jpg" alt="analysis" >
-				
+	 		<div class="c1">
+	 			<div class="w5">
+			 	<p>2.키워드 분석<br>
+			 	영화를 검색했을 때 웹에서 영화와 관련된 키워드 추출해서 WordCloud 형식으로 시각화</p>
+			 	</div>
+			 	<div class="w5"><img src="/resources/img/analysis1.jpg" alt="analysis" ></div>
 			</div>
+			
+			<div class="c1">
+		 		<div class="w5">
+		 		<img src="/resources/img/recommend.jpg" alt="board">
+		 		</div>
+		 		<div class="w5">
+				<p>3.영화추천<br>
+		 		영화 검색 후에 평점을 주면 그 사용자에 맞춤 장르 추천 서비스</p>
+		 		</div>
+	 		</div>
+	 		<div class="c1">
+	 			<div class="w5">
+			 	<p>4.평점 분석<br>
+			 	전체 영화 평점 순위 뿐만 아니라 각 영화의 연령별, 나이별 평점 확인 가능</p>
+			 	</div>
+			 	<div class="w5"><img src="/resources/img/rate.PNG" alt="analysis" ></div>
+			</div>
+			
 	</div>
 	<div class="footer">
 		<ul>

@@ -1,7 +1,7 @@
 <%@page import="com.java.web.bean.Movie"%>
 <%@page import="com.java.web.bean.Login"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="java.util.List"%>  https://bootsnipp.com/
+<%@page import="java.util.List"%>
 <%@page import="net.sf.json.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -353,19 +353,22 @@ $(document).ready(function(){$(".datepicker").datepicker({
 <script>
 
 var rstar;
-function star(i) {
+function star(idx,i) {
 	rstar=i;
 	for(var j=0;j<5;j++) {
-		document.getElementsByClassName("star")[j].style.color="black"
+		document.getElementsByClassName("totalstar")[idx].getElementsByClassName("star")[j].style.color="black"
+		//document.getElementsByClassName("star")[j].style.color="black"
 	}
 	for(var j=0;j<i;j++) {
-		document.getElementsByClassName("star")[j].style.color="yellow"
+		document.getElementsByClassName("totalstar")[idx].getElementsByClassName("star")[j].style.color="yellow"
+		//document.getElementsByClassName("star")[j].style.color="yellow"
 	}
 }
 
 
-function setstar(user_id,m_no,director,release) {
-	var review=document.getElementById("star").getElementsByTagName("input")[0].value
+function setstar(idx,user_id,m_no,director,release) {
+	var review=document.getElementsByClassName("totalstar")[idx].getElementsByTagName("input")[0].value
+	//var review=document.getElementById("star").getElementsByTagName("input")[0].value
 	
 	$.ajax({
 		url:"/setstar",
@@ -386,14 +389,14 @@ function setstar(user_id,m_no,director,release) {
 	<div onclick="star(5,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie.getTitle()+"\'"%>)" class="star">☆</div>
 	<button type="button">등록</button>
 </form> --%>
-<form id="star">
-	<div onclick="star(1)" class="star">☆</div>
-	<div onclick="star(2)" class="star">☆</div>
-	<div onclick="star(3)" class="star">☆</div>
-	<div onclick="star(4)" class="star">☆</div>
-	<div onclick="star(5)" class="star">☆</div>
+<form class="totalstar">
+	<div onclick="star(<%=i %>,1)" class="star">☆</div>
+	<div onclick="star(<%=i %>,2)" class="star">☆</div>
+	<div onclick="star(<%=i %>,3)" class="star">☆</div>
+	<div onclick="star(<%=i %>,4)" class="star">☆</div>
+	<div onclick="star(<%=i %>,5)" class="star">☆</div>
 	<input type="text" name="review">
-	<button type="button" onclick="setstar(<%="\'"+user.getId()+"\'"%>,<%="\'"+movie[i].getTitle()+"\'"%>,<%="\'"+movie[i].getDirector()+"\'"%>,<%="\'"+movie[i].getRelease()+"\'"%>)">등록</button>
+	<button type="button" onclick="setstar(<%=i%>,<%="\'"+user.getId()+"\'"%>,<%="\'"+movie[i].getTitle()+"\'"%>,<%="\'"+movie[i].getDirector()+"\'"%>,<%="\'"+movie[i].getRelease()+"\'"%>)">등록</button>
 </form>
 <%} %>
 </div>

@@ -25,9 +25,9 @@ a{
 	color:#337ab7;
 }
 img{
-	display: inline;
-    max-width: 30%;
-    max-height: 100%;
+	display: inline-block;
+    max-width: calc(100% - 22px);
+
     margin : 10px 10px;
     vertical-align:middle;
     border: 1px solid aqua;
@@ -116,7 +116,7 @@ img{
 	
 }
 .c1{
-	clear:both;
+
 	font-family: sans-serif;
 	font-size: 25px;
 	margin: 50px 0;
@@ -125,6 +125,7 @@ img{
 }
 .fl{
 	float: left;
+	clear:both;
 }
 .fr{
 	clear:both;
@@ -167,13 +168,12 @@ div.body{
 	height: auto;
 }
 .body p{
-	width:65%;
-	display: inline-block;
+	height:auto;
 }
 
 div.body:after {
 
-	background-repeat:no-repeat;
+	background-repeat:round;
 	background-size:100%;
 	background-color:rgba(255,255,255,0.5);
 	    content : "";
@@ -183,7 +183,8 @@ div.body:after {
     left: 0;
 	background-image:url(/resources/img/theather.jpg); 
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    height:auto;
     opacity : 0.2;
     z-index: -1;
     font-family: serif;
@@ -229,6 +230,15 @@ div.body:after {
 .w30{
 	width:30%;
 }
+.w5{
+	width: calc(50% - 22px);
+    display: inline-block;
+	height: auto;
+}
+.w5 p{
+    display: inline-block;
+}
+
 .w60{
 	width:60%;
 }
@@ -251,7 +261,7 @@ div.body:after {
 .star{
 	cursor: pointer;
 }
-#star div{
+.totalstar div{
 	display: inline-block;
 }
 p.star{

@@ -155,52 +155,52 @@ function pageclick(a) {
 page=parseInt(temp.substring(1,2)); */
 }
 function leftpageclick(a) {
-if(isNaN(curpage)) curpage=1;
-
-console.log(pagenum);
-while(curpage>pageIndex){
-	curpage--;	
-}
-if(curpage>1) {
-curpage-=pagepernotice;
-pageIndex-=pagepernotice;
-}
-alert(curpage);
-
-<%if(request.getParameter("search")==null){%>
-location.search="?pageNum="+curpage;
-<%}else{%>
-location.search="?pageNum="+curpage+"&search="+search;
-<%}%>
+	if(isNaN(curpage)) curpage=1;
+	
+	console.log(pagenum);
+	while(curpage>pageIndex){
+		curpage--;	
+	}
+	if(curpage>1) {
+	curpage-=pagepernotice;
+	pageIndex-=pagepernotice;
+	}
+	alert(curpage);
+	
+	<%if(request.getParameter("search")==null){%>
+	location.search="?pageNum="+curpage;
+	<%}else{%>
+	location.search="?pageNum="+curpage+"&search="+search;
+	<%}%>
 }
 function rightpageclick(a) {
-if(isNaN(curpage)) curpage=1;
-
-console.log(pagenum);
-while(curpage>pageIndex){
-	curpage--;	
-}
-if(curpage<pagenum) {
-	console.log(curpage);
-	if(pagenum-curpage<10) {
-		curpage+=pagenum-curpage;
-		pageIndex+=pagenum-curpage;
-		<%if(request.getParameter("search")==null){%>
-		location.search="?pageNum="+curpage;
-		<%}else{%>
-		location.search="?pageNum="+curpage+"&search="+search;
-		<%}%>
-		return;
+	if(isNaN(curpage)) curpage=1;
+	
+	console.log(pagenum);
+	while(curpage>pageIndex){
+		curpage--;	
 	}
-	curpage+=pagepernotice;
-	pageIndex+=pagepernotice;
-}
-alert(curpage);
-<%if(request.getParameter("search")==null){%>
-location.search="?pageNum="+curpage;
-<%}else{%>
-location.search="?pageNum="+curpage+"&search="+search;
-<%}%>
+	if(curpage<pagenum) {
+		console.log(curpage);
+		if(pagenum-curpage<10) {
+			curpage+=pagenum-curpage;
+			pageIndex+=pagenum-curpage;
+			<%if(request.getParameter("search")==null){%>
+			location.search="?pageNum="+curpage;
+			<%}else{%>
+			location.search="?pageNum="+curpage+"&search="+search;
+			<%}%>
+			return;
+		}
+		curpage+=pagepernotice;
+		pageIndex+=pagepernotice;
+	}
+	alert(curpage);
+	<%if(request.getParameter("search")==null){%>
+	location.search="?pageNum="+curpage;
+	<%}else{%>
+	location.search="?pageNum="+curpage+"&search="+search;
+	<%}%>
 }
 
 var search; 
@@ -226,6 +226,7 @@ document.getElementById("page").getElementsByTagName("li")[0].appendChild(lia);
 //document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('href', "/?pageNum="+curpage );
 document.getElementById("page").getElementsByTagName("li")[0].getElementsByTagName("a")[0].setAttribute('onclick', "leftpageclick()" );
 console.log("pageIndex"+pageIndex+"pagepernotice"+pagepernotice);
+
 for(var i=pageIndex;i<pageIndex+pagepernotice;i++) {
 
 pageli=document.createElement('li');
@@ -243,6 +244,7 @@ document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getEle
 t=i+1-pageIndex;
 document.getElementById("page").getElementsByTagName("li")[i+1-pageIndex].getElementsByTagName("a")[0].setAttribute('onclick', "pageclick("+t+")" );
 }
+
 pageli=document.createElement('li');
 pagetext=document.createTextNode(">");
 lia=document.createElement('a');
