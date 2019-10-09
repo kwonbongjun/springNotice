@@ -13,6 +13,7 @@ import com.java.web.bean.Bean;
 import com.java.web.bean.FileBean;
 import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
+import com.java.web.bean.RateBean;
 import com.java.web.bean.UserMovie;
 import com.java.web.util.CrawlingBean;
 
@@ -136,31 +137,31 @@ public class NoticeDao implements NoticeDaoInterface{
 	}
 	
 	@Override
-	public int getMaleRate(int no) {
+	public RateBean getMaleRate(int no) {
 		return s.selectOne("test.getMaleRate",no);
 	}
 	@Override
-	public int getFemaleRate(int no) {
+	public RateBean getFemaleRate(int no) {
 		return s.selectOne("test.getFemaleRate",no);
 	}
 	@Override
-	public int getRate10(int no) {
+	public RateBean getRate10(int no) {
 		return s.selectOne("test.getRate10",no);
 	}
 	@Override
-	public int getRate20(int no) {
+	public RateBean getRate20(int no) {
 		return s.selectOne("test.getRate20",no);
 	}
 	@Override
-	public int getRate30(int no) {
+	public RateBean getRate30(int no) {
 		return s.selectOne("test.getRate30",no);
 	}
 	@Override
-	public int getRate40(int no) {
+	public RateBean getRate40(int no) {
 		return s.selectOne("test.getRate40",no);
 	}
 	@Override
-	public int getRate50(int no) {
+	public RateBean getRate50(int no) {
 		return s.selectOne("test.getRate50",no);
 	}
 	

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.java.web.bean.Movie;
+import com.java.web.bean.RateBean;
 import com.java.web.dao.NoticeDaoInterface;
 import com.java.web.service.NoticeService;
 import com.java.web.service.NoticeServiceInterface;
@@ -28,15 +29,15 @@ public class RateController {
 	public String rate(HttpServletRequest req, HttpServletResponse res) {
 		String code=req.getParameter("code");
 		if(code!=null) {
-			Map<String,Integer> map=new HashMap<String, Integer>();
+			Map<String,RateBean> map=new HashMap<String, RateBean>();
 			int no=Integer.parseInt(code);
-			int mrate=nsi.getMaleRate(no);
-			int frate=nsi.getFemaleRate(no);
-			int rate10 = nsi.getRate10(no);
-			int rate20 = nsi.getRate20(no);
-			int rate30 = nsi.getRate30(no);
-			int rate40 = nsi.getRate40(no);
-			int rate50 = nsi.getRate50(no);
+			RateBean mrate=nsi.getMaleRate(no);
+			RateBean frate=nsi.getFemaleRate(no);
+			RateBean rate10 = nsi.getRate10(no);
+			RateBean rate20 = nsi.getRate20(no);
+			RateBean rate30 = nsi.getRate30(no);
+			RateBean rate40 = nsi.getRate40(no);
+			RateBean rate50 = nsi.getRate50(no);
 			map.put("mrate", mrate);
 			map.put("frate", frate);
 			map.put("rate10", rate10);

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.web.bean.Login;
 import com.java.web.service.NoticeService;
@@ -31,7 +32,7 @@ public class HomeController {
 	}
 	@Autowired
 	NoticeServiceInterface nsi;
-	@RequestMapping("/submitjoin")
+	@RequestMapping(value="/submitjoin",method=RequestMethod.POST)
 	public String submitjoin(HttpServletRequest req, HttpServletResponse res){
 		String id=req.getParameter("id");
 		String pw=req.getParameter("pw");
@@ -60,6 +61,22 @@ public class HomeController {
 		nsi.insertLogin(login);
 		return "home";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/submitjoinajax",method=RequestMethod.POST)
+	public boolean submitjoinajax(HttpServletRequest req, HttpServletResponse res){
+		String id=req.getParameter("id");
+		System.out.println("id"+id);
+		boolean dup=false;
+		Login checklogin = nsi.checkLogin(id);
+		if(checklogin!=null ) {
+			dup = false;
+		}else {
+			dup=true;
+		}
+		return dup;
+	}
+	
 	@RequestMapping("/submitlogin")
 	public String submitlogin(HttpServletRequest req, HttpServletResponse res){
 		String id=req.getParameter("no");

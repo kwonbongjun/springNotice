@@ -17,6 +17,7 @@ import com.java.web.bean.Bean;
 import com.java.web.bean.FileBean;
 import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
+import com.java.web.bean.RateBean;
 import com.java.web.bean.UserMovie;
 import com.java.web.dao.NoticeDao;
 import com.java.web.dao.NoticeDaoInterface;
@@ -170,31 +171,31 @@ public class NoticeService implements NoticeServiceInterface {
 	}
 	
 	@Override
-	public int getMaleRate(int no) {
+	public RateBean getMaleRate(int no) {
 			return ndi.getMaleRate(no);
 	}
 	@Override
-	public int getFemaleRate(int no) {
+	public RateBean getFemaleRate(int no) {
 		return ndi.getFemaleRate(no);
 	}
 	@Override
-	public int getRate10(int no) {
+	public RateBean getRate10(int no) {
 		return ndi.getRate10(no);
 	}
 	@Override
-	public int getRate20(int no) {
+	public RateBean getRate20(int no) {
 		return ndi.getRate20(no);
 	}
 	@Override
-	public int getRate30(int no) {
+	public RateBean getRate30(int no) {
 		return ndi.getRate30(no);
 	}
 	@Override
-	public int getRate40(int no) {
+	public RateBean getRate40(int no) {
 		return ndi.getRate40(no);
 	}
 	@Override
-	public int getRate50(int no) {
+	public RateBean getRate50(int no) {
 		return ndi.getRate50(no);
 	}
 	

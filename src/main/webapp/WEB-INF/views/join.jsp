@@ -4,7 +4,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <html>
 <head><title>ADD</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
@@ -136,8 +136,33 @@ button:active {
 .dropdown-content a {float: none;color: black;padding: 12px 16px;text-decoration: none;display: block;text-align: left;}
 .dropdown-content a:hover {background-color: #ddd;}
 .dropdown:hover .dropdown-content {display: block;}
-</style>
 
+//document.getElementById("dup").addEventListener("click", checkIDDup);
+
+
+</style>
+<script>
+
+function checkIDDup() {
+ 	var a = document.getElementsByClassName("name")[0].value;
+	console.log(a); 
+	if(a!="") {
+	$.ajax({
+		url:"/submitjoinajax",
+		data:{id:document.getElementsByClassName("name")[0].value},
+		type:"POST",
+		dataType:"json"
+	}).done(function(data){
+		console.log(data);
+		if(data==false) {	alert("id 중복!");}else{alert("사용 가능!")}
+
+		 
+	}).fail(function(data){
+		console.log(data);
+	})
+	}
+}
+</script>
 </head>
 <body>
 <script>
@@ -150,6 +175,8 @@ alert("nickname 중복");
 <%if(request.getAttribute("gen")!=null){ %>
 alert("성별 m 혹은 f만 입력");
 <%} %>
+
+
 </script>
 
 <div class="page-container">
@@ -169,6 +196,7 @@ alert("성별 m 혹은 f만 입력");
 		       <legend>회원가입</legend>
 			<!-- <h1>Sign Up</h1> -->
                 <input type="text" name="id" class="Name" placeholder="ID" required="required">
+                <button type="button" id="dup" onclick="checkIDDup()">중복확인</button>
                 <input type="password" name="pw" class="Tele" placeholder="Password" required="required">
 				<input type="text" name="nickname" class="Address" placeholder="nickname" required="required">
 				<input type="text" name="gender" class="Address" placeholder="gender(남성:m 여성:f 입력)">
@@ -178,6 +206,8 @@ alert("성별 m 혹은 f만 입력");
                 <button type="submit" value="Add" name="submit">Submit</button>
                 </fieldset>
             </form>
+<script>
 
+</script>
 </body>
 </html>

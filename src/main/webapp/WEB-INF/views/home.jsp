@@ -77,7 +77,7 @@ if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
 			 	<p>2.키워드 분석<br>
 			 	영화를 검색했을 때 웹에서 영화와 관련된 키워드 추출해서 WordCloud 형식으로 시각화</p>
 			 	</div>
-			 	<div class="w5"><img src="/resources/img/analysis1.jpg" alt="analysis" ></div>
+			 	<div class="w5 tc"><img src="/resources/img/keyword.PNG" alt="analysis" ></div>
 			</div>
 			
 			<div class="c1">
@@ -99,11 +99,13 @@ if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
 			
 	</div>
 	<div class="footer">
-		<ul>
-			<li>tel:010-1111-2222</li>
-			<li>address:경기도 군포시</li>
-			<li>Copyright@Bong Corp.All rights reserved.</li>
-		</ul>
+		<div class="ib">
+			<ul class="footerul">
+			<li>tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:010-1111-2222</li>
+			<li>address:경기도 군포시</li><br>
+			</ul>
+			<p>Copyright@Bong Corp.All rights reserved.</p>
+		</div>
 	</div>
 </body>
 </html>

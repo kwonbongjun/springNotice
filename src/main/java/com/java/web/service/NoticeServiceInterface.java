@@ -5,6 +5,7 @@ import java.util.List;
 import com.java.web.bean.Bean;
 import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
+import com.java.web.bean.RateBean;
 import com.java.web.bean.UserMovie;
 import com.java.web.util.CrawlingBean;
 
@@ -29,13 +30,13 @@ public interface NoticeServiceInterface {
 	
 	public int selectTotalRank();
 	
-	public int getMaleRate(int no);
-	public int getFemaleRate(int no);
-	public int getRate10(int no);
-	public int getRate20(int no);
-	public int getRate30(int no);
-	public int getRate40(int no);
-	public int getRate50(int no);
+	public RateBean getMaleRate(int no);
+	public RateBean getFemaleRate(int no);
+	public RateBean getRate10(int no);
+	public RateBean getRate20(int no);
+	public RateBean getRate30(int no);
+	public RateBean getRate40(int no);
+	public RateBean getRate50(int no);
 	
 	public void crawling(CrawlingBean c);
 	public Integer tdidmapping(Movie movie);
