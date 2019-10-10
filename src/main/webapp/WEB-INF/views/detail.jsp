@@ -23,6 +23,7 @@
 <%
 	Bean detail=(Bean) request.getAttribute("detail");	
 	List<FileBean> fb= (List<FileBean>) request.getAttribute("file");
+	String img = (String) request.getAttribute("img");
 	String title;
 	String val;
 	int no;
@@ -47,7 +48,7 @@ var dt = new DataTransfer();
 function load() {
 	document.getElementById("title").value=<%="\""+title+"\""%>;
 	document.getElementById("val").value=<%="\""+val+"\""%>;
-	
+	document.get
 }
 function formList() {
 	console.log(dt);
@@ -80,6 +81,11 @@ function formCheck() {
 			<div>제목:<input id="title" class="form-control" type="text" name="title"  required></div>
 			<div>내용:<input id="val" class="text" type="text" name="val"  required></div>
 			<input type="hidden" name="writer" value="<%=nmwriter%>">
+			<div contentEditable="true" id="val2">
+				<%if(fb!=null && img!=null) {for (int i=0;i<fb.size();i++) {%>
+			<% if(detail!=null && img.equals("true")){%><img src="/board/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>" alt="이미지" ><%} %>
+			<%}} %>
+			</div>
 			<div>
 			<%if(fb!=null) {for (int i=0;i<fb.size();i++) {%>
 			<% if(detail!=null){%><a href="/board/download?boardnum=<%=no%>&filename=<%=fb.get(i).getFilename()%>"><%=fb.get(i).getFilename()%></a><%} %>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.java.web.bean.Login;
 import com.java.web.service.NoticeService;
 import com.java.web.service.NoticeServiceInterface;
+import com.jcraft.jsch.Session;
 
 @Controller
 public class HomeController {
@@ -39,7 +40,7 @@ public class HomeController {
 		String nickname=req.getParameter("nickname");
 		String gender = req.getParameter("gender");
 		String temp=req.getParameter("age");
-		System.out.println(gender);
+		System.out.println(nickname);
 		
 		//int age = Integer.parseInt(req.getParameter("age"));
 		int age= 2019-Integer.parseInt(temp.substring(0,4))+1;
@@ -101,10 +102,13 @@ public class HomeController {
 	@RequestMapping(value="/mypage")
 	public String mypage(HttpServletRequest req, HttpServletResponse res) {
 		//정보보기, 회원탈퇴, 
-		String id=(String) req.getParameter("id");
+		HttpSession s = req.getSession();
+		Login l = (Login) s.getAttribute("login");
+		String id = l.getId();
+		//String id=(String) req.getParameter("id");
 		System.out.println("id"+id);
 		Login login = nsi.checkLogin(id);
-		System.out.println(login.getId());
+		System.out.println(login.getGender());
 		req.setAttribute("user", login);
 		return "mypage";
 	}

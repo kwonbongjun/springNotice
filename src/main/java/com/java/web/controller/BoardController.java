@@ -51,6 +51,8 @@ import net.sf.json.JSONObject;
 public class BoardController { //인터페이스
 	@Autowired
 	NoticeService ns;
+	@Autowired
+	NoticeServiceInterface nsi;
 	
 	private static String at="";
 	private static String nm="";
@@ -69,6 +71,15 @@ public class BoardController { //인터페이스
 			request.setAttribute("detail", detail);
 			request.setAttribute("file", fb);
 			request.setAttribute("writer", nm);
+			
+			for(int i =0;i<fb.size();i++) {
+			String ext= fb.get(i).getExt();	
+				if(ext.equals(".jpg ") || ext.equals(".jpeg") || ext.equals(".png")) {
+					System.out.println("ext"+ext);
+					request.setAttribute("img", "true");
+					break;
+				}
+			}
 			return "detail";
 		}
 		try {
@@ -82,6 +93,15 @@ public class BoardController { //인터페이스
 			//검색여부 확인
 			if(request.getParameter("search")!=null) {
 				String title=request.getParameter("search");
+				String sep = request.getParameter("searchseperate");
+				System.out.println(sep);
+				if(sep!=null) {
+					if("".equals(sep) || "title".equals(sep)) {
+						
+					}else if("val".equals(sep)) {
+						
+					}
+				}
 				total=ns.contentReadSearchAll(title);
 				list=ns.contentReadSearch(pageNum, title);
 			}else {
@@ -244,18 +264,82 @@ public class BoardController { //인터페이스
 			nm=(String) tmp.get("nickname");
 
 			System.out.println(nm);
+			
+			
 			HttpSession session=request.getSession();
 			Login login=new Login(tmp.get("id").toString(),(String)tmp.get("nickname"));
 			session.setAttribute("login", login);
+			
+			Login login2 = nsi.loginRead(new Login(tmp.get("id").toString(),"1",""));
+			if(login2==null) {
+				request.setAttribute("klogin", login);
+				return "join";
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
-
 		return "redirect:/";
+//		return "redirect:/Kakaoinfo";
 	}
+	
+//	@RequestMapping("/Kakaoinfo")
+//	public String kakaoinfo(HttpServletRequest request, HttpServletResponse response){
+//		//http://gdj16.gudi.kr:20003/KakaoBack http://localhost:8080/KakaoBack
+//		try {
+//			String url="https://kapi.kakao.com/v2/user/me?Authorization=Bearer"+at;
+//			
+//			URL uri = new URL(url);
+//			HttpURLConnection conn = (HttpURLConnection) uri.openConnection();
+//			
+//			conn.setRequestMethod("POST");
+//			conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+//			conn.setRequestProperty("Authorization", "Bearer "+at);
+//			//conn.setRequestProperty("property_keys", "["+"kakao_account.birthday"+"]");
+//			System.out.println(conn);
+//			InputStream input = conn.getInputStream();
+//			InputStreamReader inputReader = new InputStreamReader(input);
+//			BufferedReader br = new BufferedReader(inputReader);
+//			
+//			String line="";
+//			String result="";
+//			while((line=br.readLine())!=null) {
+//				result+=line;
+//			}
+//			System.out.println(result);
+//			
+//			JSONObject jtoken = JSONObject.fromObject(result);
+//
+//			String id=(String) jtoken.get("id");
+//
+//
+//			
+//			
+//			jtoken = JSONObject.fromObject(result);
+//			System.out.println(result);
+////			String temp=(String) jtoken.get("properties");
+//			String tmpid =jtoken.get("id").toString();
+//			JSONObject tmp=JSONObject.fromObject(jtoken.get("properties"));
+//			tmp.put("id", tmpid);
+//			nm=(String) tmp.get("nickname");
+//
+//			System.out.println(nm);
+//			HttpSession session=request.getSession();
+//			Login login=new Login(tmp.get("id").toString(),(String)tmp.get("nickname"));
+//			session.setAttribute("login", login);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//
+//		return "redirect:/";
+//	}
+	
 	
 	@RequestMapping("/kakaologout")
 	public String kakaoLogout(HttpServletRequest request, HttpServletResponse response){
@@ -319,12 +403,13 @@ public class BoardController { //인터페이스
 				OutputStream output = response.getOutputStream();
 				IOUtils.copy(input, output);
 				response.setHeader("content-Disposition", "attachment;filename=\""+(originalFilename)+"\"");
+
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 	}
 	
 	 

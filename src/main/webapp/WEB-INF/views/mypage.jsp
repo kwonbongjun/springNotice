@@ -13,6 +13,7 @@
 <script>
 <%String ac="false";
 Login user = (Login) session.getAttribute("login"); 
+Login user2 = (Login) request.getAttribute("user");
 String ra =(String) request.getAttribute("recommendAccess");
 String ra2 =(String) request.getAttribute("rateAccess");
 if(ra==null) {ra="false";}
@@ -49,10 +50,10 @@ if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
 			</form>
 		</div>
 		<div class="mypage">
-	 		<p>id:<%=user.getId() %></p>
-	 		<p>nickname:<%=user.getNickname() %></p>
-	 		<p>gender:<%=user.getGender() %></p>
-	 		<p>age:<%=user.getAge() %></p>
+	 		<p>id:<%=user2.getId() %></p>
+	 		<p>nickname:<%=user2.getNickname() %></p>
+	 		<p>gender:<%=user2.getGender() %></p>
+	 		<p>age:<%=user2.getAge() %></p>
 		</div>
 	<div class="footer">
 		<ul>

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@page import="com.java.web.bean.Login"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -7,6 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <html>
 <head><title>ADD</title>
+<meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/resources/css/springNotice.css">
 <style>
 body {
@@ -162,10 +164,23 @@ function checkIDDup() {
 	})
 	}
 }
+function fklogin(){
+		<%Login klogin=(Login) request.getAttribute("klogin");
+		if(klogin!=null){%>
+		document.getElementsByClassName("name")[0].value=<%=klogin.getId()%>;
+		document.getElementsByClassName("nickname")[0].value=<%="\""+klogin.getNickname()+"\""%>;
+		document.getElementsByClassName("pw")[0].value=<%=1%>;
+		document.getElementsByClassName("name")[0].readOnly = true ;
+		document.getElementsByClassName("nickname")[0].readOnly = true ;
+		document.getElementsByClassName("pw")[0].readOnly = true ;
+		
+		<%}%>
+}
 </script>
 </head>
-<body>
+<body onload="fklogin()">
 <script>
+<%request.setCharacterEncoding("utf-8");%>
 <%if(request.getAttribute("dup")!=null){ %>
 	alert("id 중복");
 <%} %>
@@ -175,7 +190,6 @@ alert("nickname 중복");
 <%if(request.getAttribute("gen")!=null){ %>
 alert("성별 m 혹은 f만 입력");
 <%} %>
-
 
 </script>
 
@@ -197,8 +211,8 @@ alert("성별 m 혹은 f만 입력");
 			<!-- <h1>Sign Up</h1> -->
                 <input type="text" name="id" class="Name" placeholder="ID" required="required">
                 <button type="button" id="dup" onclick="checkIDDup()">중복확인</button>
-                <input type="password" name="pw" class="Tele" placeholder="Password" required="required">
-				<input type="text" name="nickname" class="Address" placeholder="nickname" required="required">
+                <input type="password" name="pw" class="pw" placeholder="Password" required="required">
+				<input type="text" name="nickname" class="nickname" placeholder="nickname" required="required" accept-charset="UTF-8">
 				<input type="text" name="gender" class="Address" placeholder="gender(남성:m 여성:f 입력)">
 <!-- 				<input class="radio" type="radio" name="gender" value="m">남성
 				<input class="radio" type="radio" name="gender" value="f">여성 -->

@@ -310,7 +310,14 @@ for(int i=1;i<=pagenum;i++){%>
 	</form>--%>
 	
 	<form class="ml10">
-	 <%if(session.getAttribute("login")!=null){%><button type="button"><a href="/board/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button><%}; %>
+	 <%if(session.getAttribute("login")!=null){%>
+	 <button type="button"><a href="/board/?boardNum=<%if(list!=null){%><%=finalno+1%><%}else{%><%=1%><%}%>">입력</a></button>
+	 	 <select name = "searchseperate">
+		  	  <option value="">구분</option>
+			  <option value="title">제목별</option>
+			  <option value="val">제목+내용</option>
+	</select><%}; %>
+
 	<input type="text" name="search">
 	<a href="/"><button type="submit">search</button></a>
 	</form>
