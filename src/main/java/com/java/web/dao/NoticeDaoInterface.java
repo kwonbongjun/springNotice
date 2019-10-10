@@ -1,7 +1,9 @@
 package com.java.web.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import com.java.web.bean.Bean;
 import com.java.web.bean.Login;
 import com.java.web.bean.Movie;
 import com.java.web.bean.RateBean;
@@ -39,6 +41,9 @@ public interface NoticeDaoInterface {
 	public int isWatch(UserMovie um);
 	public void insertWatchMovie(UserMovie um);
 	public Login checkNickname(String nickname);
+	
+	public int contentReadSearchAll2(String title);
+	public List<Bean> contentReadSearch2(Map<String, Object> map);
 	
 	
 	

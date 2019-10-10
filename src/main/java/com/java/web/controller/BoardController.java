@@ -89,7 +89,7 @@ public class BoardController { //인터페이스
 				pageNum=Integer.parseInt(request.getParameter("pageNum"));
 			}
 			List<Bean> list=null;
-			int total;
+			int total=0;
 			//검색여부 확인
 			if(request.getParameter("search")!=null) {
 				String title=request.getParameter("search");
@@ -97,13 +97,14 @@ public class BoardController { //인터페이스
 				System.out.println(sep);
 				if(sep!=null) {
 					if("".equals(sep) || "title".equals(sep)) {
-						
+						total=ns.contentReadSearchAll(title);
+						list=ns.contentReadSearch(pageNum, title);
 					}else if("val".equals(sep)) {
-						
+						total=nsi.contentReadSearchAll2(title);
+						list=nsi.contentReadSearch2(pageNum,title);
 					}
 				}
-				total=ns.contentReadSearchAll(title);
-				list=ns.contentReadSearch(pageNum, title);
+
 			}else {
 				total=ns.contentReadAll();
 				list=ns.contentRead(pageNum);

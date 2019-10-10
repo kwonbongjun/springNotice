@@ -187,5 +187,15 @@ public class NoticeDao implements NoticeDaoInterface{
 		return s.selectOne("test.checkNickname",nickname);
 	}
 	
+	@Override
+	public int contentReadSearchAll2(String val) {
+		return s.selectOne("test.contentReadSearchAll2",val);
+	}
+	@Override
+	public List<Bean> contentReadSearch2(Map<String, Object> map) {
+		return s.selectList("test.contentReadSearch2",map);
+	}
+	
+	
 	
 }

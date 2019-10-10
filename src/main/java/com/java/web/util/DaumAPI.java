@@ -56,7 +56,7 @@ public class DaumAPI {
 //		getsearchAPI3(search,os,"webkr");
 //		getsearchAPI3(search,os,"blog");
 		getsearchAPI3(search,os,"cafearticle");
-		
+//		getsearchAPI4(search,os);
 		try {
 			os.close();
 		} catch (IOException e) {
@@ -196,6 +196,62 @@ public class DaumAPI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 			}
+			}
+
+	}
+	
+	
+	public void getsearchAPI4(String search,FileOutputStream os) {
+
+		String urlAddress;
+		
+			try {
+				urlAddress = "https://namu.wiki/w/"+search;
+				//+"\"" +"\""
+				
+				URL url = new URL(urlAddress);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				 
+				conn.setRequestMethod("GET");
+				
+			System.out.println(conn);
+			InputStream input = conn.getInputStream();
+			InputStreamReader inputReader = new InputStreamReader(input);
+			BufferedReader br = new BufferedReader(inputReader);
+			
+			String line="";
+			String result="";
+			while((line=br.readLine())!=null) {
+				result+=line;
+				System.out.println(line);
+			}
+			
+		
+			JSONObject jtoken = JSONObject.fromObject(result);
+			JSONArray documents=JSONArray.fromObject(jtoken.get("items"));
+
+			
+			for(int i=0;i<documents.size();i++) {
+				//System.out.println(documents.get(i));
+				JSONObject jo=JSONObject.fromObject(documents.get(i));
+				System.out.println(jo.get("title"));
+				System.out.println(jo.get("contents"));
+				
+				os.write(jo.get("title").toString().getBytes());
+				os.write(jo.get("description").toString().getBytes());
+			}
+
+			} 
+			catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 			}
 
 	}

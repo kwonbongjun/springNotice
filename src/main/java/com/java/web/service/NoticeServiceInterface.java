@@ -43,6 +43,9 @@ public interface NoticeServiceInterface {
 	public int isWatch(UserMovie um);
 	public void insertWatchMovie(UserMovie um);
 	public Login checkNickname(String nickname);
+	
+	public int contentReadSearchAll2(String title);
+	public List<Bean> contentReadSearch2(int pageNum, String title);
 
 	
 }

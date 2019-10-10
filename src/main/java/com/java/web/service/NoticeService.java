@@ -221,4 +221,17 @@ public class NoticeService implements NoticeServiceInterface {
 		return ndi.checkNickname(nickname);
 	}
 	
+	@Override
+	public int contentReadSearchAll2(String title) {
+		return ndi.contentReadSearchAll2(title);
+	}
+	@Override
+	public List<Bean> contentReadSearch2(int pageNum, String title) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("pageNum", pageNum);
+		map.put("title", title);
+		return ndi.contentReadSearch2(map);
+	}
+	
+	
 }

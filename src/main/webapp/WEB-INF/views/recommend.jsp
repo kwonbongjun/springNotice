@@ -90,20 +90,20 @@ function check(idx){
 
 			</form>
 		</div>
-		
+<div class="recommend">	
 <%if(movie!=null) { 
 for(int i=0;i<movie.size();i++){%>
-<div class="recommend">
+
 <input type="checkbox" onclick="check(<%=i%>)">
 <img src="<%=movie.get(i).getImage()%>" alt="movie" width=110; height=150;>
 <p>제목:<%=movie.get(i).getTitle()%></p>
 <p>감독:<%=movie.get(i).getDirector() %>
 <p>배우:<%=movie.get(i).getActor() %>
-</div><%} 
+<%} 
 }else{%>
 	추천할 영화가 없습니다.
 <%}%>
-
+</div>
 	<div class="footer">
 		<ul>
 			<li>tel:010-1111-2222</li>
