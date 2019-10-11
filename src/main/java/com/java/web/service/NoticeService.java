@@ -232,6 +232,10 @@ public class NoticeService implements NoticeServiceInterface {
 		map.put("title", title);
 		return ndi.contentReadSearch2(map);
 	}
+	@Override
+	public int watchYn(UserMovie um) {
+		return ndi.watchYn(um);
+	}
 	
 	
 }

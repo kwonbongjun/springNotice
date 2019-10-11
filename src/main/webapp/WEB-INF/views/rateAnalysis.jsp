@@ -19,7 +19,7 @@
 <body>
 
 <!-- Create a div where the graph will take place -->
-<div id="my_dataviz1"></div>
+<div id="my_dataviz1"></div>-남녀별 평균 평점 비율
 <script>
 
 // set the dimensions and margins of the graph
@@ -40,7 +40,7 @@ var svg = d3.select("#my_dataviz1")
 var aa=<%=map.get("mrate").getAvg() %>;
 // Create dummy data
 <%-- var data = {male+<%=map.get("mrate").getAvg() %>: <%= map.get("mrate").getCnt()%>, female+<%=map.get("frate").getAvg() %>: <%=map.get("frate").getCnt() %>} --%>
-var data = {male: <%=map.get("mrate").getAvg()%>, female: <%=map.get("frate").getAvg() %>}
+var data = {남성: <%=map.get("mrate").getAvg()%>, 여성: <%=map.get("frate").getAvg() %>}
 //set the color scale
 var color = d3.scaleOrdinal()
   .domain(["a", "b", "c", "d", "e", "f", "g", "h"])
@@ -113,7 +113,7 @@ svg
 </script>
 
 <!-- Create a div where the graph will take place -->
-<div id="my_dataviz2"></div>
+<div id="my_dataviz2"></div>-연령별 평균 평점 비율
 <script>
 
 // set the dimensions and margins of the graph
@@ -208,12 +208,12 @@ svg
 </script>
 
 
-<p>남성 비율:<%=map.get("mrate").getAvg() %>,<%= map.get("mrate").getCnt()%></p>
+<%-- <p>남성 비율:<%=map.get("mrate").getAvg() %>,<%= map.get("mrate").getCnt()%></p>
 <p>여성 비율:<%=map.get("frate").getAvg() %>,<%=map.get("frate").getCnt() %></p>
 <p>10대 비율:<%=map.get("rate10").getAvg() %>,<%=map.get("rate10").getCnt() %></p>
 <p>20대 비율:<%=map.get("rate20").getAvg() %>,<%=map.get("rate20").getCnt() %></p>
 <p>30대 비율:<%=map.get("rate30").getAvg() %>,<%=map.get("rate30").getCnt() %></p>
 <p>40대 비율:<%=map.get("rate40").getAvg() %>,<%=map.get("rate40").getCnt() %></p>
-<p>50대 이상 비율:<%=map.get("rate50").getAvg() %>,<%=map.get("rate50").getCnt() %></p>
+<p>50대 이상 비율:<%=map.get("rate50").getAvg() %>,<%=map.get("rate50").getCnt() %></p> --%>
 </body>
 </html>

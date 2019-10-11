@@ -195,6 +195,10 @@ public class NoticeDao implements NoticeDaoInterface{
 	public List<Bean> contentReadSearch2(Map<String, Object> map) {
 		return s.selectList("test.contentReadSearch2",map);
 	}
+	@Override
+	public int watchYn(UserMovie um) {
+		return s.selectOne("test.watchYn",um);
+	}
 	
 	
 	

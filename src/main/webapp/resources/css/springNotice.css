@@ -33,6 +33,15 @@ img{
     border: 1px solid aqua;
 
 }
+#my_dataviz1{
+	width:45%;
+	display: inline-block !important;
+}
+#my_dataviz2{
+	width:45%;
+	display: inline-block !important;
+}
+
 .center input, select{
 	border-radius: 30px;
 	width:100px;
@@ -84,7 +93,7 @@ img{
 	background-color: aliceblue;
 	text-align: center;
 	font-size: 30px;	
-	margin-bottom: 50px;
+	margin-bottom: 50px !important;
 }
 .nav li{
 	font-size: 25px;
@@ -275,15 +284,19 @@ p.star{
     display: none;
  }
  
-.recommend{
+ .recommend{
+ 	width: 80%;
+ 	display: inline-block;
+ }
+.recommend2{
 	margin-top: 30px;
 	margin: 0 30px;
-	display: inline-block;
+	display: block;
 	margin-left:30%;
 	text-align: center;
 	width:40%;
 	min-height: 65vh;
-    	margin: 0 auto -100px;
+
 }
 
 .page-container h1{
@@ -322,6 +335,4 @@ p.star{
 	border: 1px solid black;
 	min-height:40vh;
 }
-.ib{
 
-}

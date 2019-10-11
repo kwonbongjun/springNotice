@@ -44,6 +44,7 @@ public interface NoticeDaoInterface {
 	
 	public int contentReadSearchAll2(String title);
 	public List<Bean> contentReadSearch2(Map<String, Object> map);
+	public int watchYn(UserMovie um);
 	
 	
 	

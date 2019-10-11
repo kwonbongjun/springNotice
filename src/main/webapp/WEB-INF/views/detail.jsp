@@ -1,3 +1,4 @@
+<%@page import="com.java.web.bean.Login"%>
 <%@page import="com.java.web.bean.FileBean"%>
 <%@page import="com.java.web.bean.Bean"%>
 <%@page import="java.util.List"%>
@@ -28,7 +29,9 @@
 	String val;
 	int no;
 	String filename;
-	String nmwriter=(String) request.getAttribute("writer");
+	//String nmwriter=(String) request.getAttribute("writer");
+	Login l = (Login) session.getAttribute("login");
+	String nmwriter = l.getNickname();
 	String writer;
 	if(detail==null){
 		title="";

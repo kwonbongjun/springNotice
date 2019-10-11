@@ -48,11 +48,14 @@ import net.sf.json.JSONObject;
 @Controller
 public class Analysis {
 //	@RequestMapping("/analysis")
-	public String[] mapReducer() throws IOException {
+	public String[] mapReducer(String search,Movie[] m) throws IOException {
 	String[] tempArr = null;
 	try {
 	Configuration conf = new Configuration();
 	Configuration hadoopConf = new Configuration();
+	for(int i=0;i<m.length;i++) {
+		hadoopConf.set("movie"+i,m[i].getActor());
+	}
 	hadoopConf.set("fs.defaultFS", "hdfs://Name:9000");  //"hdfs://192.168.3.34:9000"
 	String localStr= "C:\\Resources\\";//  "/home/kbj"  "C:\\Resources\\" "D:\\workspace\\data"
 	String hadoopStr="/input/data/a.txt";
@@ -165,7 +168,14 @@ public class Analysis {
 			Iterator iterator = set.iterator();
 			while(iterator.hasNext()){
 				  String key = (String)iterator.next();
+				  key=key.trim();
+				  search=search.trim();
 				  if(i==0) {
+					  	if(key.contains(search) || search.contains(key)|| key.equals(search)) {
+					  		System.out.println(i);
+							  a++;i--;
+							  break;
+					  	}
 						tempArr[i]=key;
 						break;
 					}
@@ -174,13 +184,20 @@ public class Analysis {
 				  	}else {
 				  		m2=key;m1=tempstr;
 				  	}
-				  	if(m2.contains(m1)) {
+				  	if(m2.contains(m1) ) {
+					  	if(key.contains(search) || search.contains(key)) {
+					  		System.out.println(i);
+							  a++;i--;
+							  break;
+					  	}
 				  		System.out.println(i);
 						  tempstr=key;
 						  a++;i--;
 						  break;
 					 }
+
 				  	tempstr=key;
+
 				  //System.out.println("hashMap Key : " + key);
 				  tempArr[i]=key;
 				}	

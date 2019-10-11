@@ -267,6 +267,9 @@ where no=#{m_no}
 	    <insert id="insertWatchMovie" parameterType="com.java.web.bean.UserMovie">
   	insert into usermovie (user_id,m_no,m_rate,searchCnt,watchYn,review) values (#{user_id},#{m_no},0,0,'N',null)
   </insert>
-  
+  	
+  	<select id="watchYn" parameterType="com.java.web.bean.UserMovie" resultType="int">
+		select count(*) from usermovie where user_id=#{user_id} and m_no=#{m_no} and watchYn='Y'
+	</select>
 
 </mapper>

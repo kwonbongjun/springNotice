@@ -46,6 +46,7 @@ public interface NoticeServiceInterface {
 	
 	public int contentReadSearchAll2(String title);
 	public List<Bean> contentReadSearch2(int pageNum, String title);
+	public int watchYn(UserMovie um);
 
 	
 }

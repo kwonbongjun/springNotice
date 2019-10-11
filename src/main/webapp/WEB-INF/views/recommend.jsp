@@ -42,7 +42,6 @@ var cnt=0;
 
 var u=<%="\""+user.getId()+"\""%>
 function check(idx){
-	alert(len);
 	document.getElementsByClassName("recommend")[idx].style.display="none"
 	/* document.getElementsByClassName("inline")[idx].parentNode.removeChild(document.getElementsByClassName("inline")[idx]); */
 
@@ -90,15 +89,17 @@ function check(idx){
 
 			</form>
 		</div>
-<div class="recommend">	
+<div class="recommend2">	
 <%if(movie!=null) { 
+%><%	
 for(int i=0;i<movie.size();i++){%>
-
+<div class="recommend">
 <input type="checkbox" onclick="check(<%=i%>)">
 <img src="<%=movie.get(i).getImage()%>" alt="movie" width=110; height=150;>
 <p>제목:<%=movie.get(i).getTitle()%></p>
-<p>감독:<%=movie.get(i).getDirector() %>
-<p>배우:<%=movie.get(i).getActor() %>
+<p>감독:<%=movie.get(i).getDirector() %></p>
+<p>배우:<%=movie.get(i).getActor() %></p>
+</div>
 <%} 
 }else{%>
 	추천할 영화가 없습니다.

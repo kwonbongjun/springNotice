@@ -155,7 +155,6 @@ public class BoardController { //인터페이스
 		String title=request.getParameter("title");
 		String val=request.getParameter("val");
 		String writer=request.getParameter("writer");
-		
 		ns.uploadFile(files, no);
 		Bean bean=new Bean(no,title,val,writer);
 		ns.createContent(bean);

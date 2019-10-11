@@ -134,27 +134,31 @@ public class CrawlingController {
 	}
 	
 	
-	@RequestMapping("/getHtmlData3")
-	public List<CrawlingBean> getHtmlData3() {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		Document doc;
-		List<CrawlingBean> c=new ArrayList<CrawlingBean>();
-		try {			
-			String title2="조커(2019)";
-			//for(int i=161501; i<162001;i++) {
-//			String title2=URLEncoder.encode(t, "EUC-KR");
-			String url1= "https://namu.wiki/w/"+title2;
-			doc = Jsoup.connect("https://namu.wiki/w/"+title2).get();
-			Elements pages = doc.select("body");
-			System.out.println("1"+pages.toString());
-			//if(url1+"평가")
-			doc=Jsoup.connect(url1+"/평가").get();
-			pages = doc.select("body");
-			//System.out.println("2"+pages.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return c;
-	}
+//	@RequestMapping("/getHtmlData3")
+//	public List<CrawlingBean> getHtmlData3() {
+//		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+//		Document doc;
+//		List<CrawlingBean> c=new ArrayList<CrawlingBean>();
+//		try {			
+//			String title2="조커(2019)";
+//			//for(int i=161501; i<162001;i++) {
+////			String title2=URLEncoder.encode(t, "EUC-KR");
+//			String url1= "https://namu.wiki/w/"+title2;
+//			doc = Jsoup.connect("https://namu.wiki/w/"+title2).get();
+//			Elements pages = doc.select("body");
+//			System.out.println(doc.select("body").get(0).text());
+//			
+//			try{
+//			doc=Jsoup.connect(url1+"/평가").get();
+//			System.out.println(doc.select("body").get(0).text());
+//			
+//			}catch(Exception e) {
+//				
+//			}
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return c;
+//	}
 }

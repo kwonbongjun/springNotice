@@ -1,4 +1,5 @@
 package com.java.web.bean;
+import java.lang.*;
 
 public class Movie {
 	private String no;
@@ -6,33 +7,33 @@ public class Movie {
 	private String title;
 	private String director;
 	private String actor;
-	private int userRating;
+	private double userRating;
 	private int userRatingCnt;
 	private String release;
 	
-	public Movie(String no,String image,String title, String director, String actor, int userRating, int userRatingCnt) {
+	public Movie(String no,String image,String title, String director, String actor, double userRating, int userRatingCnt) {
 		this.no=no;
 		this.image=image;
 		this.title=title;
 		this.director=director;
 		this.actor=actor;
-		this.userRating=userRating;
+		this.userRating= Math.round(userRating*100)/100.0;
 		this.userRatingCnt=userRatingCnt;
 	}
-	public Movie(String image,String title, String director, String actor, int userRating, int userRatingCnt,String release) {
+	public Movie(String image,String title, String director, String actor, double userRating, int userRatingCnt,String release) {
 		this.image=image;
 		this.title=title;
 		this.director=director;
 		this.actor=actor;
 		this.userRating=userRating;
-		this.userRatingCnt=userRatingCnt;
+		this.userRating= Math.round(userRating*100)/100.0;
 		this.release=release;
 	}
-	public Movie(String no,String title, String director, int rate, int rateCnt) {
+	public Movie(String no,String title, String director, double rate, int rateCnt) {
 		this.no=no;
 		this.title=title;
 		this.director=director;
-		this.userRating=rate;
+		this.userRating= Math.round(rate*100)/100.0;
 		this.userRatingCnt=rateCnt;
 	}
 	public Movie(String title, String director,String release) {
@@ -70,11 +71,11 @@ public class Movie {
 	public void setActor(String actor) {
 		this.actor = actor;
 	}
-	public int getUserRating() {
+	public double getUserRating() {
 		return userRating;
 	}
-	public void setUserRating(int userRating) {
-		this.userRating = userRating;
+	public void setUserRating(double userRating) {
+		this.userRating= Math.round(userRating*100)/100.0;
 	}
 	public int getUserRatingCnt() {
 		return userRatingCnt;

@@ -13,6 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,9 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -53,10 +59,10 @@ public class DaumAPI {
 		getsearchAPI2(search,os,"web");
 		getsearchAPI2(search,os,"blog");
 		getsearchAPI2(search,os,"cafe");
-//		getsearchAPI3(search,os,"webkr");
+		getsearchAPI3(search,os,"webkr");
 //		getsearchAPI3(search,os,"blog");
 		getsearchAPI3(search,os,"cafearticle");
-//		getsearchAPI4(search,os);
+		getsearchAPI4(search,os);
 		try {
 			os.close();
 		} catch (IOException e) {
@@ -202,44 +208,46 @@ public class DaumAPI {
 	
 	
 	public void getsearchAPI4(String search,FileOutputStream os) {
+		Document doc;
+		String result=null;
+		try {			
+			String title2=search;
+			//for(int i=161501; i<162001;i++) {
+//			String title2=URLEncoder.encode(t, "EUC-KR");
+			String url1= "https://namu.wiki/w/"+title2;
+			doc = Jsoup.connect("https://namu.wiki/w/"+title2).get();
+			Elements pages = doc.select("body");
+			System.out.println(doc.select("body").get(0).text());
+			result=doc.select("body").get(0).text();
 
-		String urlAddress;
-		
-			try {
-				urlAddress = "https://namu.wiki/w/"+search;
-				//+"\"" +"\""
-				
-				URL url = new URL(urlAddress);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				 
-				conn.setRequestMethod("GET");
-				
-			System.out.println(conn);
-			InputStream input = conn.getInputStream();
-			InputStreamReader inputReader = new InputStreamReader(input);
-			BufferedReader br = new BufferedReader(inputReader);
-			
-			String line="";
-			String result="";
-			while((line=br.readLine())!=null) {
-				result+=line;
-				System.out.println(line);
-			}
-			
-		
-			JSONObject jtoken = JSONObject.fromObject(result);
-			JSONArray documents=JSONArray.fromObject(jtoken.get("items"));
+			doc=Jsoup.connect(url1+"/평가").get();
+			System.out.println(doc.select("body").get(0).text());
+			result+=doc.select("body").get(0).text();
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+//			InputStream input = conn.getInputStream();
+//			InputStreamReader inputReader = new InputStreamReader(input);
+//			BufferedReader br = new BufferedReader(inputReader);
 			
-			for(int i=0;i<documents.size();i++) {
-				//System.out.println(documents.get(i));
-				JSONObject jo=JSONObject.fromObject(documents.get(i));
-				System.out.println(jo.get("title"));
-				System.out.println(jo.get("contents"));
-				
-				os.write(jo.get("title").toString().getBytes());
-				os.write(jo.get("description").toString().getBytes());
-			}
+//			String line="";
+//			String result="";
+//			while((line=br.readLine())!=null) {
+//				result+=line;
+//				System.out.println(line);
+//			}
+			
+//		
+//			JSONObject jtoken = JSONObject.fromObject(result);
+//			JSONArray documents=JSONArray.fromObject(jtoken.get("items"));
+//
+//			
+		try {	
+				if(result!=null)
+				os.write(result.getBytes());
+
 
 			} 
 			catch (UnsupportedEncodingException e) {

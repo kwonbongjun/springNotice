@@ -106,7 +106,7 @@ public class DataController {
 			fsos.close();
 			
 			Analysis a = new Analysis();
-			String[] str = a.mapReducer();
+			String[] str = a.mapReducer(search,m);
 			request.setAttribute("movie", m);
 			request.setAttribute("data", str);
 			

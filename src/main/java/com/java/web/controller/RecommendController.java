@@ -17,6 +17,7 @@ import com.java.web.bean.Movie;
 import com.java.web.bean.UserMovie;
 import com.java.web.service.NoticeServiceInterface;
 import com.java.web.util.CrawlingBean;
+import com.java.web.util.CrawlingController;
 import com.java.web.util.NaverAPI;
 
 import net.sf.json.JSONArray;
@@ -51,21 +52,29 @@ public class RecommendController {
 			String update = null;
 			UserMovie um = null;
 			if(str1!=null) {
+				System.out.println("22222");
 				//for(int i=0;i<ja.size();i++) {
 					//update= (String) ja.get(i);
 					//int m_no=nsi.titleidmapping(str1);
 				System.out.println(str1+d1+r1);
 					int m_no=nsi.tdidmapping(new Movie(str1,d1,r1));
 					System.out.println("11111"+user_id+m_no);
-					um=new UserMovie(user_id, m_no,0,0,'0',null);
+					System.out.println("3");
+					um=new UserMovie(user_id, m_no,0,0,'N',null);
+					System.out.println("4");
 					if(nsi.isWatch(um)==0) {
 						nsi.insertWatchMovie(um);
+						System.out.println("5");
 						nsi.SetWatchMovie(um);
+						System.out.println("6");
 					}else {
+						System.out.println("7");
 					nsi.SetWatchMovie(um);
+					System.out.println("8");
 					}
 				//}
 			}
+
 			if(str2!=null) {
 					//int m_no=nsi.titleidmapping(str2);
 					int m_no=nsi.tdidmapping(new Movie(str2,d2,r2));
@@ -107,7 +116,7 @@ public class RecommendController {
 
 		String[] nation=new String[len];
 		for(int i=0;i<len;i++) {
-	
+		
 		System.out.println("11111"+title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation()+title.get(i).getDirector());
 		if(title.get(i).getNation().equals("영국")) {
 			nation[i]="GB";
@@ -118,7 +127,12 @@ public class RecommendController {
 		//Movie[] m = new Movie[len];
 		List<Movie> m = new ArrayList<Movie>();
 		for(int i=0;i<len;i++) {
+			if("".equals(title.get(i).getTitle())){
+				continue;
+			}
+			
 			System.out.println(title.get(i).getTitle()+title.get(i).getRelease()+title.get(i).getNation());
+//			Movie m2 = na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null);
 			if(na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)==null) {
 //				System.out.println("222222");
 //				m[i]=null;
@@ -131,8 +145,27 @@ public class RecommendController {
 //					na.naverMovie(title.get(i).getTitle(),title.get(i).getRelease(),title.get(i).getRelease(),null)[0].getDirector()))==0) {
 //				continue;
 //			}
-			m.add(na.naverMovie(title.get(i).getTitle(),null,null,null)[0]);
-			
+			Movie[] m2 = na.naverMovie(title.get(i).getTitle(),null,null,null);
+			if(m2!=null) {
+				CrawlingController cc = new CrawlingController();
+				List<CrawlingBean> c = cc.getHtmlData2(m2[0].getTitle());//title.get(i).getTitle()
+				for(int j=0;j<c.size();j++) {
+					Integer m3 = nsi.existMovie(new Movie(c.get(j).getTitle(),c.get(j).getDirector(),c.get(j).getRelease()));
+					System.out.println(m3);
+					if(m3==0) {
+						nsi.crawling(c.get(j));
+					}
+				}
+				if(m2[0].getTitle()!=null && m2[0].getDirector()!=null && m2[0].getRelease()!=null) {
+					System.out.println("1123121441"+ m2[0].getTitle()+m2[0].getDirector()+m2[0].getRelease());
+				int m_no=nsi.tdidmapping(new Movie(m2[0].getTitle(),m2[0].getDirector(),m2[0].getRelease()));
+				um=new UserMovie(user_id, m_no,0,0,'0',null);
+				if(nsi.watchYn(um)>0) {
+					continue;
+				}
+				}
+				m.add(m2[0]);
+			}
 			
 		}
 		
