@@ -38,7 +38,6 @@
   stroke-width: 7px !important;
   opacity: 1 !important;
 }
-
     body,html{
     height: 100%;
     width: 100%;
@@ -46,7 +45,6 @@
     padding: 0;
 /*     background: #e74c3c !important; */
     }
-
     .searchbar{
     margin-bottom: auto;
     margin-top: auto;
@@ -55,7 +53,6 @@
     border-radius: 30px;
     padding: 10px;
     }
-
     .search_input{
     color: white;
     border: 0;
@@ -66,19 +63,16 @@
     line-height: 40px;
     transition: width 0.4s linear;
     }
-
     .searchbar:hover > .search_input{
     padding: 0 10px;
     width: 450px;
     /* caret-color:red; */
     transition: width 0.4s linear;
     }
-
     .searchbar:hover > .search_icon{
     background: white;
     color: #e74c3c;
     }
-
     .search_icon{
     height: 40px;
     width: 40px;
@@ -100,16 +94,13 @@ var data=<%=jo%>
 //set the dimensions and margins of the graph
 var width = 450
 var height = 450
-
 //append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
 .append("svg")
  .attr("width", 450)
  .attr("height", 450)
-
 //create dummy data -> just one element per circle
 //var data = [{ "name": "A" }, { "name": "B" }, { "name": "C" }, { "name": "D" }, { "name": "E" }, { "name": "F" }, { "name": "G" }, { "name": "H" }]
-
 console.log(data);
 var node = svg.append("g")
 .selectAll("circle")
@@ -123,13 +114,11 @@ var node = svg.append("g")
   .style("fill-opacity", 0.3)
   .attr("stroke", "#69a2b2")
   .style("stroke-width", 4)
-
 //Features of the forces applied to the nodes:
 var simulation = d3.forceSimulation()
   .force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
   .force("charge", d3.forceManyBody().strength(0.5)) // Nodes are attracted one each other of value is > 0
   .force("collide", d3.forceCollide().strength(.01).radius(30).iterations(1)) // Force that avoids circle overlapping
-
 //Apply these forces to the nodes and update their positions.
 //Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
 simulation
@@ -139,8 +128,6 @@ simulation
         .attr("cx", function(d){ return d.x; })
         .attr("cy", function(d){ return d.y; })
   });
-
-
 </script> --%>
  <%-- ${data} --%>
 
@@ -151,29 +138,23 @@ simulation
 // set the dimensions and margins of the graph
 var width = 460
 var height = 460
-
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
   .append("svg")
     .attr("width", width)
     .attr("height", height)
-
 // Read data
 //d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/11_SevCatOneNumNestedOneObsPerGroup.csv", function(data) {
-
   // Filter a bit the data -> more than 1 million inhabitants
   data = data.filter(function(d){ return d.value>10000000 })
-
   // Color palette for continents?
   var color = d3.scaleOrdinal()
     .domain(["Asia", "Europe", "Africa", "Oceania", "Americas"])
     .range(d3.schemeSet1);
-
   // Size scale for countries
   var size = d3.scaleLinear()
     .domain([0, 1400000000])
     .range([7,55])  // circle will be between 7 and 55 px wide
-
   // create a tooltip
   var Tooltip = d3.select("#my_dataviz")
     .append("div")
@@ -184,7 +165,6 @@ var svg = d3.select("#my_dataviz")
     .style("border-width", "2px")
     .style("border-radius", "5px")
     .style("padding", "5px")
-
   // Three function that change the tooltip when user hover / move / leave a cell
   var mouseover = function(d) {
     Tooltip
@@ -200,7 +180,6 @@ var svg = d3.select("#my_dataviz")
     Tooltip
       .style("opacity", 0)
   }
-
   // Initialize the circle: all located at the center of the svg area
   var node = svg.append("g")
     .selectAll("circle")
@@ -222,13 +201,11 @@ var svg = d3.select("#my_dataviz")
            .on("start", dragstarted)
            .on("drag", dragged)
            .on("end", dragended));
-
   // Features of the forces applied to the nodes:
   var simulation = d3.forceSimulation()
       .force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
       .force("charge", d3.forceManyBody().strength(.1)) // Nodes are attracted one each other of value is > 0
       .force("collide", d3.forceCollide().strength(.2).radius(function(d){ return (size(d.value)+3) }).iterations(1)) // Force that avoids circle overlapping
-
   // Apply these forces to the nodes and update their positions.
   // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
   simulation
@@ -238,7 +215,6 @@ var svg = d3.select("#my_dataviz")
             .attr("cx", function(d){ return d.x; })
             .attr("cy", function(d){ return d.y; })
       });
-
   // What happens when a circle is dragged?
   function dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(.03).restart();
@@ -254,7 +230,6 @@ var svg = d3.select("#my_dataviz")
     d.fx = null;
     d.fy = null;
   }
-
 //})
 </script> --%>
 
@@ -268,7 +243,6 @@ if(ra2==null) {ra2="false";}
 String uid=null;
 if(user!=null) {uid=user.getId();}
 if(ra!="false") {%>alert("로그인 후 이용 가능");<%}%>
-
 $(document).ready(function(){$(".datepicker").datepicker({
         changeYear: true,
         showButtonPanel: true,
@@ -279,7 +253,6 @@ $(document).ready(function(){$(".datepicker").datepicker({
         }
 	
 	});
-
 }); 
 </script>
 </head>
@@ -351,7 +324,6 @@ $(document).ready(function(){$(".datepicker").datepicker({
 
 	
 <script>
-
 var rstar;
 function star(idx,i) {
 	rstar=i;
@@ -364,8 +336,6 @@ function star(idx,i) {
 		//document.getElementsByClassName("star")[j].style.color="yellow"
 	}
 }
-
-
 function setstar(idx,user_id,m_no,director,release) {
 	var review=document.getElementsByClassName("totalstar")[idx].getElementsByTagName("input")[0].value
 	//var review=document.getElementById("star").getElementsByTagName("input")[0].value
@@ -406,9 +376,8 @@ function setstar(idx,user_id,m_no,director,release) {
 <%if(jo!=null) { %>
 
 <div id="visual" class="inline w60"></div>	
- <script>
-
-<%--  var myWord=<%=jo%> --%>
+<%--  <script>
+ var myWord=<%=jo%>
 var myWords = new Array(10);
 <%
  for(int i=0;i<jo.length;i++) {
@@ -421,12 +390,10 @@ var myWords = new Array(10);
  console.log(myWords);
 // List of words
 //var myWords = ["Hello", "Everybody", "How", "Are", "You", "Today", "It", "Is", "A", "Lovely", "Day", "I", "Love", "Coding", "In", "My", "Van", "Mate"]
-
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 600 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
-
 // append the svg object to the body of the page
 var svg = d3.select("#visual").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -434,7 +401,6 @@ var svg = d3.select("#visual").append("svg")
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
-
 // Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
 var layout = d3.layout.cloud()
   .size([width, height])
@@ -443,7 +409,6 @@ var layout = d3.layout.cloud()
   .fontSize(60)
   .on("end", draw);
 layout.start();
-
 // This function takes the output of 'layout' above and draw the words
 // Better not to touch it. To change parameters, play with the 'layout' variable above
 function draw(words) {
@@ -460,7 +425,66 @@ function draw(words) {
         })
         .text(function(d) { return d.text; });
 }
+</script> --%>
+<script>
+<%-- var myWord=<%=jo%>; --%>
+var myWord = new Array(10);
+<%
+ for(int i=0;i<jo.length;i++) {
+	 
+	 %>myWord[<%=i%>]=<%="\""+jo[i]+"\""%>
+	 <%
+ 	}
+ %>
+ 
+ console.log(myWords);
+// List of words
+var myWords = [{word: myWord[9], size: "10"}, {word: myWord[8], size: "20"}, {word: myWord[7], size: "30"}, {word: myWord[6], size: "40"}, {word: myWord[5], size: "50"}, {word: myWord[4], size: "60"},{word: myWord[3], size: "70"},{word: myWord[2], size: "80"},{word: myWord[1], size: "90"},{word: myWord[0], size: "100"} ]
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 450 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#visual").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+// Wordcloud features that are different from one word to the other must be here
+var layout = d3.layout.cloud()
+  .size([width, height])
+  .words(myWords.map(function(d) { return {text: d.word, size:d.size}; }))
+  .padding(5)        //space between words
+  .rotate(function() { return ~~(Math.random() * 2) * 90; })
+  .fontSize(function(d) { return d.size; })      // font size of words
+  .on("end", draw);
+layout.start();
+
+// This function takes the output of 'layout' above and draw the words
+// Wordcloud features that are THE SAME from one word to the other can be here
+function draw(words) {
+  svg
+    .append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size; })
+        .style("fill", "#69b3a2")
+        .attr("text-anchor", "middle")
+        .style("font-family", "Impact")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+}
 </script>
+
 <%}%>
 	<div class="footer">
 		<ul>

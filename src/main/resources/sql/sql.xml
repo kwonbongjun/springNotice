@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test">
   <select id="login" parameterType="com.java.web.bean.Login" resultType="com.java.web.bean.Login">
-    select id,pw from login where id=#{id} and pw=#{pw}
+    select id,nickname from login where id=#{id} and pw=#{pw}
   </select>
   <insert id="test.insertLogin" parameterType="com.java.web.bean.Login">
     insert into login (id,pw,nickname,gender,age) values (#{id},#{pw},#{nickname},#{gender},#{age})
@@ -23,7 +23,7 @@
    select count(*) from content where delYn='N' and title=#{title}
   </select>
    <select id="content" resultType="com.java.web.bean.Bean">
-   select no,title,val,writer from (select row_number() over(order by no asc) rn,no,title,val,writer from content where delYn='N') where rn <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and rn <![CDATA[ < ]]>= (#{pageNum})*10
+   select no,title,val,writer from (select row_number() over(order by no desc) rn,no,title,val,writer from content where delYn='N') where rn <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and rn <![CDATA[ < ]]>= (#{pageNum})*10
   </select>
   <select id="selectContentSearch" parameterType="hashmap" resultType="com.java.web.bean.Bean">
   	select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' and title=#{title}) where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10 
