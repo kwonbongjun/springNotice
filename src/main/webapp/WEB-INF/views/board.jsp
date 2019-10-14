@@ -68,7 +68,10 @@ if(session==null) {
 }
 System.out.println("session"+session.getAttribute("login"));
 List<Bean> list=(List<Bean>) request.getAttribute("list");
-int finalno= (Integer) request.getAttribute("finalno");
+int finalno=0;
+if(request.getAttribute("finalno")!=null) {
+finalno= (Integer) request.getAttribute("finalno");
+}
 
 System.out.println("list"+list);
 %>
@@ -76,7 +79,10 @@ System.out.println("list"+list);
 int a;
 int contentperpage=10;
 int pagepernotice=10;
-int totalpage=(Integer)(request.getAttribute("total"));
+int totalpage=0;
+if(request.getAttribute("finalno")!=null) {
+totalpage=(Integer)(request.getAttribute("total"));
+}
 int pagenum=0;
 int pageIndex=1;
 if(list==null) {

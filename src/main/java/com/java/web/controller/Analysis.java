@@ -56,7 +56,7 @@ public class Analysis {
 	for(int i=0;i<m.length;i++) {
 		hadoopConf.set("movie"+i,m[i].getActor());
 	}
-	hadoopConf.set("fs.defaultFS", "hdfs://192.168.3.34:9000");  //"hdfs://192.168.3.34:9000" Name
+	hadoopConf.set("fs.defaultFS", "hdfs://192.168.3.240:9000");  //"hdfs://192.168.3.240:9000" Name 34
 	String localStr= "C:\\Resources\\";//  "/home/kbj"  "C:\\Resources\\" "D:\\workspace\\data"
 	String hadoopStr="/input/data/a.txt";
 	Path localPath = new Path(localStr);

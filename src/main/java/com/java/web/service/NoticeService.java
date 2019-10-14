@@ -95,7 +95,7 @@ public class NoticeService implements NoticeServiceInterface {
 	}
 	public List<Bean> contentReadSearch(int pageNum, String title){
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("pageNum", pageNum);
+		map.put("pageNum", (pageNum-1)*10+1);
 		map.put("title", title);
 		return nd.selectContentSearch(map);
 	}
@@ -228,7 +228,7 @@ public class NoticeService implements NoticeServiceInterface {
 	@Override
 	public List<Bean> contentReadSearch2(int pageNum, String title) {
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("pageNum", pageNum);
+		map.put("pageNum", (pageNum-1)*10);
 		map.put("title", title);
 		return ndi.contentReadSearch2(map);
 	}

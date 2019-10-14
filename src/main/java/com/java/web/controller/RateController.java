@@ -58,7 +58,7 @@ public class RateController {
 		
 		System.out.println(page);
 		List<Movie> list = nsi.movieRank(page);
-		System.out.println(list.get(0).getTitle());
+//		System.out.println(list.get(0).getTitle());
 		req.setAttribute("list", list);
 		
 		int total;

@@ -26,17 +26,22 @@
    select count(*) from content where delYn='N' and title=#{title}
   </select>
    <select id="content" resultType="com.java.web.bean.Bean">
-   select no,title,val,writer from (select row_number() over(order by no desc) rn,no,title,val,writer from content where delYn='N') a where rn <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and rn <![CDATA[ < ]]>= (#{pageNum})*10
+   <!-- select no,title,val,writer from (select row_number() over(order by no desc) rn,no,title,val,writer from content where delYn='N') a where rn <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and rn <![CDATA[ < ]]>= (#{pageNum})*10 -->
+   select no,title,val,writer 
+		from content where delYn='N' 
+		LIMIT #{pageNum} ,10
   </select>
   <select id="selectContentSearch" parameterType="hashmap" resultType="com.java.web.bean.Bean">
-  	select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' and title=#{title}) a where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10 
+  	<!-- select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' and title=#{title}) a where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10 --> 
+  	select no,title,val,writer from content where delYn='N' and title=#{title} limit #{pageNum}, 10
   </select>
   
     <select id="contentReadSearchAll2" parameterType="String" resultType="int">
    select count(*) from content where delYn='N' and (val=#{val} or title=#{val})
   </select>
    <select id="contentReadSearch2" parameterType="hashmap" resultType="com.java.web.bean.Bean">
-  	select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' and (title=#{title} or val=#{title})) a where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10 
+  	<!-- select no,title,val,writer from (select ROWNUM numrow,no,title,val,writer from content where delYn='N' and (title=#{title} or val=#{title})) a where numrow <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and numrow <![CDATA[ < ]]>= (#{pageNum})*10 -->
+  	select no,title,val,writer from content where delYn='N' and (title=#{title} or val=#{title}) limit #{pageNum} ,10 
   </select>
   
    <select id="finalno" resultType="int">
@@ -84,12 +89,12 @@
   
   <insert id="crawling" parameterType="com.java.web.util.CrawlingBean">
   	<!-- insert into movie (no,title,genre1,genre2,nation,time,release,director) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director}) -->
-  	insert into movie (title,genre1,genre2,nation,time,release,director) values (#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
+  	insert into movie (title,genre1,genre2,nation,time,`release`,director) values (#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
   </insert>
   
     <insert id="crawling2" parameterType="com.java.web.util.CrawlingBean">
   	<!-- insert into movie (no,title,genre1,genre2,nation,time,release,director) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director}) -->
-  	insert into movie (title,genre1,genre2,nation,time,release,director) values (#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
+  	insert into movie (title,genre1,genre2,nation,time,`release`,director) values (#{title},#{genre1},#{genre2},#{nation},#{time},#{release},#{director})
   </insert>
   
   <select id="titleidmapping" parameterType="String" resultType="int">
@@ -97,7 +102,7 @@
   </select>
     <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="Integer">
     <!-- select NVL(no,0) from movie where title LIKE '%' || #{title} || '%'   and director=#{director} and release=#{release} -->
-    select NVL(no,0) from movie where title like CONCAT('%',1,'%') and director=#{director} and release=#{release}
+    select NVL(no,0) from movie where title like CONCAT('%',1,'%') and director=#{director} and `release`=#{release}
 <!--LIKE '%' || #{title} || '%'  and NOT regexp_like(title, '*[0-9]')-->  
   </select>
    <select id="isSetScore" parameterType="com.java.web.bean.UserMovie" resultType="Integer">
@@ -147,7 +152,7 @@ and no Not In (select m_no from usermovie where  watchYn='Y')
 order by genre1 , genre2 , nation , director 
  -->
  
- select title,release,nation,director
+<!--  select title,release,nation,director
 from movie
 where genre1 in (
     select genre1 from(
@@ -166,7 +171,29 @@ where genre1 in (
         )
     order by c1 desc) g1  ) g2  where numrow = 1)
 and no Not In (select m_no from usermovie where  watchYn='Y')    
+order by genre1 , genre2 , nation , director -->
+
+select title,`release`,nation,director
+from movie
+where genre1 in (
+    select g1.genre1 from(
+    select genre1, avg(um.m_rate) c1
+    from usermovie um join movie m
+    on(um.m_no=m.no)
+    where um.m_rate>0 and um.user_id=#{id}
+    group by m.genre1
+    having avg(um.m_rate)=(select max(c1) from(
+        select avg(um.m_rate) c1
+        from usermovie um join movie m
+        on(um.m_no=m.no)
+        where um.m_rate>0  and um.user_id=#{id}
+        group by m.genre1) a
+        )
+    order by c1 desc) g1)
+and no Not In (select m_no from usermovie where  watchYn='Y')    
 order by genre1 , genre2 , nation , director
+ limit 1;
+
   </select>
   
   <update id="setWatchMovie" parameterType="com.java.web.bean.UserMovie" >
@@ -182,7 +209,8 @@ where no=#{m_no}
   </update>
 
  <select id="movierank" parameterType="int" resultType="com.java.web.bean.Movie">
-  select no,title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,no,title,director,rate,rateCnt from movie  order by rate desc) a where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= #{page}*10
+  <!-- select no,title,director,rate,rateCnt from (select row_number() over(order by rate desc) rn,no,title,director,rate,rateCnt from movie  order by rate desc) a where rn <![CDATA[ > ]]>= (#{page}-1)*10+1 and rn <![CDATA[ < ]]>= #{page}*10 -->
+  select no,title,director,rate,rateCnt from movie order by rate desc limit #{page} , 10 ;
  </select> 
 
  
@@ -197,7 +225,7 @@ where no=#{m_no}
 
    <insert id="insertMovie" parameterType="com.java.web.bean.Movie">
   	<!-- insert into Movie (no,title,genre1,genre2,nation,time,release,director,rate,rateCnt) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},nation,time,release,director,rate,rateCnt) -->
-  	insert into Movie (title,genre1,genre2,nation,time,release,director,rate,rateCnt) values (#{title},#{genre1},#{genre2},nation,time,release,director,rate,rateCnt)
+  	insert into Movie (title,genre1,genre2,nation,time,`release`,director,rate,rateCnt) values (#{title},#{genre1},#{genre2},nation,time,'release',director,rate,rateCnt)
   </insert>
   
   <select id="selectTotalRank" resultType="int">

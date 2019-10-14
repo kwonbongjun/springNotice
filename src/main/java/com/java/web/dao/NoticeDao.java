@@ -1,5 +1,6 @@
 package com.java.web.dao;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,7 @@ public class NoticeDao implements NoticeDaoInterface{
 		return s.selectOne("test.contentall");
 	}
 	public List<Bean> contentselect(int pageNum) {
-		return s.selectList("test.content",pageNum);
+		return s.selectList("test.content",(pageNum-1)*10);
 	}
 	public void insertContent(Bean bean ) {
 		System.out.println("2");
@@ -121,7 +122,7 @@ public class NoticeDao implements NoticeDaoInterface{
 		s.update("test.setrate", m_no);
 	}
 	public List<Movie> movieRank(int page){
-		return s.selectList("test.movierank",page);
+		return s.selectList("test.movierank",(page-1)*10);
 	}
 	public int movieRankAll() {
 		return s.selectOne("test.movieRankAll");
