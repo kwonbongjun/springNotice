@@ -112,7 +112,7 @@ public class NoticeService implements NoticeServiceInterface {
 				String fileName=UUID.randomUUID().toString();
 				try {
 					byte[] data=file.getBytes();
-					String path="C:\\Resources\\";//D:\\workspace\\resources\\";
+					String path="/home/kbj/boardfile/";//D:\\workspace\\resources\\"; /home/kbj/boardfile/
 					File f = new File(path);
 					if(!f.isDirectory()) {
 						f.mkdirs();
