@@ -96,7 +96,7 @@ public class DataController {
 
 			FileSystem localSystem=FileSystem.getLocal(conf);
 			FileSystem hadoopSystem=FileSystem.get(hadoopConf);
-			FSDataInputStream fsis = localSystem.open(new Path(localPath+"/"+search+".txt")); //\\
+			FSDataInputStream fsis = localSystem.open(new Path(localPath+search+".txt")); //\\
 			FSDataOutputStream fsos = hadoopSystem.create(new Path(hadoopPath+"/a.txt"));
 			int byteRead=0;
 			while((byteRead=fsis.read())>0) {
