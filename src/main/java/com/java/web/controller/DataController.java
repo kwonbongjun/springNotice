@@ -85,14 +85,12 @@ public class DataController {
 
 			DaumAPI da = new DaumAPI();
 			da.getsearchAPI(search);
-
-			search=search.trim();
 			
 			String localStr= "/home/kbj/crawlingdata"; //"/home/kbj/crawlingdata" "C:\\Resources\\" "D:\\workspace\\data"
 			String hadoopStr="/input/data/";
 			Configuration conf = new Configuration();
 			Configuration hadoopConf = new Configuration();
-			hadoopConf.set("fs.defaultFS", "hdfs://192.168.3.240:9000");  //"hdfs://192.168.3.34:9000" Name 34
+			hadoopConf.set("fs.defaultFS", "hdfs://gdj16:9000");  //"hdfs://192.168.3.34:9000" Name 34
 			Path localPath = new Path(localStr);
 			Path hadoopPath = new Path(hadoopStr);
 
@@ -132,10 +130,11 @@ public class DataController {
 			String release = request.getParameter("release");
 			System.out.println(director);
 			//int m_no = nsi.titleidmapping(title);
+			System.out.println(title+director+release);
 			int m_no=nsi.tdidmapping(new Movie(title,director,release));
 			System.out.println("1111"+user_id+m_no);
 			UserMovie um = new UserMovie(user_id, m_no, 0, 0, 'N',review);
-
+			System.out.println("no"+um.getM_no());
 			System.out.println(nsi.isSetScore(um));
 			if(nsi.isSetScore(um)!=0 && m_no!=0) {
 				request.setAttribute("isSetScore",true);
@@ -154,6 +153,8 @@ public class DataController {
 		int m_no=nsi.tdidmapping(new Movie(title,director,release));
 		int star=Integer.parseInt(str);
 		UserMovie um = new UserMovie(user_id, m_no, star, 0, 'N',null);
+		System.out.println(user_id+" "+ m_no+" " +star);
+		System.out.println("11"+um.getUser_id()+um.getM_rate());
 		nsi.setstar(um);
 		nsi.setrate(um);
 		System.out.println(1);

@@ -29,6 +29,7 @@
    <!-- select no,title,val,writer from (select row_number() over(order by no desc) rn,no,title,val,writer from content where delYn='N') a where rn <![CDATA[ > ]]>= (#{pageNum}-1)*10+1 and rn <![CDATA[ < ]]>= (#{pageNum})*10 -->
    select no,title,val,writer 
 		from content where delYn='N' 
+		order by no desc
 		LIMIT #{pageNum} ,10
   </select>
   <select id="selectContentSearch" parameterType="hashmap" resultType="com.java.web.bean.Bean">
@@ -102,19 +103,19 @@
   </select>
     <select id="tdidmapping" parameterType="com.java.web.bean.Movie" resultType="Integer">
     <!-- select NVL(no,0) from movie where title LIKE '%' || #{title} || '%'   and director=#{director} and release=#{release} -->
-    select NVL(no,0) from movie where title like CONCAT('%',1,'%') and director=#{director} and `release`=#{release}
+    select NVL(no,0) from movie where title like CONCAT('%', #{title},'%') and director=#{director} and `release`=#{release}
 <!--LIKE '%' || #{title} || '%'  and NOT regexp_like(title, '*[0-9]')-->  
   </select>
    <select id="isSetScore" parameterType="com.java.web.bean.UserMovie" resultType="Integer">
-    select count(*) from UserMovie where user_id=#{user_id} and m_no=#{m_no}
+    select count(*) from usermovie where user_id=#{user_id} and m_no=#{m_no}
   </select>
   
    <update id="setStar" parameterType="com.java.web.bean.UserMovie" >
-	update UserMovie set m_rate=#{m_rate} where user_id=#{user_id} and m_no=#{m_no}
+	update usermovie set m_rate=#{m_rate} where user_id=#{user_id} and m_no=#{m_no}
   </update>
   
    <insert id="insertUM" parameterType="com.java.web.bean.UserMovie">
-  	insert into UserMovie (user_id,m_no,m_rate,searchCnt,review) values (#{user_id},#{m_no},#{m_rate},#{searchCnt},#{review})
+  	insert into usermovie (user_id,m_no,m_rate,searchCnt,review) values (#{user_id},#{m_no},#{m_rate},#{searchCnt},#{review})
   </insert>
 
   <select id="recommend" parameterType="String" resultType="com.java.web.util.CrawlingBean">
@@ -197,11 +198,11 @@ order by genre1 , genre2 , nation , director
   </select>
   
   <update id="setWatchMovie" parameterType="com.java.web.bean.UserMovie" >
-	update UserMovie set watchYn='Y' where user_id=#{user_id} and m_no=#{m_no}
+	update usermovie set watchYn='Y' where user_id=#{user_id} and m_no=#{m_no}
   </update>
 
   <update id="setrate" parameterType="com.java.web.bean.UserMovie" >
-update Movie set rateCnt=rateCnt+1 
+update movie set rateCnt=rateCnt+1 
 , rate= (select((rateCnt*rate)+(#{m_rate}))/(rateCnt+1) a
 													from movie
 													where no =#{m_no})
@@ -225,7 +226,7 @@ where no=#{m_no}
 
    <insert id="insertMovie" parameterType="com.java.web.bean.Movie">
   	<!-- insert into Movie (no,title,genre1,genre2,nation,time,release,director,rate,rateCnt) values (tmp_seq2.NEXTVAL,#{title},#{genre1},#{genre2},nation,time,release,director,rate,rateCnt) -->
-  	insert into Movie (title,genre1,genre2,nation,time,`release`,director,rate,rateCnt) values (#{title},#{genre1},#{genre2},nation,time,'release',director,rate,rateCnt)
+  	insert into movie (title,genre1,genre2,nation,time,`release`,director,rate,rateCnt) values (#{title},#{genre1},#{genre2},nation,time,'release',director,rate,rateCnt)
   </insert>
   
   <select id="selectTotalRank" resultType="int">
@@ -289,7 +290,7 @@ where no=#{m_no}
 	<select id="getRate50" parameterType="int" resultType="com.java.web.bean.RateBean">
 		select  Count(m_rate),NVL(avg(m_rate),0) from usermovie where m_no=
 	    (select no 
-	    from movie where no=42) 
+	    from movie where no=#{no}) 
 	    and user_id in( 
 	                  select id from login 
 	                   where age >=50)
